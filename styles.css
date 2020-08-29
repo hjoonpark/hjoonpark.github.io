@@ -1,0 +1,43 @@
+html{
+    background-color:#EEE;
+    padding: 1em;
+    width: 90%;
+    margin: auto;
+}
+body {
+    background-color:#FFF;
+    font-family:"Trebuchet MS", Helvetica, Arial;
+    font-size: 1em;
+    margin: 0 auto;
+    padding: 1em;
+}
+td {
+    vertical-align: bottom;
+}
+h1{
+    font-size:1.75em;
+    font-family: Helvetica, Verdana, Arial, sans-serif;
+    }
+h2 {
+    clear:both;
+    font-size: 1.4em;
+    font-weight:bold;
+    margin-top:2em; 
+    font-variant: small-caps;
+    padding-left:.25em;
+    background-color:#EEE;
+    border-bottom: 1px solid #999;
+    letter-spacing: .06em;
+}
+ul {
+    list-style-type:none;
+}
+dt {
+    margin-left: 1.5em;
+}
+table, th, td {
+    border: 0px solid black;
+}
+td {
+    padding: 2px
+}
