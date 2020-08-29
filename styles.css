@@ -29,9 +29,6 @@ h2 {
     border-bottom: 1px solid #999;
     letter-spacing: .06em;
 }
-ul {
-    list-style-type:none;
-}
 dt {
     margin-left: 1.5em;
 }
@@ -41,3 +38,9 @@ table, th, td {
 td {
     padding: 2px
 }
+ul li.publications {
+    margin-bottom: 1em;
+}
+.paper-title, .my-author {
+    font-weight: bold;
+  }
