@@ -62,13 +62,12 @@ table.publications td:first-child {
     /*border: 1px solid black;*/
     text-align: center;
 }
-table.publications td img {
-    max-height: 125px;
-}
 table.publications td:first-child {
     width: 20%;
 }
 table.publications img {
-    max-height: 300px; 
+    max-height: 120px; 
     max-width: 250px;
+    padding-right: 20px;
+    padding-left: 20px
 }
