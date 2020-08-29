@@ -41,6 +41,34 @@ td {
 ul li.publications {
     margin-bottom: 1em;
 }
-.paper-title, .my-author {
+.paper-title {
+    font-size: 1.2em;
     font-weight: bold;
-  }
+}
+.my-author {
+    font-weight: bold;
+}
+
+.conference {
+    font-style: italic; 
+}
+
+table.publications td {
+    vertical-align: top;
+    padding: 0px 0px 20px 0px;
+    /*border: 1px solid black;*/
+}
+table.publications td:first-child {
+    /*border: 1px solid black;*/
+    text-align: center;
+}
+table.publications td img {
+    max-height: 125px;
+}
+table.publications td:first-child {
+    width: 20%;
+}
+table.publications img {
+    max-height: 300px; 
+    max-width: 250px;
+}
