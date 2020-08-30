@@ -42,7 +42,7 @@ ul li.publications {
     margin-bottom: 1em;
 }
 .paper-title {
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
 }
 .my-author {
@@ -53,15 +53,24 @@ ul li.publications {
     font-style: italic; 
 }
 
+table.publications {
+    width: 100%;
+    border-collapse: collapse;
+}
+table.publications tr {
+    border-bottom: 1px solid #ccc;
+}
 table.publications td {
     vertical-align: top;
-    padding: 0px 0px 20px 0px;
+    padding: 20px 0px 20px 0px;
     width: auto;
     /*border: 1px solid black;*/
 }
 table.publications td:last-child {
     /*border: 1px solid red;*/
-    width: 75%;
+    max-width: 90%;
+    min-width: 70%;
+    width: 80%;
 }
 table.publications td:first-child {
     /*border: 1px solid black;*/
