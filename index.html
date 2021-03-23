@@ -18,10 +18,10 @@
 
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="/js/index.js"></script>
 	<title>Hyojoon Park | Academic Website</title>
 </head>
 <body text="black" link="#1F618D" vlink="#1F618D" alink="silver">
+    <main>
     <table border="0" width=100%>
         <tr>
             <br>
@@ -57,7 +57,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <a href="src/CV_HyojoonPark200829.pdf">CV</a>
+                            <a href="src/CV_HyojoonPark202103.pdf">CV</a>
                         </td>
                     </tr>
                 </table>
@@ -83,7 +83,7 @@
     <h2>Introduction</h2>
     <i>I will be joining <a href="https://www.cs.wisc.edu/">University of Wisconsin - Madison</a> starting Fall 2021 for Ph.D. in Computer Science.</i> 
     <br><br>
-    I am currently a research assistant at <a href="https://www.cs.utah.edu/">The University of Utah</a> in School of Computing (advisor: Prof. Ladislav Kavan / co-advisor: Prof. Cem Yuksel).
+    I am currently a research assistant at <a href="https://www.cs.utah.edu/">University of Utah</a> in School of Computing (Advisors: Prof. Ladislav Kavan & Prof. Cem Yuksel).
     <br>
     I received my M.S. in Mechanical Engineering (advised by Prof. Dongjun Lee) at <a href="http://me.snu.ac.kr/en">Seoul National University</a>, and B.S. in Mechanical Engineering at <a href="http://me.korea.edu/me_en/index.do">Korea University</a>, in South Korea.
     <br><br>
@@ -189,7 +189,35 @@
     --------------------->
     <h2>Under Construction... </h2>
     <!--last update 11-29-2020-->
+    </main>
+
+
     
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyCwdwS8qsIPpLcrVCVRWr_Qb_-bFvCAeJs",
+        authDomain: "hjoonpark-cbc14.firebaseapp.com",
+        projectId: "hjoonpark-cbc14",
+        storageBucket: "hjoonpark-cbc14.appspot.com",
+        messagingSenderId: "947900858330",
+        appId: "1:947900858330:web:7edba359b36b48a8924ae3",
+        measurementId: "G-EWLMPFHNTV"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    </script>
+    <script src="/js/index.js"></script>
+
 </body>
 </html>
 
