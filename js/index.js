@@ -2,6 +2,26 @@ $(document).ready(function(){
     $("a").attr("target", "_blank");
 });
 
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-171067365-1');
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+var firebaseConfig = {
+    apiKey: "AIzaSyCwdwS8qsIPpLcrVCVRWr_Qb_-bFvCAeJs",
+    authDomain: "hjoonpark-cbc14.firebaseapp.com",
+    projectId: "hjoonpark-cbc14",
+    storageBucket: "hjoonpark-cbc14.appspot.com",
+    messagingSenderId: "947900858330",
+    appId: "1:947900858330:web:7edba359b36b48a8924ae3",
+    measurementId: "G-EWLMPFHNTV",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
 function ipLookUp (handleData) {
     $.get("https://api.ipdata.co?api-key=test", function(response) {
         handleData(response);
