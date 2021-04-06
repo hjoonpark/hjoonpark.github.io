@@ -82,8 +82,8 @@ table.publications img {
     /*border: 1px solid green;*/
     height: auto;
     width: auto;
-    max-height: 150px; 
-    max-width: 80%;
-    padding-right: 20px;
-    padding-left: 20px
+    max-height: 160px; 
+    max-width: 90%;
+    padding-right: 15px;
+    padding-left: 15px
 }
