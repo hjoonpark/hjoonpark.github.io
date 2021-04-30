@@ -11,6 +11,9 @@ body {
     margin: 0 auto;
     padding: 1em;
 }
+a {
+    target:"_blank";
+}
 td {
     vertical-align: bottom;
 }
