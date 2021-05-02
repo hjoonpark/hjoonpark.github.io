@@ -14,9 +14,6 @@ body {
 a {
     target:"_blank";
 }
-td {
-    vertical-align: bottom;
-}
 h1{
     font-size:1.75em;
     font-family: Helvetica, Verdana, Arial, sans-serif;
@@ -39,7 +36,8 @@ table, th, td {
     border: 0px solid black;
 }
 td {
-    padding: 2px
+    padding: 2px;
+    vertical-align: bottom;
 }
 ul li.publications {
     margin-bottom: 1em;
@@ -65,7 +63,7 @@ table.publications tr {
 }
 table.publications td {
     vertical-align: top;
-    padding: 20px 0px 20px 0px;
+    padding: 10px 0px 10px 0px;
     width: auto;
     /*border: 1px solid black;*/
 }
@@ -87,6 +85,6 @@ table.publications img {
     width: auto;
     max-height: 160px; 
     max-width: 90%;
-    padding-right: 15px;
-    padding-left: 15px
+    padding-right: 10px;
+    padding-left: 10px
 }
