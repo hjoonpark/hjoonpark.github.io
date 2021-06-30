@@ -197,9 +197,29 @@
         </tr>
     </table>
 	<!-------------------
-        Construction
+        Other
     --------------------->
-    <h2>Under Construction... </h2>
+    <h2>Other Projects</h2>
+    
+    <table class="publications">
+        <tr>
+            <td>
+                <img src="src/bundle_adjustment_v2.gif"/>
+            </td>
+            <td>
+                <span class="paper-title">Multi-Camera Calibration</span>
+                <a href="https://github.com/hjoonpark/MultiCamCalib" target="_blank">[project page]</a>
+                <br>
+                calibrates multiple cameras using a planar calibration checkerboard via four main steps:<br>
+                (1) detect checkerboard corners,<br>
+                (2) remove outlier corners from the previous step (<i>VAE, variational auto-encoder</i>),<br>
+                (3) estimate initial camera parameters and world (checkerboard) points,<br>
+                (4) refine the initial estimates (<i>bundle adjustment</i>),<br>
+                <i>optionally</i>, (5) analyze the calibration result.<br>
+            </td>
+        </tr>
+    </table>
+
     <!--last update 11-29-2020-->
     </main>
 </body>
