@@ -1,2 +1,4 @@
 js/index_uncompressed.js
 node_modules/
+*_old.html
+*_old.css

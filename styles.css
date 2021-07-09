@@ -51,7 +51,7 @@ table td.header{
 }
 #div-main {
     width:100%;
-    max-width:1200px;
+    max-width:1100px;
     border:0px;
     border-spacing:0px;
     border-collapse:separate;
@@ -82,15 +82,16 @@ table td.header{
     padding-bottom:10px;
 }
 .table-contents tr td:first-child {
-    width:25%;
-    padding-left: 10px;
+    width:30%;
+    padding-left: 5px;
 }
 .table-contents tr td:nth-child(2) {
-    width:75%;
+    width:70%;
     padding-right: 10px;
+    padding-left: 10px;
 }
 .table-contents tr:last-child {
-    width:75%;
+    width:70%;
     padding-right: 10px;
     border-bottom: 0;
 }
