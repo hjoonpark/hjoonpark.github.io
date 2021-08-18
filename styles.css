@@ -110,6 +110,9 @@ table td.header{
 .my-author {
     font-weight: bold;
 }
-.conference {
+
+#intro-ul li {
+    margin: 8px 0;
 }
-/* other projects */
+
+
