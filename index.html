@@ -1,247 +1,97 @@
-<!DOCTYPE HTML>
-<html lang="en">
-    
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="src/uwmadison.png" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171067365-1"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="en-gb" class='uk-notouch'>
 
-	<title>Hyojoon Park | Academic Website</title>
-</head>
+	<head>
+		<title>Hyojoon Park | Academical Website</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="favicon.ico" href="favicon.ico?v=5"  />
 
-<body>
-    <div id="div-main">
-    <table id="table-main">
-        <tbody>
-            <tr id="row-bio">
-                <td>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td class="td-left">
-                                    <label id="my-name">Hyojoon Park</label>
-                                    <br>
-                                    hjoonpark.us{at}gmail.com
-                                    <br>
-                                    <a href="https://www.linkedin.com/in/hyojoon-park-301aba117" target="_blank"><i style="font-size:24px" class="fa">&#xf08c;</i></a>
-                                    <a href="https://github.com/hjoonpark" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a>
-                                    <br>
-                                    <a href="src/CV_HyojoonPark202108.pdf" target="_blank">CV</a>
-                                </td>
-                                <td width="10%" style="text-align: right; padding-right:0px; padding-top:10px;">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <img src="src/phj2019.png" height=200px alt="Photo of Hyojoon Park">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align:center;">
-                                                <a href="http://www.korea.edu/mbshome/mbs/en/index.do" target="_blank"><img src="src/crimson2positive.gif" height=55px></a>
-                                                <a href="https://en.snu.ac.kr/" target="_blank"><img src="src/snu_logo.PNG" height=56px></a>
-                                                <!--<a href="https://www.cs.utah.edu/"><img src="src/BlockU_redweb.gif" height=37px></a>-->
-                                                <a href="https://www.cs.wisc.edu/" target="_blank"><img src="src/uwmadison.png" height=56px></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
+                
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171067365-1"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+        
+		<!-- CSS FILES -->
+        <link rel="stylesheet" href="css/custom.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+		<!-- JS FILES -->
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <script src="js/index.js"></script>
+    </head>
 
-            <tr id="row-intro">
-                <tr>
-                    <td class="header">
-                        Introduction
-                    </td>
-                </tr>
-                <tr>
-                    <td class="td-left">
-                        <ul id="intro-ul">
+	<body class="uk-background-muted">
+        <div id="nav-placeholder">
+        </div>
+        <script>
+            $(function(){
+                $("#nav-placeholder").load("nav.html");
+            });
+        </script>
+
+        <main uk-height-viewport="expand: true">
+        <div class="uk-section uk-section-small uk-section-muted">
+            <div class="uk-container">
+                <div class="uk-card uk-card-default uk-width-small-*">
+                    <div class="uk-card-header">
+                        <div class="uk-grid-small uk-flex-top" uk-grid>
+                            <div class="uk-flex uk-flex-left uk-flex-column uk-width-expand">
+                                <h1 class="uk-card-title uk-margin-remove-top uk-margin-remove-bottom"><a uk-tooltip="title: 박효준; pos: right" style="color: black; font-size:1.5em"><b>Hyojoon Park</b></a></h1>
+                                <h5 class="uk-margin-remove-top uk-margin-remove-bottom"><a uk-tooltip="title: hjoonpark.us@gmail.com; pos: right" style="color: black;">hjoonpark.us{at}gmail.com</a></h5>
+                                <div class="uk-grid-collapse">
+                                    <a href="https://www.linkedin.com/in/hyojoon-park-301aba117" target="_blank" uk-icon="icon: linkedin; ratio:1.2" class="uk-icon-link" uk-tooltip="title: LinkedIn; pos: bottom"></a>
+                                    <a href="https://github.com/hjoonpark" target="_blank" uk-icon="icon: github; ratio:1.2" class="uk-icon-link" uk-tooltip="title: GitHub; pos: bottom"></a>
+                                    <a href="src/CV_HyojoonPark202108.pdf" target="_blank" uk-icon="icon: file-text; ratio:1.2" class="uk-icon-link" uk-tooltip="title: CV; pos: bottom"></a>
+                                </div>
+                            </div>
+
+                            <div class="uk-flex uk-flex-center uk-flex-column">
+                                <div class="uk-flex uk-flex-center">
+                                    <img class="uk-border-rounded uk-box-shadow-medium" width="150" src="src/joon_park.png">
+                                </div>
+                                <div class="uk-flex uk-flex-center uk-margin-small-top">
+                                    <a href="http://www.korea.edu/mbshome/mbs/en/index.do" target="_blank" uk-tooltip="title:Korea University; pos:bottom"><img data-src="src/logo/ku.png" style="height:55px;" uk-img></a>
+                                    <a href="https://en.snu.ac.kr/" target="_blank" uk-tooltip="title:Seoul National University; pos:bottom"><img data-src="src/logo/snu.png" class="uk-margin-small-left uk-margin-small-right" style="height:55px;" uk-img></a>
+                                    <a href="https://www.cs.wisc.edu/" target="_blank" uk-tooltip="title:University of Wisconsin - Madison; pos:bottom"><img data-src="src/logo/uwmadison.png" style="height:55px;" uk-img></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="uk-card-body" >
+                        <ul class="uk-list uk-list-square">
                             <li>I am currently a Ph.D. student at <a href="https://www.cs.wisc.edu/" target="_blank">the University of Wisconsin-Madison</a> in Computer Sciences (Fall 2021-)</li>
                             <li>I received M.S. in Mechanical Engineering from <a href="http://me.snu.ac.kr/en" target="_blank">Seoul National University</a> (advisor: Prof. <i>Dongjun Lee</i>) and B.S. in Mechanical Engineering from <a href="http://me.korea.edu/me_en/index.do" target="_blank">Korea University</a>, in South Korea</li>
-                            <li>Prior to joining UW-Madison, I was a graduate research assistant at <a href="https://www.cs.utah.edu/" target="_blank">the University of Utah</a> in School of Computing (advisors: Prof. <i>Ladislav Kavan</i> and <i>Prof. Cem Yuksel</i>) and an intern researcher at <a href="https://eng.kist.re.kr/kist_eng/main/" target="_blank">Korea Institute of Science and Technology (KIST)</a></li>
-                            <li>My research interest is physics-based simulations in computer graphics incorporating machine learning and computer vision</li>
+                            <li>Prior to joining UW-Madison, I was a graduate research assistant at <a href="https://www.cs.utah.edu/" target="_blank">the University of Utah</a> in School of Computing (advisors: Prof. <i>Ladislav Kavan</i> and Prof. <i>Cem Yuksel</i>) and an intern researcher at <a href="https://eng.kist.re.kr/kist_eng/main/" target="_blank">Korea Institute of Science and Technology (KIST)</a></li>
+                            <li>My research interest is physics-based simulations in computer graphics utilizing machine learning and computer vision</li>
                         </ul>
-                    </td>
-                </tr>
-            </tr>
-            
-            <!-- PUBLICATIONS -->
-            <tr id="row-publications">
-                <tr>
-                    <td class="header">
-                        Publications
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table class="table-contents">
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <img src="src/papers/imgs/siggraph21.JPG">
-                                </td>
-                                <td>
-                                    <span class="paper-title">Capturing Detailed Deformations of Moving Human Bodies</span>
-                                    <br>
-                                    He Chen, <span class="my-author">Hyojoon Park</span>, Kutay Macit, and Ladislav Kavan
-                                    <br>
-                                    <span class="conference">SIGGRAPH 2021</span>
-                                    <br>
-                                    <a href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Capturing+Detailed+Deformations+of+Moving+Human+Bodies&btnG=" target="_blank">pdf</a>
-                                    |
-                                    <a href="https://ankachan.github.io/Projects/MocapCheckerboard/MocapCheckerboard.html" target="_blank">project page</a>
-                                    |
-                                    <a href="https://github.com/hjoonpark/MultiCamCalib" target="_blank">multi-camera calibration codes</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="src/papers/imgs/iros2020.jpg">
-                                </td>
-                                <td>
-                                    <span class="paper-title">Adaptive Precision-Enhancing Hand Rendering for Wearable Fingertip Tracking Devices</span>
-                                    <br>
-                                    <span class="my-author">Hyojoon Park</span> and Jung-Min Park
-                                    <br>
-                                    <span class="conference">IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) 2020</span>
-                                    <br>
-                                    <a href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C45&q=Adaptive+Precision-Enhancing+Hand+Rendering+for+Wearable+Fingertip+Tracking+Devices&btnG=" target="_blank">pdf</a>
-                                    |
-                                    <a href="https://youtu.be/_JeicPxjsXQ" target="_blank">short video</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="src/papers/imgs/glove.PNG">
-                                </td>
-                                <td>
-                                    <span class="paper-title">Stretchable Skin‐Like Cooling/Heating Device for Reconstruction of Artificial Thermal Sensation in Virtual Reality</span>
-                                    <br>
-                                    Jnwoo Lee, Heayoun Sul, Wonha Lee, Kyung Rok Pyun, Inho Ha, Dongkwan Kim, <span class="my-author">Hyojoon Park</span>, Hyeonjin Eom, Yeosang Yoon, Jinwook Jung, Dongjun Lee, and Seung Hwan Ko
-                                    <br>
-                                    <span class="conference">Advanced Functional Materials 2020</span>
-                                    <br>
-                                    <a  href="https://onlinelibrary.wiley.com/doi/full/10.1002/adfm.201909171" target="_blank">pdf</a>
-                                </td>
-                            </tr>
-                    
-                            <tr>
-                                <td>
-                                    <img src="src/papers/imgs/dental.PNG">
-                                </td>
-                                <td>
-                                    <span class="paper-title">Dental Simulator with Increased Z-width of Haptic Rendering</span>
-                                    <br>
-                                    <span class="my-author">Hyojoon Park</span>, Myungsin Kim, and Dongjun Lee
-                                    <br>
-                                    <span class="conference">AsiaHaptics 2018</span>
-                                    <br>
-                                    <a  href="src/papers/HPark_AsiaHaptics18_ShortPaper.pdf" target="_blank">pdf</a>
-                                    |
-                                    <a href="https://youtu.be/R7unVX3cIXg" target="_blank">short video</a>
-                                    |
-                                    <a href="src/papers/videos/master_degree_compressed.mp4" target="_blank">long video</a>*
-                                    <br><br>
-                                    <i>*Outstanding MS Thesis Presentation Award (Seoul National University 2019)</i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <img src="src/papers/imgs/collaborative.PNG">
-                                </td>
-                                <td>
-                                    <span class="paper-title">Rigid-body Collaborative Manipulation among Remote Users with Wearable Cutaneous Haptic Interfaces</span>
-                                    <br>
-                                    Myungsin Kim, WonHa Lee, <span class="my-author">Hyojoon Park</span>, Junghan Kwon, Yong-Lae Park, and Dongjun Lee
-                                    <br>
-                                    <span class="conference">AsiaHaptics 2018</span>
-                                    <br>
-                                    <a  href="src/papers/MKim_AsiaHaptics18.pdf" target="_blank">pdf</a>
-                                    |
-                                    <a href="src/papers/videos/low_AsiaHaptics2018_KMS.mp4" target="_blank">video</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    <span class="paper-title">Design and Performance Evaluation of Wearable Haptic Interfaces</span>
-                                    <br>
-                                    WonHa Lee, Myungsin Kim, <span class="my-author">Hyojoon Park</span>, and Dongjun Lee
-                                    <br>
-                                    <span class="conference">International Conference on Control, Automation and Systems 2018</span>
-                                    <br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    <span class="paper-title">Wearable Cutaneous Haptic Interface with Soft Sensors and IMUs</span>
-                                    <br>
-                                    Yongjun Lee, Myungsin Kim, Yongseok Lee, <span class="my-author">Hyojoon Park</span>, and Dongjun Lee
-                                    <br>
-                                    <span class="conference">Korea Robotics Society Annual Conference 2018</span>
-                                    <br>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tr>
+                    </div>
+                </div>
 
-            <!-- OTHER WORK -->
-            <tr id="row-otherwork">
-                <tr>
-                    <td class="header">
-                        Other work
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table class="table-contents">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="src/bundle_adjustment_v2.gif"/>
-                                    </td>
-                                    <td>
-                                        <span class="paper-title">Multi-Camera Calibration</span>
-                                        <br>
-                                        calibrates multiple cameras using a planar calibration checkerboard through four main steps:<br>
-                                        (1) detect checkerboard corners,<br>
-                                        (2) remove outlier corners from the previous step (VAE, variational auto-encoder),<br>
-                                        (3) estimate initial camera parameters and world points,<br>
-                                        (4) refine the initial estimates (bundle adjustment),<br>
-                                        optionally, (5) analyze the calibration result.
-                                        <br>
-                                        <a href="https://github.com/hjoonpark/MultiCamCalib" target="_blank">project page</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
+                <hr class="uk-divider-icon uk-margin-small-bottom uk-margin-small-top">
+                <!-- publications -->
+                <div class="uk-card uk-card-default uk-width-small-*" id="publications-placeholder">
+                </div>
+                <hr class="uk-divider-icon uk-margin-small-bottom uk-margin-small-top">
+                <!-- other work -->
+                <div class="uk-card uk-card-default uk-width-small-*" id="otherwork-placeholder">
+                </div>
 
-            </tr>
-
-    </table>
-    </div>
-    </main>
-    <!-- -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
-    <script src="/js/index.js"></script>
-</body>     
+            </div><!-- uk-container ends -->
+        </div><!-- uk-section ends -->
+        </main>
+        
+        <script>
+            $(function(){
+                $("#publications-placeholder").load("publications.html");
+                $("#otherwork-placeholder").load("otherwork.html");
+            });
+        </script>
+	</body>
 </html>
