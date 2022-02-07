@@ -1,0 +1,118 @@
+html {
+    background-color:#EEE;
+    width: 100%;
+    margin: auto;
+}
+
+body {
+    font-family:"Verdana", Helvetica, Arial;
+    font-size: 0.8em;
+    margin: 0 auto;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+a:link {
+    target:"_blank";
+    color: #326ada;
+    text-decoration:none;
+}
+a:visited {
+    color: #326ada;
+}
+a:hover {
+color: hotpink;
+}
+table {
+    width: 100%;
+}
+table tr td {
+    background-color:#FFF;
+    vertical-align: top;
+}
+table td.header{
+    font-size: 1.5em;
+    font-variant: small-caps;
+    background-color:#EEE;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .06em;
+    padding-left:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+#row-bio td {
+    letter-spacing: .02em;
+    line-height: 1.3em;
+}
+#my-name {
+    line-height: 1.5em;
+    letter-spacing: 0.02em;
+    font-size: 2.25em;
+    font-weight: bold;
+}
+#div-main {
+    width:90%;
+    max-width:1000px;
+    border:0px;
+    border-spacing:0px;
+    border-collapse:separate;
+    margin-right:auto;
+    margin-left:auto;
+    padding-left:10px;
+    padding-right:10px;
+    padding-bottom:10px;
+    background-color: #fff;
+}
+.td-left {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.table-contents {
+    border-collapse: collapse;
+}
+.table-contents tr {
+    border-bottom: 0.1px solid #DDD;
+}
+.table-contents tr td {
+    max-height:200px;
+    min-height:130px;
+    height: 0;
+    vertical-align: top;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.table-contents tr td:first-child {
+    width:30%;
+    padding-left: 5px;
+}
+.table-contents tr td:nth-child(2) {
+    width:70%;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.table-contents tr:last-child {
+    width:70%;
+    padding-right: 10px;
+    border-bottom: 0;
+}
+.table-contents img {
+    width: 100%;
+    height: auto;
+    max-height: 120%;
+    object-fit: scale-down;
+    background-size:100% 100%;
+    display:block;
+}
+.paper-title {
+    font-size: 1em;
+    font-weight: bold;
+}
+.my-author {
+    font-weight: bold;
+}
+
+#intro-ul li {
+    margin: 8px 0;
+}
+
+
