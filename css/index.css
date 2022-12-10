@@ -125,11 +125,11 @@ table td.header{
 }
 .logo:hover {
     cursor: pointer;
-    transform: scale(1.5);
+    transform: scale(1.15);
 }
 .img-zoom:hover {
     cursor: pointer;
-    transform: scale(1.5);
+    transform: scale(1.15);
 }
 .img-zoom,
 .img-none {
