@@ -39,7 +39,6 @@ color: #c5050c;
     margin-top: 0px;
     margin-bottom: 5px;
 }
-
 #row-bio, #row-publication, #row-otherwork, #row-doc {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
@@ -84,7 +83,6 @@ table td.header{
     padding-bottom: 10px;
 }
 .td-right {
-    width: 1000px;
 }
 .table-contents {
     width: 100%;
@@ -116,16 +114,21 @@ table td.header{
     padding-right: 10px;
     border-bottom: 0;
 }
-
 .logo {
     height: 40px;
     margin-left:1px;
     margin-right:1px;
     transition: transform .3s;
 }
-.logo:hover {
+.logo:hover, .logo-2:hover {
     cursor: pointer;
     transform: scale(1.15);
+}
+.logo-2 {
+    height: 25px;
+    margin-left:1px;
+    margin-right:1px;
+    transition: transform .3s;
 }
 .img-zoom:hover {
     cursor: pointer;
