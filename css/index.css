@@ -123,7 +123,7 @@ table td.header{
 }
 .logo:hover, .logo-2:hover {
     cursor: pointer;
-    transform: scale(1.15);
+    transform: scale(1.2);
 }
 .logo-2 {
     height: 20px;
@@ -133,7 +133,7 @@ table td.header{
 }
 .img-zoom:hover {
     cursor: pointer;
-    transform: scale(1.15);
+    transform: scale(1.5);
 }
 .img-zoom,
 .img-none {
