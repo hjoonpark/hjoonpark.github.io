@@ -93,10 +93,10 @@
                     $(this).text(isToggledAfter ? "Collapse all" : "Expand all");
                 });
 
-                $(".pub-toggle-btn-global").data('toggled', true);
-                $(".pub-toggle-btn").data('toggled', true);
-                $(".pub-toggle-btn-global").text('Collapse all')
-                $(".pub-toggle-btn").text('Collapse')
+                $(".pub-toggle-btn-global").data('toggled', false);
+                $(".pub-toggle-btn").data('toggled', false);
+                $(".pub-toggle-btn-global").text('Extend all')
+                $(".pub-toggle-btn").text('Extend')
                 $('.pub-toggle-content').show();
             });
             $("#row-otherwork").load("otherwork.html");
