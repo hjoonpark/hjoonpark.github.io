@@ -53,16 +53,52 @@
     </table>
     </div>
     </main>
-    <!-- -->
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
-    <script src="/js/index.js"></script>
+    <!-- <script src="/js/index.js"></script> -->
 
     <script>
         $(function(){
             $("#row-bio").load("bio.html");
-            $("#row-publication").load("publication.html");
+            $("#row-publication").load("publication.html", function(){
+                // After the content is loaded, attach the event listener
+                $(".pub-toggle-btn").click(function() {
+                    let $btn = $(this);
+                    let $content = $($btn.closest('tr').next('tr').find('.pub-toggle-content'));
+                    let isToggled = $btn.data('toggled');
+                    if (isToggled) {
+                        $content.slideUp();
+                        $btn.data('toggled', false);
+                    } else {
+                        $content.slideDown();
+                        $btn.data('toggled', true);
+                    }
+                    $btn.text($btn.data('toggled') ? "Collapse" : "Expand");
+                });
+                // Global toggle
+                $(".pub-toggle-btn-global").click(function() {
+                    let isToggled = $(this).data('toggled');
+                    if (isToggled) {
+                        $('.pub-toggle-content').slideUp();
+                        $(this).data('toggled', false);
+                        $('.pub-toggle-btn').data('toggled', false);
+                    } else {
+                        $('.pub-toggle-content').slideDown();
+                        $(this).data('toggled', true);
+                        $('.pub-toggle-btn').data('toggled', true);
+                    }
+                    let isToggledAfter = $(this).data('toggled');
+                    $(".pub-toggle-btn").text(isToggledAfter ? "Collapse" : "Expand");
+                    $(this).text(isToggledAfter ? "Collapse all" : "Expand all");
+                });
+
+                $(".pub-toggle-btn-global").data('toggled', true);
+                $(".pub-toggle-btn").data('toggled', true);
+                $(".pub-toggle-btn-global").text('Collapse all')
+                $(".pub-toggle-btn").text('Collapse')
+                $('.pub-toggle-content').show();
+            });
             $("#row-otherwork").load("otherwork.html");
             $("#row-appdev").load("appdev.html");
             // $("#row-doc").load("doc.html");
