@@ -22,12 +22,15 @@
     <div id="div-main">
     <table id="table-main">
         <tbody>
+            <!-- INTRO -->
+            <tr id="row-intro">
+            </tr>
+
             <!-- BIO -->
             <tr id="row-bio">
             </tr>
 
             <tr class="row-breaker"></tr>
-
             <!-- PUBLICATIONS -->
             <tr id="row-publication">
             </tr>
@@ -56,10 +59,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
-    <script src="/js/index.js"></script>
+    <!-- <script src="/js/index.js"></script> -->
 
     <script>
         $(function(){
+            $("#row-intro").load("intro.html");
             $("#row-bio").load("bio.html");
             $("#row-publication").load("publication.html", function(){
                 // After the content is loaded, attach the event listener

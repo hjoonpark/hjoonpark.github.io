@@ -40,7 +40,7 @@ color: #c5050c;
     margin-top: 0px;
     margin-bottom: 5px;
 }
-#row-bio, #row-publication, #row-otherwork, #row-doc {
+#row-intro, #row-publication, #row-otherwork, #row-doc {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 .row-breaker {
@@ -67,7 +67,7 @@ table td.header{
 }
 #div-main {
     width:90%;
-    max-width:1000px;
+    max-width:1005px;
     border:0px;
     border-spacing:0px;
     border-collapse:separate;
@@ -92,7 +92,7 @@ table td.header{
     border-collapse: collapse;
 }
 .tr-pub-main + tr {
-    border-bottom: 0.1px solid #dadfe1;
+    /* border-bottom: 0.1px solid #dadfe1; */
     background-color: blue;
 }
 .tb-td-left, .tb-td-right {
@@ -169,7 +169,8 @@ table td.header{
     font-weight: bold;
 }
 #intro-ul {
-    padding-left: 1.5em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 #intro-ul li {
     margin: 2px 0;
