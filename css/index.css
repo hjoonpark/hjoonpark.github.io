@@ -83,8 +83,6 @@ table td.header{
     padding-left: 10px;
     padding-bottom: 10px;
 }
-.td-right {
-}
 .table-contents {
     width: 100%;
     display: block; /* or inline-block */
@@ -135,7 +133,7 @@ table td.header{
 }
 .img-zoom:hover {
     cursor: pointer;
-    transform: scale(1.5);
+    transform: scale(1.2);
 }
 .img-zoom,
 .img-none {
@@ -236,4 +234,8 @@ table td.header{
 .pub-toggle-content ul {
     margin-top:0px;
     font-size: 0.9em;
+}
+.highlight {
+    font-weight: normal;
+    color: #eb3a3c;
 }
