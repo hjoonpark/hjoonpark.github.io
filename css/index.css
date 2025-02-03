@@ -1,3 +1,10 @@
+:root {
+    --red: #C5050C;
+}
+:root {
+    --blue: #050cc5;
+}
+/* -------------------------------- */
 html {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 1em;
@@ -21,11 +28,11 @@ html, body {
     overflow-x: hidden;
 }
 a:link {
-    color: #0479a8;
-    text-decoration:none;
+    color: var(--blue);
+    text-decoration: underline;
 }
 a:visited {
-    color: #0479a8;
+    color: var(--blue);
 }
 a:hover {
 color: #c5050c;
@@ -237,5 +244,5 @@ table td.header{
 }
 .highlight {
     font-weight: normal;
-    color: #eb3a3c;
+    color: var(--red);
 }
