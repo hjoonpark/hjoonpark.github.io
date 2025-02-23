@@ -246,3 +246,29 @@ table td.header{
     font-weight: normal;
     color: var(--red);
 }
+
+.video-link {
+    position: relative;
+    display: inline-block;
+}
+.thumbnail {
+    width: 99%;
+    height: auto;
+    object-fit: scale-down;
+    background-size:100% 100%;
+    display:block;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, .05) 0px 0px 0px 1px;
+    background-color: white;
+    margin-left: auto;  /* Centers horizontally */
+    margin-right: auto; /* Centers horizontally */
+}
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 28px !important; /* Force the size */
+    color: white;
+    transform: translate(-50%, -50%);
+    opacity: 0.7;
+}
