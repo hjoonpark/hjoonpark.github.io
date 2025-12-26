@@ -1,0 +1,120 @@
+<tr>
+    <td class="header">
+        YouTube Videos (Archive)
+    </td>
+</tr>
+<tr>
+    <td>
+        <div class="thumbnail-scroll-wrapper-outer">
+            <button class="thumbnail-scroll-btn thumbnail-scroll-btn-left" aria-label="Scroll left">
+                <span class="material-icons">arrow_back</span>
+            </button>
+            <div class="thumbnail-scroll-container">
+                <div class="thumbnail-scroll-wrapper">
+                  <a href="https://www.youtube.com/watch?v=tVcn5bdCqFI" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                      <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180715_Momentum-based disturbance observer_tVcn5bdCqFI.jpg" alt="Momentum-based disturbance observer">
+                      <div class="thumbnail-scroll-title">Momentum-based disturbance observer</div>
+                  </a>
+                    <a href="https://www.youtube.com/watch?v=uv3S5SgVPO0" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180712_3D position estimation using stereo vision_uv3S5SgVPO0.jpg" alt="3D position estimation using stereo vision">
+                        <div class="thumbnail-scroll-title">3D position estimation using stereo vision</div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=SteBJKPO-Gc" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180712_FABRIK implementation_SteBJKPO-Gc.jpg" alt="FABRIK implementation">
+                        <div class="thumbnail-scroll-title">FABRIK implementation</div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=iR09q3vimJ4" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180712_Impedance control (3dof)_iR09q3vimJ4.jpg" alt="Impedance control (3dof)">
+                        <div class="thumbnail-scroll-title">Impedance control (3dof)</div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=WlYhC1Vwjpc" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180712_IR-LED identification using blinking frequencies_WlYhC1Vwjpc.jpg" alt="IR-LED identification using blinking frequencies">
+                        <div class="thumbnail-scroll-title">IR-LED identification using blinking frequencies</div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=hoFF8HOO-tE" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180715_3D seed-filling_hoFF8HOO-tE.jpg" alt="3D seed-filling">
+                        <div class="thumbnail-scroll-title">3D seed-filling</div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=qCSPUNuYpwo" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180712_Joint torque controller - trajectory tracking_qCSPUNuYpwo.jpg" alt="Joint torque controller - trajectory tracking">
+                        <div class="thumbnail-scroll-title">Joint torque controller - trajectory tracking</div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=FyTjqrsTd8M" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180307_Reducing contact force vectors using two-step K-means clustering_FyTjqrsTd8M.jpg" alt="Reducing contact force vectors using two-step K-means clustering">
+                        <div class="thumbnail-scroll-title">Reducing contact force vectors using two-step K-means clustering</div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=X3v1CeLaQBY" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20180712_Leap Motion - obtaining depth value_X3v1CeLaQBY.jpg" alt="Leap Motion - obtaining depth value">
+                        <div class="thumbnail-scroll-title">Leap Motion - obtaining depth value</div>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=JeicPxjsXQ" target="_blank" rel="noopener noreferrer" class="thumbnail-scroll-link">
+                        <img class="thumbnail-scroll-item" src="src/youtube/thumbnails/20210503_Adaptive Precision-Enhancing Hand Rendering for Wearable Fingertip Tracking Devices (IROS 2020)__JeicPxjsXQ.jpg" alt="Adaptive Precision-Enhancing Hand Rendering for Wearable Fingertip Tracking Devices (IROS 2020)">
+                        <div class="thumbnail-scroll-title">Adaptive Precision-Enhancing Hand Rendering for Wearable Fingertip Tracking Devices (IROS 2020)</div>
+                    </a>
+                </div>
+            </div>
+            <button class="thumbnail-scroll-btn thumbnail-scroll-btn-right" aria-label="Scroll right">
+                <span class="material-icons">arrow_forward</span>
+            </button>
+        </div>
+    </td>
+</tr>
+<script>
+(function() {
+    const container = document.querySelector('.thumbnail-scroll-container');
+    const leftBtn = document.querySelector('.thumbnail-scroll-btn-left');
+    const rightBtn = document.querySelector('.thumbnail-scroll-btn-right');
+    
+    if (!container || !leftBtn || !rightBtn) return;
+    
+    function updateButtonVisibility() {
+        const scrollLeft = container.scrollLeft;
+        const scrollWidth = container.scrollWidth;
+        const clientWidth = container.clientWidth;
+        
+        // Show/hide buttons based on scroll position
+        leftBtn.style.display = scrollLeft > 1 ? 'flex' : 'none';
+        rightBtn.style.display = scrollLeft < scrollWidth - clientWidth - 1 ? 'flex' : 'none';
+    }
+    
+    function scrollLeft() {
+        const link = container.querySelector('.thumbnail-scroll-link');
+        if (!link) return;
+        const itemWidth = link.offsetWidth;
+        // Get computed gap from the wrapper element
+        const wrapper = container.querySelector('.thumbnail-scroll-wrapper');
+        const wrapperStyle = window.getComputedStyle(wrapper);
+        const gap = parseInt(wrapperStyle.gap) || 16;
+        container.scrollBy({
+            left: -(itemWidth + gap),
+            behavior: 'smooth'
+        });
+    }
+    
+    function scrollRight() {
+        const link = container.querySelector('.thumbnail-scroll-link');
+        if (!link) return;
+        const itemWidth = link.offsetWidth;
+        // Get computed gap from the wrapper element
+        const wrapper = container.querySelector('.thumbnail-scroll-wrapper');
+        const wrapperStyle = window.getComputedStyle(wrapper);
+        const gap = parseInt(wrapperStyle.gap) || 16;
+        container.scrollBy({
+            left: itemWidth + gap,
+            behavior: 'smooth'
+        });
+    }
+    
+    leftBtn.addEventListener('click', scrollLeft);
+    rightBtn.addEventListener('click', scrollRight);
+    container.addEventListener('scroll', updateButtonVisibility);
+    
+    // Initial button visibility (with slight delay to ensure layout is complete)
+    setTimeout(updateButtonVisibility, 100);
+    
+    // Update on window resize
+    window.addEventListener('resize', function() {
+        setTimeout(updateButtonVisibility, 100);
+    });
+})();
+</script>
