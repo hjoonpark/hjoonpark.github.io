@@ -1018,6 +1018,44 @@ td[colspan="2"] .table-contents .tb-td-right {
     font-weight: 400;
 }
 
+/* Nested sub-item (e.g. exchange program under parent degree) */
+.xp-sub-item {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.xp-sub-logo {
+    flex: 0 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 2px;
+}
+
+.xp-sub-logo img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    border-radius: 6px;
+    display: block;
+}
+
+.xp-sub-body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.xp-sub-body .xp-title {
+    font-size: 0.95rem;
+}
+
+.xp-sub-body .xp-sub {
+    font-size: 0.9rem;
+}
+
 .xp-desc .project-image {
     width: 100%;
     max-width: 100%;
