@@ -9,14 +9,19 @@
             <tbody>
                 <tr>
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/otherwork/3d-sim-super-res.gif" alt="3D Simulation Super-Resolution">
+                        <img class="img-zoom" src="src/otherwork/3d-sim-super-res.gif"
+                            alt="3D Simulation Super-Resolution">
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">3D Simulation Super-Resolution</span>
-                        <br>
-                        Official Pytorch implementation of the 3D Simulation Super-resolution framework.
-                        <br>
-                        <a href="https://github.com/hjoonpark/3d-sim-super-res" target="_blank">github</a>
+                        <ul class="code-desc">
+                            <li>Official PyTorch implementation of the 3D Simulation Super-resolution framework.</li>
+                            <li>Learns to enhance a fast, coarse simulation to match expensive high-resolution results.
+                            </li>
+                        </ul>
+                        <span class="paper-links">
+                            <a href="https://github.com/hjoonpark/3d-sim-super-res" target="_blank">github</a>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -25,40 +30,75 @@
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">DuoVAE</span>
-                        <br>
-                        VAE framework for property-controlled data generation.
-                        <br>
-                        <a href="https://github.com/hjoonpark/duovae" target="_blank">github</a>
+                        <ul class="code-desc">
+                            <li>Official PyTorch implementation of DuoVAE, a dual-VAE framework.</li>
+                            <li>Uses an auxiliary VAE to probabilistically link properties to a controllable latent
+                                space.</li>
+                            <li>Produces diverse, realistic outputs, stays robust to noisy labels, and requires only two
+                                standard VAEs (no complex constraints or special training tricks).</li>
+                        </ul>
+                        <span class="paper-links">
+                            <a href="https://github.com/hjoonpark/duovae" target="_blank">github</a>
+                            |
+                            <a href="https://doi.org/10.1016/j.media.2023.102961" target="_blank">paper</a>
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/otherwork/centerline_extraction.jpg" alt="Collagen Fiber Centerline Extraction">
+                        <img class="img-zoom" src="src/papers/imgs/stage2.jpeg"
+                            alt="Collagen Fiber Centerline Extraction">
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Collagen Fiber Centerline Extraction Network</span>
-                        <br>
-                        Training of the collagen fiber centerline extract network (Stage I, II, and III).
-                        <br>
-                        <a href="https://github.com/hjoonpark/collagen-fiber-centerline-extraction" target="_blank">github</a>
+                        <ul class="code-desc">
+                            <li>Synthesizes realistic collagen fiber images from centerline masks.</li>
+                            <li>Produces diverse synthetic image–mask training pairs to overcome the shortage of
+                                large-scale manual annotations.</li>
+                        </ul>
+                        <span class="paper-links">
+                            <a href="https://github.com/hjoonpark/collagen-fiber-centerline-extraction"
+                                target="_blank">github</a>
+                            |
+                            <a href="https://doi.org/10.1016/j.media.2023.102961" target="_blank">paper</a>
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/otherwork/bundle_adjustment_v2.gif" alt="Multi-Camera Calibration">
+                        <img class="img-zoom" src="src/otherwork/centerline_extraction.jpg"
+                            alt="Collagen Fiber Extraction and Analysis">
+                    </td>
+                    <td class="tb-td-right">
+                        <span class="paper-title">Collagen Fiber Extraction and Analysis in Cancer Tissue
+                            Microenvironment</span>
+                        <ul class="code-desc">
+                            <li>Trained on VAE-enriched synthetic data to extract collagen fiber centerlines from SHG
+                                microscopy images.</li>
+                            <li>Evaluated on breast, pancreas, and kidney cancer tissue.</li>
+                        </ul>
+                        <span class="paper-links">
+                            <a href="https://github.com/uw-loci/collagen-fiber-metrics" target="_blank">github</a>
+                            |
+                            <a href="https://doi.org/10.1016/j.media.2023.102961" target="_blank">paper</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tb-td-left">
+                        <img class="img-zoom" src="src/otherwork/bundle_adjustment_v2.gif"
+                            alt="Multi-Camera Calibration">
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Multi-Camera Calibration</span>
-                        <br>
-                        Calibrates multiple cameras using a planar calibration checkerboard through five main steps:
-                        <ol style="padding-left:2em; margin-top:0.25em; margin-bottom: 0.25em;">
-                            <li>detect checkerboard corners,</li>
-                            <li>remove outlier corners from the previous step (VAE, variational auto-encoder),</li>
-                            <li>estimate initial camera parameters and world points,</li>
-                            <li>refine the initial estimates (bundle adjustment),</li>
-                            <li>optionally, analyze the calibration result.</li>
-                        </ol>
-                        <a href="https://github.com/hjoonpark/MultiCamCalib" target="_blank">github</a>
+                        <ul class="code-desc">
+                            <li>Calibrates multiple cameras using a planar checkerboard.</li>
+                            <li>Automated corner detection with VAE-based outlier removal.</li>
+                            <li>Initial parameter estimation followed by bundle adjustment refinement.</li>
+                        </ul>
+                        <span class="paper-links">
+                            <a href="https://github.com/hjoonpark/MultiCamCalib" target="_blank">github</a>
+                        </span>
                     </td>
                 </tr>
             </tbody>

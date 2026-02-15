@@ -596,12 +596,39 @@ td[colspan="2"] .table-contents .tb-td-right {
     line-height: 1.3;
 }
 
-.tb-td-right .paper-title+* {
+.tb-td-right .paper-title+*:not(.code-desc) {
     display: inline;
 }
 
 .tb-td-right .paper-title {
     margin-bottom: 0;
+}
+
+.paper-desc {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color-light);
+}
+
+.paper-links {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.92rem;
+}
+
+.code-desc {
+    padding-left: 2em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-color-light);
+}
+
+.code-desc li {
+    margin-bottom: 2px;
 }
 
 .my-author {
@@ -787,54 +814,42 @@ td[colspan="2"] .table-contents .tb-td-right {
 .pub-toggle-btn-global {
     appearance: none;
     background-color: #ffffff;
-    border: 1px solid #e1e8ed;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(0, 0, 0, 0.04);
+    border: 1px solid #d0d5db;
+    border-radius: 4px;
+    box-shadow: none;
     box-sizing: border-box;
-    color: #4a5568;
+    color: #5a6370;
     cursor: pointer;
     display: inline-block;
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 0.82rem;
     font-weight: 500;
-    line-height: 1.5;
-    letter-spacing: 0.01em;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
     list-style: none;
-    padding: 5px 10px;
+    padding: 3px 10px;
     margin: 0;
     position: relative;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
     vertical-align: middle;
     white-space: nowrap;
-    word-wrap: break-word;
-    width: auto;
-    max-width: none;
-    min-width: 0;
-    overflow: visible;
-    flex-shrink: 0;
-    flex-grow: 0;
-    flex-basis: auto;
 }
 
 .pub-toggle-btn:hover,
 .pub-toggle-btn-global:hover {
-    background-color: var(--blue);
-    border-color: var(--blue);
-    color: #ffffff;
-    box-shadow: 0 3px 6px rgba(0, 102, 204, 0.25), 0 2px 4px rgba(0, 102, 204, 0.15);
+    background-color: #f0f2f5;
+    border-color: #a0a8b4;
+    color: #333;
     text-decoration: none;
-    transform: translateY(-1px);
 }
 
 .pub-toggle-btn:active,
 .pub-toggle-btn-global:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    background-color: #0052a3;
-    border-color: #0052a3;
+    background-color: #e8eaed;
+    border-color: #a0a8b4;
 }
 
 .pub-toggle-btn:disabled {
@@ -848,12 +863,12 @@ td[colspan="2"] .table-contents .tb-td-right {
 .pub-toggle-btn:focus,
 .pub-toggle-btn-global:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0 2px rgba(160, 168, 180, 0.25);
 }
 
 .pub-toggle-btn:focus:not(:focus-visible),
 .pub-toggle-btn-global:focus:not(:focus-visible) {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
 }
 
 .pub-toggle-btn:before {
@@ -865,21 +880,25 @@ td[colspan="2"] .table-contents .tb-td-right {
 }
 
 .pub-toggle-content {
-    padding: 14px 16px;
-    background-color: #f5f6f7;
-    border-top: none;
-    margin-top: 0;
+    padding: 14px 18px 14px 20px;
+    background: #f6f7f9;
+    border-left: 3px solid #a0a8b4;
+    border-radius: 0 3px 3px 0;
+    margin: 2px 0 6px 0;
     position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 .pub-toggle-content::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
+    left: 3px;
     right: 0;
     height: 1px;
-    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.3) 8%, rgba(0, 0, 0, 0.3) 92%, transparent 100%);
+    background: rgba(0, 0, 0, 0.04);
     pointer-events: none;
 }
 
@@ -889,14 +908,18 @@ td[colspan="2"] .table-contents .tb-td-right {
 
 .pub-toggle-content ul {
     margin: 0;
-    padding-left: 1.5em;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    padding-left: 1.6em;
+    font-size: 0.93rem;
+    line-height: 1.65;
     color: var(--text-color-light);
 }
 
 .pub-toggle-content ul li {
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+}
+
+.pub-toggle-content ul li::marker {
+    color: #9aa3ae;
 }
 
 .pub-toggle-content ul li:last-child {

@@ -1,260 +1,260 @@
 <!DOCTYPE HTML>
 <html lang="en">
-    
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/tooltip.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <link rel="icon" type="favicon.ico" href="favicon.ico?v=5">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/tooltip.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <link rel="icon" type="favicon.ico" href="favicon.ico?v=5">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171067365-1"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171067365-1"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-    <title>Hyojoon Park | Academic Website</title>
+  <title>Hyojoon Park | Academic Website</title>
 </head>
 
 <body>
-    <div id="header-bar">
-    </div>
-    <div id="div-main">
+  <div id="header-bar">
+  </div>
+  <div id="div-main">
     <table id="table-main">
-        <tbody>
-            <!-- INTRO -->
-            <tr id="row-intro">
-            </tr>
+      <tbody>
+        <!-- INTRO -->
+        <tr id="row-intro">
+        </tr>
 
-            <!-- RESEARCH -->
-            <tr id="row-research">
-            </tr>
+        <!-- RESEARCH -->
+        <tr id="row-research">
+        </tr>
 
-            <!-- EDUCATION -->
-            <tr class="row-breaker"></tr>
-            <tr id="row-education">
-            </tr>
+        <!-- EDUCATION -->
+        <tr class="row-breaker"></tr>
+        <tr id="row-education">
+        </tr>
 
-            <!-- WORK -->
-            <tr class="row-breaker"></tr>
-            <tr id="row-work">
-            </tr>
+        <!-- WORK -->
+        <tr class="row-breaker"></tr>
+        <tr id="row-work">
+        </tr>
 
-            <!-- PUBLICATIONS -->
-            <tr class="row-breaker"></tr>
-            <tr id="row-publication">
-            </tr>
+        <!-- PUBLICATIONS -->
+        <tr class="row-breaker"></tr>
+        <tr id="row-publication">
+        </tr>
 
-            <!-- OTHER WORK -->
-            <tr class="row-breaker"></tr>
-            <tr id="row-otherwork">
-            </tr>
-            
-            <tr class="row-breaker"></tr>
+        <!-- OTHER WORK -->
+        <tr class="row-breaker"></tr>
+        <tr id="row-otherwork">
+        </tr>
 
-            <!-- APP DEV -->
-            <tr id="row-appdev">
-            </tr>
-            
-            <tr class="row-breaker"></tr>
+        <tr class="row-breaker"></tr>
 
-            <!-- DOC -->
-            <tr id="row-doc">
-            </tr>
+        <!-- APP DEV -->
+        <tr id="row-appdev">
+        </tr>
 
-            <tr class="row-breaker"></tr>
+        <tr class="row-breaker"></tr>
 
-            <!-- YOUTUBE -->
-            <tr id="row-youtube">
-            </tr>
-        </tbody>
+        <!-- DOC -->
+        <tr id="row-doc">
+        </tr>
+
+        <tr class="row-breaker"></tr>
+
+        <!-- YOUTUBE -->
+        <tr id="row-youtube">
+        </tr>
+      </tbody>
     </table>
-    </div>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
-    <script src="/js/index.js"></script>
-    <script>
-        $(function () {
-          // Generic loader: if the partial contains <tr>, replace the placeholder row.
-          // Otherwise, inject the HTML as cells inside the existing <tr>.
-          function insertRow(rowId, url, afterInsert) {
-            $.get(url, function (html) {
-              var trimmed = (html || "").trim();
-              var hasTR = /<\s*tr[\s>]/i.test(trimmed);    // any <tr ...> in the fragment?
-              var $row = $("#" + rowId);
-      
-              if (hasTR) {
-                // The partial returns one or more <tr> rows -> swap the placeholder row.
-                $row.replaceWith(trimmed);
-              } else {
-                // The partial returns only <td> cells -> keep the row and inject cells.
-                $row.html(trimmed);
-              }
-      
-              if (typeof afterInsert === "function") afterInsert();
-            });
-          }
-      
-          // Load all sections
-          insertRow("row-intro",        "intro.html");
-          insertRow("row-education",    "education.html");
-          insertRow("row-research",     "research.html");
-          insertRow("row-work",         "work.html");
-          insertRow("row-otherwork",    "otherwork.html");
-          insertRow("row-appdev",       "appdev.html");
-          insertRow("row-youtube",     "youtube.html");
-      
-          // Publications needs its expand/collapse wiring after load
-          insertRow("row-publication",  "publication.html", function () {
-            // After the content is loaded, attach the event listeners
-            $(".pub-toggle-btn").off("click").on("click", function () {
-              let $btn = $(this);
-              let $content = $($btn.closest('tr').next('tr').find('.pub-toggle-content'));
-              let isToggled = $btn.data('toggled');
-              if (isToggled) {
-                $content.slideUp();
-                $btn.data('toggled', false);
-              } else {
-                $content.slideDown();
-                $btn.data('toggled', true);
-              }
-              $btn.text($btn.data('toggled') ? "Collapse" : "Expand");
-            });
-      
-            // Global toggle
-            $(".pub-toggle-btn-global").off("click").on("click", function () {
-              let isToggled = $(this).data('toggled');
-              if (isToggled) {
-                $('.pub-toggle-content').slideUp();
-                $(this).data('toggled', false);
-                $('.pub-toggle-btn').data('toggled', false);
-              } else {
-                $('.pub-toggle-content').slideDown();
-                $(this).data('toggled', true);
-                $('.pub-toggle-btn').data('toggled', true);
-              }
-              let after = $(this).data('toggled');
-              $(".pub-toggle-btn").text(after ? "Collapse" : "Expand");
-              $(this).text(after ? "Collapse all" : "Expand all");
-            });
-      
-            $(".pub-toggle-btn-global").data('toggled', false);
-            $(".pub-toggle-btn").data('toggled', false);
-            $(".pub-toggle-btn-global").text('Expand all');
-            $(".pub-toggle-btn").text('Expand');
-            $('.pub-toggle-content').hide();
-          });
-          
-          // Add link previews to all links
-          function addLinkPreviews() {
-            $('a[href]').each(function() {
-              var $link = $(this);
-              // Skip if already has preview
-              if ($link.closest('.tooltip').length > 0 || $link.parent().hasClass('link-with-preview')) {
-                return;
-              }
-              // Skip links that already have a tooltip sibling
-              if ($link.siblings('.link-preview-tooltip, .tooltiptext-image').length > 0) {
-                return;
-              }
-              // Skip video links that already have a thumbnail image inside them
-              if ($link.hasClass('video-link') || $link.find('img.thumbnail').length > 0) {
-                return;
-              }
-              
-              var href = $link.attr('href');
-              
-              if (!href) return;
-              
-              // Check if it's an image
-              var imageExts = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
-              if (imageExts.test(href)) {
-                var $wrapper = $('<span class="link-with-preview"></span>');
-                var $tooltip = $('<span class="link-preview-tooltip"><img src="' + href + '" alt="Preview"></span>');
-                $link.wrap($wrapper);
-                $link.after($tooltip);
-              }
-              // Check if it's a YouTube video
-              else if (/youtube\.com|youtu\.be/i.test(href)) {
-                var videoId = '';
-                // Extract video ID from various YouTube URL formats
-                var match;
-                
-                // Pattern 1: youtu.be/VIDEO_ID or youtu.be/VIDEO_ID?params
-                if (match = href.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/)) {
-                  videoId = match[1];
-                }
-                // Pattern 2: youtube.com/watch?v=VIDEO_ID
-                else if (match = href.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/)) {
-                  videoId = match[1];
-                }
-                // Pattern 3: youtube.com/embed/VIDEO_ID
-                else if (match = href.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/)) {
-                  videoId = match[1];
-                }
-                // Pattern 4: youtube.com/v/VIDEO_ID
-                else if (match = href.match(/youtube\.com\/v\/([a-zA-Z0-9_-]{11})/)) {
-                  videoId = match[1];
-                }
-                
-                if (videoId && videoId.length === 11) {
-                  var $wrapper = $('<span class="link-with-preview"></span>');
-                  var imgSrc = 'https://img.youtube.com/vi/' + videoId + '/maxresdefault.jpg';
-                  var fallbackSrc = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
-                  var $img = $('<img>').attr({
-                    'src': imgSrc,
-                    'alt': 'Video preview'
-                  }).on('error', function() {
-                    $(this).attr('src', fallbackSrc);
-                  });
-                  var $tooltip = $('<span class="link-preview-tooltip"></span>').append($img);
-                  $link.wrap($wrapper);
-                  $link.after($tooltip);
-                }
-              }
-              // Check if it's a video file
-              else if (/\.(mp4|webm|ogg|mov)$/i.test(href) || /vimeo\.com/i.test(href)) {
-                var $wrapper = $('<span class="link-with-preview"></span>');
-                var $tooltip = $('<span class="link-preview-tooltip link-text">Video: ' + (href.length > 50 ? href.substring(0, 50) + '...' : href) + '</span>');
-                $link.wrap($wrapper);
-                $link.after($tooltip);
-              }
-              // Check if it's a PDF
-              else if (/\.pdf$/i.test(href)) {
-                var $wrapper = $('<span class="link-with-preview"></span>');
-                var $tooltip = $('<span class="link-preview-tooltip link-text">PDF Document</span>');
-                $link.wrap($wrapper);
-                $link.after($tooltip);
-              }
-              // For external websites, show URL preview
-              else if (href.startsWith('http://') || href.startsWith('https://')) {
-                if (!href.includes(window.location.hostname) && !href.startsWith(window.location.origin)) {
-                  var $wrapper = $('<span class="link-with-preview"></span>');
-                  var displayUrl = href.replace(/^https?:\/\//, '').replace(/\/$/, '');
-                  var $tooltip = $('<span class="link-preview-tooltip link-text">' + (displayUrl.length > 40 ? displayUrl.substring(0, 40) + '...' : displayUrl) + '</span>');
-                  $link.wrap($wrapper);
-                  $link.after($tooltip);
-                }
-              }
-            });
-          }
-          
-          // Add previews after all content loads
-          setTimeout(addLinkPreviews, 800);
-          // Also add when new content is loaded
-          $(document).ajaxComplete(function() {
-            setTimeout(addLinkPreviews, 200);
-          });
-          
-          // Also run on DOM ready for any links already present
-          $(document).ready(function() {
-            setTimeout(addLinkPreviews, 1000);
-          });
-          
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+  <script src="/js/index.js"></script>
+  <script>
+    $(function () {
+      // Generic loader: if the partial contains <tr>, replace the placeholder row.
+      // Otherwise, inject the HTML as cells inside the existing <tr>.
+      function insertRow(rowId, url, afterInsert) {
+        $.get(url, function (html) {
+          var trimmed = (html || "").trim();
+          var hasTR = /<\s*tr[\s>]/i.test(trimmed);    // any <tr ...> in the fragment?
+          var $row = $("#" + rowId);
 
+          if (hasTR) {
+            // The partial returns one or more <tr> rows -> swap the placeholder row.
+            $row.replaceWith(trimmed);
+          } else {
+            // The partial returns only <td> cells -> keep the row and inject cells.
+            $row.html(trimmed);
+          }
+
+          if (typeof afterInsert === "function") afterInsert();
         });
-    </script>
+      }
+
+      // Load all sections
+      insertRow("row-intro", "intro.html");
+      insertRow("row-education", "education.html");
+      insertRow("row-research", "research.html");
+      insertRow("row-work", "work.html");
+      insertRow("row-otherwork", "otherwork.html");
+      insertRow("row-appdev", "appdev.html");
+      insertRow("row-youtube", "youtube.html");
+
+      // Publications needs its expand/collapse wiring after load
+      insertRow("row-publication", "publication.html", function () {
+        // After the content is loaded, attach the event listeners
+        $(".pub-toggle-btn").off("click").on("click", function () {
+          let $btn = $(this);
+          let $content = $($btn.closest('tr').next('tr').find('.pub-toggle-content'));
+          let isToggled = $btn.data('toggled');
+          if (isToggled) {
+            $content.slideUp();
+            $btn.data('toggled', false);
+          } else {
+            $content.slideDown();
+            $btn.data('toggled', true);
+          }
+          $btn.text($btn.data('toggled') ? "Collapse" : "Expand");
+        });
+
+        // Global toggle
+        $(".pub-toggle-btn-global").off("click").on("click", function () {
+          let isToggled = $(this).data('toggled');
+          if (isToggled) {
+            $('.pub-toggle-content').slideUp();
+            $(this).data('toggled', false);
+            $('.pub-toggle-btn').data('toggled', false);
+          } else {
+            $('.pub-toggle-content').slideDown();
+            $(this).data('toggled', true);
+            $('.pub-toggle-btn').data('toggled', true);
+          }
+          let after = $(this).data('toggled');
+          $(".pub-toggle-btn").text(after ? "Collapse" : "Expand");
+          $(this).text(after ? "Collapse all" : "Expand all");
+        });
+
+        $(".pub-toggle-btn-global").data('toggled', true);
+        $(".pub-toggle-btn").data('toggled', true);
+        $(".pub-toggle-btn-global").text('Collapse all');
+        $(".pub-toggle-btn").text('Collapse');
+        $('.pub-toggle-content').show();
+      });
+
+      // Add link previews to all links
+      function addLinkPreviews() {
+        $('a[href]').each(function () {
+          var $link = $(this);
+          // Skip if already has preview
+          if ($link.closest('.tooltip').length > 0 || $link.parent().hasClass('link-with-preview')) {
+            return;
+          }
+          // Skip links that already have a tooltip sibling
+          if ($link.siblings('.link-preview-tooltip, .tooltiptext-image').length > 0) {
+            return;
+          }
+          // Skip video links that already have a thumbnail image inside them
+          if ($link.hasClass('video-link') || $link.find('img.thumbnail').length > 0) {
+            return;
+          }
+
+          var href = $link.attr('href');
+
+          if (!href) return;
+
+          // Check if it's an image
+          var imageExts = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
+          if (imageExts.test(href)) {
+            var $wrapper = $('<span class="link-with-preview"></span>');
+            var $tooltip = $('<span class="link-preview-tooltip"><img src="' + href + '" alt="Preview"></span>');
+            $link.wrap($wrapper);
+            $link.after($tooltip);
+          }
+          // Check if it's a YouTube video
+          else if (/youtube\.com|youtu\.be/i.test(href)) {
+            var videoId = '';
+            // Extract video ID from various YouTube URL formats
+            var match;
+
+            // Pattern 1: youtu.be/VIDEO_ID or youtu.be/VIDEO_ID?params
+            if (match = href.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/)) {
+              videoId = match[1];
+            }
+            // Pattern 2: youtube.com/watch?v=VIDEO_ID
+            else if (match = href.match(/youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/)) {
+              videoId = match[1];
+            }
+            // Pattern 3: youtube.com/embed/VIDEO_ID
+            else if (match = href.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/)) {
+              videoId = match[1];
+            }
+            // Pattern 4: youtube.com/v/VIDEO_ID
+            else if (match = href.match(/youtube\.com\/v\/([a-zA-Z0-9_-]{11})/)) {
+              videoId = match[1];
+            }
+
+            if (videoId && videoId.length === 11) {
+              var $wrapper = $('<span class="link-with-preview"></span>');
+              var imgSrc = 'https://img.youtube.com/vi/' + videoId + '/maxresdefault.jpg';
+              var fallbackSrc = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
+              var $img = $('<img>').attr({
+                'src': imgSrc,
+                'alt': 'Video preview'
+              }).on('error', function () {
+                $(this).attr('src', fallbackSrc);
+              });
+              var $tooltip = $('<span class="link-preview-tooltip"></span>').append($img);
+              $link.wrap($wrapper);
+              $link.after($tooltip);
+            }
+          }
+          // Check if it's a video file
+          else if (/\.(mp4|webm|ogg|mov)$/i.test(href) || /vimeo\.com/i.test(href)) {
+            var $wrapper = $('<span class="link-with-preview"></span>');
+            var $tooltip = $('<span class="link-preview-tooltip link-text">Video: ' + (href.length > 50 ? href.substring(0, 50) + '...' : href) + '</span>');
+            $link.wrap($wrapper);
+            $link.after($tooltip);
+          }
+          // Check if it's a PDF
+          else if (/\.pdf$/i.test(href)) {
+            var $wrapper = $('<span class="link-with-preview"></span>');
+            var $tooltip = $('<span class="link-preview-tooltip link-text">PDF Document</span>');
+            $link.wrap($wrapper);
+            $link.after($tooltip);
+          }
+          // For external websites, show URL preview
+          else if (href.startsWith('http://') || href.startsWith('https://')) {
+            if (!href.includes(window.location.hostname) && !href.startsWith(window.location.origin)) {
+              var $wrapper = $('<span class="link-with-preview"></span>');
+              var displayUrl = href.replace(/^https?:\/\//, '').replace(/\/$/, '');
+              var $tooltip = $('<span class="link-preview-tooltip link-text">' + (displayUrl.length > 40 ? displayUrl.substring(0, 40) + '...' : displayUrl) + '</span>');
+              $link.wrap($wrapper);
+              $link.after($tooltip);
+            }
+          }
+        });
+      }
+
+      // Add previews after all content loads
+      setTimeout(addLinkPreviews, 800);
+      // Also add when new content is loaded
+      $(document).ajaxComplete(function () {
+        setTimeout(addLinkPreviews, 200);
+      });
+
+      // Also run on DOM ready for any links already present
+      $(document).ready(function () {
+        setTimeout(addLinkPreviews, 1000);
+      });
+
+
+    });
+  </script>
 </body>
 
 </html>
