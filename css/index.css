@@ -8,10 +8,13 @@
     --text-color: #2c3e50;
     --text-color-light: #2f3f50;
     --border-color: #e1e8ed;
+    --profile-width: 96px; /* shared width: profile picture + dark-mode button */
+    --img-h-mobile: 200px;     /* GLOBAL knob: MAX thumbnail height on narrow/phone screens (keeps aspect ratio) */
+    --img-min-h-mobile: 120px; /* GLOBAL knob: MIN thumbnail height on narrow/phone screens (keeps aspect ratio) */
+    --img-h-desktop: 190px;    /* GLOBAL knob: thumbnail SIZE on wide/desktop screens (height in px; column width scales with it, so the whole image grows, aspect ratio kept) */
     --shadow-sm: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
     --shadow-md: rgba(0, 0, 0, 0.12) 0px 4px 8px 0px, rgba(0, 0, 0, 0.08) 0px 2px 4px 0px;
     --shadow-lg: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px, rgba(0, 0, 0, 0.1) 0px 4px 8px 0px;
-    --shadow-xs: rgba(0, 0, 0, .06) 0px 0px 0px 1px;
 }
 
 /* ============================================
@@ -19,7 +22,7 @@
    ============================================ */
 html {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 1em;
+    font-size: 0.85em; /* GLOBAL font-size knob — scales the whole site */
     font-weight: 400;
     line-height: 1.6;
     -webkit-text-size-adjust: 100%;
@@ -47,7 +50,8 @@ body {
 html,
 body {
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden; /* fallback for browsers without clip support */
+    overflow-x: clip;   /* prevents horizontal scroll WITHOUT breaking position:sticky */
     box-sizing: border-box;
 }
 
@@ -81,22 +85,21 @@ a:focus {
     border-radius: 2px;
 }
 
-.disabled {
-    pointer-events: none;
-}
-
 /* ============================================
    Layout
    ============================================ */
 #header-bar {
     width: 100%;
-    height: 10px;
+    height: 5px;
     background-color: var(--red);
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 #div-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
     width: 90%;
     max-width: 1005px;
     border: 0;
@@ -104,15 +107,97 @@ a:focus {
     border-collapse: separate;
     margin-right: auto;
     margin-left: auto;
-    padding: 24px 10px 32px;
+    padding: 8px 8px 32px;
     background-color: var(--bg-color);
 }
 
-.row-breaker {
-    height: 20px;
+/* ---- Profile sidebar: narrow left column on desktop, centered block on mobile ---- */
+#profile-sidebar {
+    flex: 0 0 232px;
+    align-self: flex-start;
+    position: sticky;
+    top: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-#row-intro,
+#content-main {
+    flex: 1 1 auto;
+    min-width: 0; /* let wide tables/code shrink instead of forcing overflow */
+}
+
+.profile-card {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: var(--shadow-sm);
+    padding: 22px 16px 20px;
+    box-sizing: border-box;
+}
+
+#profile-sidebar .img-profile {
+    display: block;
+    max-width: var(--profile-width);
+    margin: 0 auto 8px;
+}
+
+#profile-sidebar #my-name {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.profile-email {
+    color: var(--text-color-light);
+    font-size: 1em;
+    margin-bottom: 4px;
+    word-break: break-word;
+}
+
+#profile-sidebar .intro-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 0px;
+    font-size: 1.25rem; /* controls the icon glyph size */
+}
+
+#profile-sidebar .intro-links .tooltip {
+    margin: 0;
+}
+
+#profile-sidebar .intro-links a {
+    color: var(--text-color-light);
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+}
+
+#profile-sidebar .intro-links a:hover {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+/* hover label under each icon (Google Scholar is wide -> keep it on one line).
+   Use max-content, not auto: these tooltips are absolutely positioned inside a
+   very narrow icon wrapper, so `width:auto` shrink-to-fits to the icon width and
+   the (white) label spills onto the page, invisible. max-content sizes to the text. */
+#profile-sidebar .intro-links .tooltiptext-bottom {
+    width: -webkit-max-content;
+    width: max-content;
+    max-width: 160px;
+    white-space: nowrap;
+    margin-left: 0;
+    transform: translateX(-50%);
+    font-size: 1rem; /* normal body-text size (not the enlarged 1.25rem icon size) */
+}
+
+.row-breaker {
+    height: 16px;
+}
+
 #row-publication,
 #row-otherwork,
 #row-research,
@@ -199,48 +284,38 @@ table tr td[colspan="2"] {
 }
 
 table td.header {
-    font-size: 1.5em;
+    font-size: 1.2rem; /* match the name (#my-name) size */
     font-variant: small-caps;
-    border-bottom: 2px solid var(--border-color);
+    border-top: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     letter-spacing: .06em;
-    padding: 10px 16px 8px;
+    padding: 4px 16px 4px;
     background-color: #fff;
     font-weight: 600;
-    position: relative;
+    position: relative; /* anchor for the absolutely-positioned toggle button */
     vertical-align: middle;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    gap: 12px;
-    min-width: 0;
-    overflow: hidden;
+    /* IMPORTANT: do NOT use display:flex/grid here. A flex/grid <td> is demoted
+       from a table cell, which breaks colspan="2" and makes the header render at
+       half width. Keep it a plain table-cell so colspan spans the full row. */
 }
 
 /* Ensure button in header doesn't expand - override any width rules */
 table td.header button,
 table td.header .pub-toggle-btn-global {
-    flex-shrink: 0 !important;
-    flex-grow: 0 !important;
-    flex-basis: auto !important;
     width: auto !important;
     min-width: 0 !important;
     max-width: none !important;
     display: inline-block !important;
-    align-self: center;
 }
 
+/* Toggle button pinned to the right and vertically centered, no flex on the cell */
 table td.header .pub-toggle-btn-global {
-    float: none;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
     margin: 0;
-    vertical-align: middle;
-    margin-top: 0;
-    flex-shrink: 0 !important;
-    flex-grow: 0 !important;
-    flex-basis: auto !important;
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    font-size: 1rem; /* root-relative so the header's 1.2rem doesn't enlarge it; matches .pub-toggle-btn */
 }
 
 .table-contents {
@@ -317,7 +392,7 @@ table td:has(.table-contents) {
     right: 0;
     width: 100%;
     height: 1px;
-    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.3) 8%, rgba(0, 0, 0, 0.3) 92%, transparent 100%);
+    background: rgba(0, 0, 0, 0.15);
     pointer-events: none;
     z-index: 10;
 }
@@ -387,15 +462,11 @@ table td:has(.table-contents) {
     padding: 14px 16px;
 }
 
-.td-right {
-    padding: 14px 16px 14px 0;
-}
-
 .tb-td-left,
 .tb-td-right {
-    height: 220px;
-    min-height: 220px;
-    max-height: 220px;
+    height: var(--img-h-desktop);
+    min-height: var(--img-h-desktop);
+    max-height: var(--img-h-desktop);
     vertical-align: top;
     padding-top: 6px;
     padding-bottom: 6px;
@@ -403,9 +474,10 @@ table td:has(.table-contents) {
 }
 
 .tb-td-left {
-    width: 30% !important;
-    max-width: 30% !important;
-    min-width: 30% !important;
+    /* width scales with the height knob so the whole thumbnail grows together */
+    width: calc(var(--img-h-desktop) * 1.6) !important;
+    max-width: calc(var(--img-h-desktop) * 1.6) !important;
+    min-width: calc(var(--img-h-desktop) * 1.6) !important;
     padding-left: 0;
     padding-right: 2px;
     padding-top: 6px;
@@ -427,12 +499,12 @@ table td:has(.table-contents) {
 }
 
 .tb-td-right {
-    width: 70% !important;
-    max-width: 70% !important;
-    min-width: 70% !important;
+    width: auto !important;      /* take whatever the image column leaves */
+    max-width: none !important;
+    min-width: 0 !important;
     padding: 14px 16px 14px 12px;
     color: var(--text-color-light);
-    font-size: 0.95rem;
+    font-size: 1em;
     line-height: 1.6;
     font-weight: 400;
     word-wrap: break-word;
@@ -521,7 +593,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 .img-placeholder-with-logo {
     width: 100%;
     height: 100%;
-    min-height: 220px;
+    min-height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -568,28 +640,8 @@ td[colspan="2"] .table-contents .tb-td-right {
     margin-left: 0;
 }
 
-.profile-table {
-    min-width: 160px;
-    float: right;
-    margin-left: auto;
-    margin-right: 0;
-}
-
-@media (max-width: 768px) {
-    .profile-table {
-        float: none;
-        margin: 16px auto 0;
-        width: auto;
-        display: table;
-    }
-}
-
-.profile-table td {
-    text-align: center;
-}
-
 .paper-title {
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 700;
     display: block;
     margin-bottom: 0;
@@ -604,25 +656,17 @@ td[colspan="2"] .table-contents .tb-td-right {
     margin-bottom: 0;
 }
 
-.paper-desc {
-    display: block;
-    margin-top: 6px;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--text-color-light);
-}
-
 .paper-links {
     display: block;
     margin-top: 8px;
-    font-size: 0.92rem;
+    font-size: 1em;
 }
 
 .code-desc {
     padding-left: 2em;
     margin-top: 0.25em;
     margin-bottom: 0.25em;
-    font-size: 0.95rem;
+    font-size: 1em;
     line-height: 1.5;
     color: var(--text-color-light);
 }
@@ -646,16 +690,22 @@ td[colspan="2"] .table-contents .tb-td-right {
 .conference {
     font-style: italic;
     color: var(--text-color-light);
-    font-size: 0.95rem;
+    font-size: 1em;
     font-weight: 400;
     display: block;
     margin-top: 4px;
-    margin-bottom: 4px;
+    margin-bottom: 0;
+}
+
+/* .conference is display:block, so it already ends the line; the <br> right after it
+   only added an empty line before the paper/video links. Drop it (all entries). */
+.conference + br {
+    display: none;
 }
 
 @media (max-width: 768px) {
     .conference {
-        font-size: 0.9rem;
+        font-size: 1em;
         line-height: 1.4;
     }
 }
@@ -690,24 +740,6 @@ td[colspan="2"] .table-contents .tb-td-right {
 /* ============================================
    Images
    ============================================ */
-.logo {
-    height: 45px;
-    margin: 0 4px;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.logo-2 {
-    height: 20px;
-    margin: 0 4px;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.logo:hover,
-.logo-2:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
 .img-zoom,
 .img-none {
     width: 100%;
@@ -822,7 +854,7 @@ td[colspan="2"] .table-contents .tb-td-right {
     cursor: pointer;
     display: inline-block;
     font-family: inherit;
-    font-size: 0.82rem;
+    font-size: 1em;
     font-weight: 500;
     line-height: 1.4;
     letter-spacing: 0.02em;
@@ -909,7 +941,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 .pub-toggle-content ul {
     margin: 0;
     padding-left: 1.6em;
-    font-size: 0.93rem;
+    font-size: 1em;
     line-height: 1.65;
     color: var(--text-color-light);
 }
@@ -932,18 +964,12 @@ td[colspan="2"] .table-contents .tb-td-right {
 .section-card {
     border: 0;
     border-radius: 0;
-    padding: 14px 16px;
+    padding: 0px 16px;
     background: #fff;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
     display: block;
-}
-
-.section-title {
-    font-weight: 700;
-    font-size: 1.05rem;
-    margin: 4px 0 12px;
 }
 
 /* ============================================
@@ -958,7 +984,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 .xp-item {
     display: flex;
     gap: 12px;
-    padding: 14px 0;
+    padding: 8px 0;
 }
 
 .xp-item+.xp-item {
@@ -973,7 +999,7 @@ td[colspan="2"] .table-contents .tb-td-right {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 8%, rgba(0, 0, 0, 0.15) 92%, transparent 80%);
+    background: rgba(0, 0, 0, 0.15);
     pointer-events: none;
 }
 
@@ -1021,14 +1047,14 @@ td[colspan="2"] .table-contents .tb-td-right {
 .xp-sub {
     margin: 0 0 6px;
     color: var(--text-color-light);
-    font-size: 0.95rem;
+    font-size: 1em;
     font-weight: 400;
 }
 
 .xp-meta {
     margin: 0 0 6px;
     color: #888;
-    font-size: 0.88rem;
+    font-size: 1em;
     line-height: 1.5;
     font-weight: 400;
 }
@@ -1036,7 +1062,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 .xp-desc {
     margin: 0;
     color: var(--text-color-light);
-    font-size: 0.95rem;
+    font-size: 1em;
     line-height: 1.6;
     font-weight: 400;
 }
@@ -1072,14 +1098,14 @@ td[colspan="2"] .table-contents .tb-td-right {
 }
 
 .xp-sub-body .xp-title {
-    font-size: 0.95rem;
+    font-size: 1em;
 }
 
 .xp-sub-body .xp-sub {
-    font-size: 0.9rem;
+    font-size: 1em;
 }
 
-.xp-desc .project-image {
+.project-image {
     width: 100%;
     max-width: 100%;
     height: auto;
@@ -1095,20 +1121,20 @@ td[colspan="2"] .table-contents .tb-td-right {
     box-sizing: border-box;
 }
 
-.xp-desc .project-image:hover {
+.project-image:hover {
     transform: scale(1.05);
     box-shadow: rgba(0, 0, 0, 0.22) 0px 4px 10px 0px, rgba(0, 0, 0, 0.15) 0px 2px 6px 0px;
 }
 
 @media (max-width: 768px) {
-    .xp-desc .project-image {
+    .project-image {
         width: 100%;
         max-width: 100%;
     }
 }
 
 @media (max-width: 520px) {
-    .xp-desc .project-image {
+    .project-image {
         width: 100%;
         max-width: 100%;
     }
@@ -1122,117 +1148,24 @@ td[colspan="2"] .table-contents .tb-td-right {
 }
 
 /* ============================================
-   Education List (matches LinkedIn style)
-   ============================================ */
-.ed-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.ed-item {
-    display: flex;
-    gap: 12px;
-    padding: 14px 0;
-}
-
-.ed-item+.ed-item {
-    border-top: none;
-    position: relative;
-}
-
-.ed-item+.ed-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.3) 8%, rgba(0, 0, 0, 0.3) 92%, transparent 100%);
-    pointer-events: none;
-}
-
-.ed-item:hover {
-    background-color: rgba(0, 0, 0, 0.008);
-    border-radius: 2px;
-    margin: 0 -4px;
-    padding-left: 4px;
-    padding-right: 4px;
-    transition: background-color 0.15s ease;
-}
-
-.ed-logo {
-    flex: 0 0 44px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 6px;
-}
-
-.ed-logo img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    border-radius: 8px;
-    display: block;
-}
-
-.ed-body {
-    flex: 1 1 auto;
-    min-width: 0;
-}
-
-.edu-degree {
-    font-weight: 700;
-    margin: 0 0 2px;
-    line-height: 1.25;
-}
-
-.edu-school {
-    margin: 0 0 6px;
-    color: var(--text-color-light);
-    font-size: 0.95rem;
-    font-weight: 400;
-}
-
-.edu-meta {
-    margin: 0 0 6px;
-    color: #888;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    font-weight: 400;
-}
-
-.edu-desc {
-    margin: 0;
-    color: var(--text-color-light);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    font-weight: 400;
-}
-
-/* ============================================
    Responsive Design
    ============================================ */
 @media (max-width: 768px) {
-    html {
-        font-size: 15px;
-    }
-
     #div-main {
+        display: block; /* stack sidebar above content on mobile */
         width: 98%;
         padding: 12px 8px 16px;
         max-width: 100%;
         box-sizing: border-box;
     }
 
-    .td-left {
-        padding: 12px;
-        display: block;
-        width: 100%;
+    #profile-sidebar {
+        position: static; /* undo sticky; content is already text-align:center */
+        width: auto;      /* full width -> same width as the section rows below */
+        margin: 0 0 4px;
     }
 
-    .td-right {
+    .td-left {
         padding: 12px;
         display: block;
         width: 100%;
@@ -1245,7 +1178,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 
     table td.header {
         padding: 10px 12px 8px;
-        font-size: 1.3em;
+        font-size: 1.2rem; /* match the name (#my-name) size */
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
@@ -1296,16 +1229,47 @@ td[colspan="2"] .table-contents .tb-td-right {
         padding-right: 8px;
         padding-bottom: 12px;
         width: 100% !important;
-        text-align: center;
+        text-align: center; /* center the thumbnail in the column */
     }
 
+    /* Size thumbnails to the image (not the full column) and cap the height.
+       max-height keeps the aspect ratio; --img-h-mobile (in :root) is the one knob. */
     .tb-td-left .img-zoom,
     .tb-td-left .img-none,
     .tb-td-left .thumbnail {
-        width: 100%;
+        display: inline-block;
+        width: auto;
         max-width: 100%;
+        height: auto;
+        max-height: var(--img-h-mobile);
+        min-height: var(--img-min-h-mobile);
         margin: 0;
-        max-height: 300px;
+        padding: 0;
+        object-fit: contain;
+        vertical-align: top;
+    }
+
+    /* On mobile this becomes the badge's positioning box, shrink-wrapped to the
+       (centered) image, so the conf-badge stays pinned to the image's corner. */
+    .thumb-wrap {
+        display: inline-block;
+        position: relative;
+        max-width: 100%;
+        vertical-align: top;
+    }
+
+    /* YouTube (video-link) thumbnails: the 3-class base rule forces 100%/100%,
+       so match its specificity here to cap the height (e.g. Two Minute Papers).
+       margin:0 auto centers it — the .video-link is inline-block, so text-align
+       can't center this block child. */
+    .tb-td-left .video-link .thumbnail {
+        display: block;
+        margin: 0 auto;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: var(--img-h-mobile);
+        min-height: var(--img-min-h-mobile);
         object-fit: contain;
     }
 
@@ -1318,7 +1282,6 @@ td[colspan="2"] .table-contents .tb-td-right {
 
     a,
     .xp-desc,
-    .edu-desc,
     .tb-td-right {
         word-break: break-word;
         overflow-wrap: anywhere;
@@ -1331,18 +1294,8 @@ td[colspan="2"] .table-contents .tb-td-right {
     .img-zoom,
     .img-none,
     .thumbnail {
-        width: 100%;
         max-width: 100%;
         min-width: 0;
-    }
-
-    .tb-td-left .img-zoom,
-    .tb-td-left .img-none,
-    .tb-td-left .thumbnail {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
     }
 
     .img-placeholder-with-logo {
@@ -1355,7 +1308,7 @@ td[colspan="2"] .table-contents .tb-td-right {
     }
 
     .paper-title {
-        font-size: 1.05em;
+        font-size: 1em;
         line-height: 1.3;
         display: block;
         margin-bottom: 4px;
@@ -1374,21 +1327,9 @@ td[colspan="2"] .table-contents .tb-td-right {
         margin: 0 2px;
     }
 
-    /* Better spacing for intro section on mobile */
-    #row-intro .td-left {
-        padding-bottom: 16px;
-    }
-
-    #row-intro .td-right {
-        padding-top: 0;
-    }
 }
 
 @media (max-width: 520px) {
-    html {
-        font-size: 14px;
-    }
-
     #div-main {
         width: 100%;
         padding: 10px 8px 14px;
@@ -1400,7 +1341,7 @@ td[colspan="2"] .table-contents .tb-td-right {
     }
 
     table td.header {
-        font-size: 1.2em;
+        font-size: 1.2rem; /* match the name (#my-name) size */
         padding: 10px 12px 8px;
         display: flex;
         flex-wrap: nowrap;
@@ -1409,8 +1350,7 @@ td[colspan="2"] .table-contents .tb-td-right {
         gap: 12px;
     }
 
-    .td-left,
-    .td-right {
+    .td-left {
         padding: 12px 10px;
     }
 
@@ -1420,47 +1360,40 @@ td[colspan="2"] .table-contents .tb-td-right {
 
     .tb-td-right {
         padding: 12px 10px;
-        font-size: 0.9rem;
+        font-size: 1em;
     }
 
-    .xp-logo,
-    .ed-logo {
+    .xp-logo {
         flex-basis: 36px;
         flex-shrink: 0;
     }
 
-    .xp-logo img,
-    .ed-logo img {
+    .xp-logo img {
         width: 32px;
         height: 32px;
     }
 
-    .xp-item,
-    .ed-item {
+    .xp-item {
         gap: 10px;
         padding: 12px 0;
         flex-wrap: nowrap;
     }
 
-    .xp-body,
-    .ed-body {
+    .xp-body {
         min-width: 0;
         width: 100%;
         flex: 1 1 auto;
     }
 
-    .xp-title,
-    .edu-degree {
-        font-size: 0.95rem;
+    .xp-title {
+        font-size: 1em;
         word-break: break-word;
         line-height: 1.3;
     }
 
     .xp-sub,
-    .xp-desc,
-    .edu-school,
-    .edu-desc {
-        font-size: 0.9rem;
+    .xp-desc {
+        font-size: 1em;
         word-break: break-word;
         line-height: 1.5;
     }
@@ -1476,19 +1409,13 @@ td[colspan="2"] .table-contents .tb-td-right {
         padding: 10px;
     }
 
-    .profile-table {
-        float: none;
-        margin: 12px auto 0;
-        width: auto;
-    }
-
     .img-profile {
         max-width: 100px;
     }
 
     .pub-toggle-btn,
     .pub-toggle-btn-global {
-        font-size: 0.9rem;
+        font-size: 1em;
         padding: 5px 10px;
         min-height: 36px;
         min-width: 0;
@@ -1502,13 +1429,6 @@ td[colspan="2"] .table-contents .tb-td-right {
         display: none !important;
     }
 
-    /* Better image sizing on small screens */
-    .tb-td-left .img-zoom,
-    .tb-td-left .img-none,
-    .tb-td-left .thumbnail {
-        max-height: 250px;
-    }
-
     .img-placeholder-with-logo {
         min-height: 180px;
     }
@@ -1520,10 +1440,6 @@ td[colspan="2"] .table-contents .tb-td-right {
 }
 
 @media (max-width: 400px) {
-    html {
-        font-size: 13px;
-    }
-
     #div-main {
         padding: 8px 6px 12px;
     }
@@ -1534,15 +1450,14 @@ td[colspan="2"] .table-contents .tb-td-right {
     }
 
     table td.header {
-        font-size: 1.1em;
+        font-size: 1.2rem; /* match the name (#my-name) size */
         padding: 8px 10px 6px;
         flex-wrap: nowrap;
         justify-content: flex-start;
         gap: 10px;
     }
 
-    .td-left,
-    .td-right {
+    .td-left {
         padding: 10px 8px;
     }
 
@@ -1552,7 +1467,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 
     .tb-td-right {
         padding: 10px 8px;
-        font-size: 0.88rem;
+        font-size: 1em;
     }
 
     .intro-links {
@@ -1570,35 +1485,26 @@ td[colspan="2"] .table-contents .tb-td-right {
     }
 
     .paper-title {
-        font-size: 0.95em;
+        font-size: 1em;
     }
 
-    .xp-title,
-    .edu-degree {
-        font-size: 0.9rem;
+    .xp-title {
+        font-size: 1em;
     }
 
     .xp-sub,
-    .xp-desc,
-    .edu-school,
-    .edu-desc {
-        font-size: 0.85rem;
+    .xp-desc {
+        font-size: 1em;
     }
 
     .pub-toggle-btn,
     .pub-toggle-btn-global {
-        font-size: 0.85rem;
+        font-size: 1em;
         padding: 5px 8px;
         min-height: 34px;
         min-width: 0;
         width: auto;
         max-width: none;
-    }
-
-    .tb-td-left .img-zoom,
-    .tb-td-left .img-none,
-    .tb-td-left .thumbnail {
-        max-height: 200px;
     }
 }
 
@@ -1614,6 +1520,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 
 .thumbnail-scroll-container {
     flex: 1;
+    min-width: 0; /* let overflow-x:auto scroll internally instead of pushing the strip past the viewport */
     padding: 16px;
     overflow-x: auto;
     overflow-y: hidden;
@@ -1680,7 +1587,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 
 .thumbnail-scroll-title {
     margin-top: 8px;
-    font-size: 0.875rem;
+    font-size: 1em;
     line-height: 1.4;
     color: var(--text-color);
     font-weight: 400;
@@ -1818,7 +1725,7 @@ td[colspan="2"] .table-contents .tb-td-right {
     }
 
     .thumbnail-scroll-title {
-        font-size: 0.813rem;
+        font-size: 1em;
         margin-top: 6px;
         max-width: 200px;
     }
@@ -1879,7 +1786,7 @@ td[colspan="2"] .table-contents .tb-td-right {
     }
 
     .thumbnail-scroll-title {
-        font-size: 0.75rem;
+        font-size: 1em;
         margin-top: 6px;
         max-width: 180px;
     }
@@ -1969,7 +1876,7 @@ table {
     .pub-toggle-btn,
     .pub-toggle-btn-global {
         padding: 6px 10px;
-        font-size: 0.95rem;
+        font-size: 1em;
         min-height: 44px;
         min-width: 0;
         width: auto;
@@ -1994,4 +1901,146 @@ table {
     .table-contents tr {
         padding: 4px 0;
     }
+}
+
+/* ============================================
+   News / Services list
+   ============================================ */
+.news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.news-list li {
+    display: flex;
+    gap: 14px;
+    padding: 8px 0;
+    align-items: baseline;
+}
+.news-list li + li {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.news-date {
+    flex: 0 0 auto;
+    min-width: 5em;
+    font-weight: 600;
+    color: var(--text-color-light);
+}
+
+/* ============================================
+   Conference badge on publication thumbnails
+   ============================================ */
+.tb-td-left { position: relative; }
+/* Badge+thumbnail wrapper. display:contents = no box on desktop, so the badge stays
+   positioned relative to the cell and the image fills the cell exactly as before.
+   The mobile media query turns it into a real positioning box (see above). */
+.thumb-wrap { display: contents; }
+.conf-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    background-color: #f9e6e7; /* solid light red (= .highlight color rendered on white) */
+    color: var(--red) !important;
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 1.3;
+    padding: 2px 7px;
+    border-radius: 0;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   Dark-mode toggle button (floats at the content's top-right; design only, not wired up)
+   ============================================ */
+/* Dark / light-mode toggle — a small round icon button that sits inline with the
+   social icons in the profile card, right after the CV link. Icon only. */
+#darkmode-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7em;
+    height: 1.7em;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background-color: #fff;
+    color: var(--text-color-light);
+    font-size: 0.88em; /* icon glyph sits just under the social-icon size */
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background-color .15s ease, color .15s ease, box-shadow .15s ease, border-color .15s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+#darkmode-btn:hover {
+    color: var(--blue);
+    box-shadow: var(--shadow-md);
+    border-color: var(--text-color-light);
+}
+
+/* ============================================
+   Dark mode (toggled by #darkmode-btn -> <html class="dark">)
+   ============================================ */
+html.dark {
+    --bg-color: #0d1117;         /* page background */
+    --text-color: #f0f3f6;       /* primary text (bright) */
+    --text-color-light: #c9d1da; /* secondary text (brightened for contrast) */
+    --border-color: #30363d;     /* borders / dividers */
+    --blue: #58a6ff;             /* links */
+}
+html.dark body { background-color: var(--bg-color); }
+
+/* hardcoded white surfaces -> dark card surface */
+html.dark .profile-card,
+html.dark .section-card,
+html.dark table tr td,
+html.dark table td.header,
+html.dark #row-publication,
+html.dark #row-otherwork,
+html.dark #row-research,
+html.dark #row-work,
+html.dark #row-education,
+html.dark #row-appdev,
+html.dark #row-doc,
+html.dark .pub-toggle-btn,
+html.dark .pub-toggle-btn-global,
+html.dark #darkmode-btn {
+    background-color: #161b22;
+}
+
+/* row dividers: black-based -> light on dark */
+html.dark .table-contents tr::after,
+html.dark .xp-item + .xp-item::before {
+    background: rgba(255, 255, 255, 0.12);
+}
+html.dark .news-list li + li { border-top-color: rgba(255, 255, 255, 0.1); }
+
+/* BUG FIX: collapse/expand panel had a hardcoded light bg + border */
+html.dark .pub-toggle-content {
+    background: #0d1117;              /* recessed vs the #161b22 card */
+    border-left-color: #30363d;
+    box-shadow: none;
+}
+html.dark .pub-toggle-content ul li::marker { color: #6e7681; }
+
+/* BUG FIX: collapse/expand toggle buttons had hardcoded light border/text */
+html.dark .pub-toggle-btn,
+html.dark .pub-toggle-btn-global {
+    border-color: var(--border-color);
+    color: var(--text-color-light);
+}
+html.dark .pub-toggle-btn:hover,
+html.dark .pub-toggle-btn-global:hover {
+    color: var(--text-color);
+    border-color: var(--text-color-light);
+}
+
+/* highlighted terms: lighten for the dark background */
+html.dark .highlight {
+    color: #ff9498;
+    background-color: rgba(197, 5, 12, 0.24);
 }

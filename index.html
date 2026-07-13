@@ -3,13 +3,16 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="css/index.css">
-  <link rel="stylesheet" href="css/tooltip.css">
+  <link rel="stylesheet" href="css/index.css?v=42">
+  <link rel="stylesheet" href="css/tooltip.css?v=42">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <link rel="icon" type="favicon.ico" href="favicon.ico?v=5">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Apply saved theme before render to avoid a flash. Default is LIGHT (OS setting is ignored). -->
+  <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171067365-1"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -20,55 +23,68 @@
   <div id="header-bar">
   </div>
   <div id="div-main">
-    <table id="table-main">
-      <tbody>
-        <!-- INTRO -->
-        <tr id="row-intro">
-        </tr>
+    <!-- PROFILE SIDEBAR (left column on desktop, centered block on mobile) -->
+    <aside id="profile-sidebar">
+      <div id="row-intro"></div>
+    </aside>
 
-        <!-- RESEARCH -->
-        <tr id="row-research">
-        </tr>
+    <main id="content-main">
+      <table id="table-main">
+        <tbody>
+          <!-- RESEARCH (About Me) -->
+          <tr id="row-research">
+          </tr>
 
-        <!-- EDUCATION -->
-        <tr class="row-breaker"></tr>
-        <tr id="row-education">
-        </tr>
+          <!-- NEWS -->
+          <!-- <tr class="row-breaker"></tr>
+          <tr id="row-news">
+          </tr> -->
 
-        <!-- WORK -->
-        <tr class="row-breaker"></tr>
-        <tr id="row-work">
-        </tr>
+          <!-- EDUCATION -->
+          <tr class="row-breaker"></tr>
+          <tr id="row-education">
+          </tr>
 
-        <!-- PUBLICATIONS -->
-        <tr class="row-breaker"></tr>
-        <tr id="row-publication">
-        </tr>
+          <!-- WORK -->
+          <tr class="row-breaker"></tr>
+          <tr id="row-work">
+          </tr>
 
-        <!-- OTHER WORK -->
-        <tr class="row-breaker"></tr>
-        <tr id="row-otherwork">
-        </tr>
+          <!-- PUBLICATIONS -->
+          <tr class="row-breaker"></tr>
+          <tr id="row-publication">
+          </tr>
 
-        <tr class="row-breaker"></tr>
+          <!-- SERVICES -->
+          <tr class="row-breaker"></tr>
+          <tr id="row-services">
+          </tr>
 
-        <!-- APP DEV -->
-        <tr id="row-appdev">
-        </tr>
+          <!-- OTHER WORK (Codes) -->
+          <tr class="row-breaker"></tr>
+          <tr id="row-otherwork">
+          </tr>
 
-        <tr class="row-breaker"></tr>
+          <tr class="row-breaker"></tr>
 
-        <!-- DOC -->
-        <tr id="row-doc">
-        </tr>
+          <!-- APP DEV -->
+          <tr id="row-appdev">
+          </tr>
 
-        <tr class="row-breaker"></tr>
+          <tr class="row-breaker"></tr>
 
-        <!-- YOUTUBE -->
-        <tr id="row-youtube">
-        </tr>
-      </tbody>
-    </table>
+          <!-- DOC -->
+          <tr id="row-doc">
+          </tr>
+
+          <tr class="row-breaker"></tr>
+
+          <!-- YOUTUBE -->
+          <tr id="row-youtube">
+          </tr>
+        </tbody>
+      </table>
+    </main>
   </div>
   <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
@@ -76,6 +92,25 @@
   <script src="/js/index.js"></script>
   <script>
     $(function () {
+      // Always fetch section partials fresh so a stale cached intro.html can't linger.
+      $.ajaxSetup({ cache: false });
+
+      // Dark / light mode toggle (icon only; the button lives in intro.html and is
+      // loaded via AJAX, so use a delegated click handler and render after it loads).
+      function renderDarkModeBtn() {
+        var dark = document.documentElement.classList.contains('dark');
+        $("#darkmode-btn").html(dark
+          ? '<i class="fas fa-sun"></i>'
+          : '<i class="fas fa-moon"></i>');
+        // hint shows the mode you'll switch to (matches the icon)
+        $("#darkmode-tip").text(dark ? 'Light mode' : 'Dark mode');
+      }
+      $(document).on('click', '#darkmode-btn', function () {
+        var dark = document.documentElement.classList.toggle('dark');
+        try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+        renderDarkModeBtn();
+      });
+
       // Generic loader: if the partial contains <tr>, replace the placeholder row.
       // Otherwise, inject the HTML as cells inside the existing <tr>.
       function insertRow(rowId, url, afterInsert) {
@@ -97,11 +132,13 @@
       }
 
       // Load all sections
-      insertRow("row-intro", "intro.html");
+      insertRow("row-intro", "intro.html", renderDarkModeBtn);
       insertRow("row-education", "education.html");
       insertRow("row-research", "research.html");
+      insertRow("row-news", "news.html");
       insertRow("row-work", "work.html");
       insertRow("row-otherwork", "otherwork.html");
+      insertRow("row-services", "services.html");
       insertRow("row-appdev", "appdev.html");
       insertRow("row-youtube", "youtube.html");
 

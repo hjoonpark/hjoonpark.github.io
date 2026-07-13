@@ -10,7 +10,7 @@
             <tbody>
                 <tr class="tr-pub-main">
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/papers/imgs/3dsuperres.jpg" alt="3D Simulation Super-resolution">
+                        <span class="thumb-wrap"><span class="conf-badge">SIGGRAPH Asia 2024</span><img class="img-zoom" src="src/papers/imgs/3dsuperres.jpg" alt="3D Simulation Super-resolution"></span>
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Near-realtime Facial Animation by Deep 3D Simulation
@@ -18,14 +18,11 @@
                         <span class="my-author">Hyojoon Park</span>, Sangeetha Grama Srinivasan, Matthew Cong, Doyub
                         Kim, Byungsoo Kim, Jonathan Swartz, Ken Museth, and Eftychios Sifakis
                         <br>
-                        <span class="conference">ACM Transactions on Graphics (TOG) 2024</span>
+                        <span class="conference">ACM Transactions on Graphics (Proc. SIGGRAPH Asia) 2024</span>
                         <br>
                         <a href="https://dl.acm.org/doi/full/10.1145/3670687" target="_blank">paper</a>
                         |
                         <a href="https://github.com/hjoonpark/3d-sim-super-res" target="_blank">github</a>
-                        |
-                        presented at <a href="https://asia.siggraph.org/2024/full-program/" target="_blank">SIGGRAPH
-                            ASIA 2024</a>
                         <br><button class="pub-toggle-btn"></button>
                     </td>
                 </tr>
@@ -33,10 +30,10 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>3D simulation super-resolution achieving high-resolution facial animation 115x
-                                    faster (at 18 FPS) than traditional method while maintaining similar quality.</li>
-                                <li>Enhances low-resolution simulations to high-resolution surfaces while generalizing
-                                    to unseen facial expressions, external forces, and dynamics.</li>
+                                <li>Achieves high-resolution facial animation 115× faster (18 FPS) than traditional
+                                    physics-based simulation, while maintaining comparable quality.</li>
+                                <li>Generalizes to unseen expressions, dynamics, and external forces, upsampling
+                                    low-resolution simulations to high-resolution surfaces without retraining.</li>
                             </ul>
                         </div>
                     </td>
@@ -47,7 +44,7 @@
                             <img src="https://img.youtube.com/vi/Y2JJylfbuKM/maxresdefault.jpg"
                                 alt="YouTube Video Thumbnail" class="thumbnail"
                                 onerror="this.onerror=null; this.src='https://img.youtube.com/vi/Y2JJylfbuKM/hqdefault.jpg';">
-                            <i class="fa fa-play play-icon"></i>
+                            <i class="fas fa-play play-icon"></i>
                         </a>
                     </td>
                     <td class="tb-td-right">
@@ -57,8 +54,8 @@
                 </tr>
                 <tr class="tr-pub-main">
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/papers/imgs/media2022.jpg"
-                            alt="Collagen Fiber Centerline Tracking">
+                        <span class="thumb-wrap"><span class="conf-badge">MedIA 2023</span><img class="img-zoom" src="src/papers/imgs/media2022.jpg"
+                            alt="Collagen Fiber Centerline Tracking"></span>
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Collagen Fiber Centerline Tracking in Fibrotic Tissue via Deep Neural
@@ -79,18 +76,17 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Proposes DuoVAE, a dual-VAE framework that probabilistically links an auxiliary VAE
-                                    to a controllable latent space, enabling robust property-controlled generation even
-                                    under noisy labels.</li>
-                                <li>Generates diverse synthetic training data for medical imaging, mitigating limited
-                                    annotated data for downstream deep learning.</li>
+                                <li>Addresses the scarcity of annotated medical images by generating diverse,
+                                    property-controllable synthetic training data, robust even under noisy labels.</li>
+                                <li>Introduces DuoVAE, a dual-VAE that controls target properties during generation,
+                                    enabling accurate collagen-fiber centerline tracking in fibrotic tissue.</li>
                             </ul>
                         </div>
                     </td>
                 </tr>
                 <tr class="tr-pub-main">
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/papers/imgs/tog21.JPG" alt="Capturing Detailed Deformations">
+                        <span class="thumb-wrap"><span class="conf-badge">SIGGRAPH 2021</span><img class="img-zoom" src="src/papers/imgs/tog21.JPG" alt="Capturing Detailed Deformations"></span>
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Capturing Detailed Deformations of Moving Human Bodies</span>
@@ -113,21 +109,18 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Introduces a novel motion capture system in a multi-camera setup using a specially
-                                    designed low-cost suit, enabling the accurate 3D reconstruction of a moving human
-                                    body.</li>
-                                <li>Uses deep neural networks and geometric algorithms for accurate corner detection,
-                                    labeling, and 3D reconstruction.</li>
-                                <li>Developed and deployed the multi-camera calibration framework enhanced by machine
-                                    learning-based anomaly corner detection.</li>
+                                <li>Reconstructs fine skin deformations of a moving body (e.g., from breathing and
+                                    shaking) using a low-cost patterned suit and multi-camera capture.</li>
+                                <li>Tracks 1,000+ uniquely labeled body points using occlusion-resilient deep networks
+                                    and a robust multi-camera calibration pipeline.</li>
                             </ul>
                         </div>
                     </td>
                 </tr>
                 <tr class="tr-pub-main">
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/papers/imgs/iros2020.jpg"
-                            alt="Adaptive Precision-Enhancing Hand Rendering">
+                        <span class="thumb-wrap"><span class="conf-badge">IROS 2020</span><img class="img-zoom" src="src/papers/imgs/iros2020.jpg"
+                            alt="Adaptive Precision-Enhancing Hand Rendering"></span>
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Adaptive Precision-Enhancing Hand Rendering for Wearable Fingertip
@@ -148,18 +141,16 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Introduces 3D hand rendering framework in VR for wearable fingertip tracking
-                                    devices, focusing on reconstructing realistic hand poses using only fingertip
-                                    positions.</li>
-                                <li>Key contributions include motion retargeting and new hinge constraints for real-time
-                                    inverse kinematics to enhance visual plausibility and precision.</li>
+                                <li>Reconstructs realistic full-hand poses in VR from fingertip positions alone.</li>
+                                <li>Combines motion retargeting with novel inverse-kinematics hinge constraints for
+                                    real-time, precise, and visually plausible rendering.</li>
                             </ul>
                         </div>
                     </td>
                 </tr>
                 <tr class="tr-pub-main">
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/papers/imgs/dental.PNG" alt="Dental Simulator">
+                        <span class="thumb-wrap"><span class="conf-badge">AsiaHaptics 2018</span><img class="img-zoom" src="src/papers/imgs/dental.PNG" alt="Dental Simulator"></span>
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Dental Simulator with Increased Z-width of Haptic Rendering</span>
@@ -187,17 +178,16 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Introduces a VR dental simulator that renders highly stiff haptic feedback,
-                                    achieving up to 10× greater maximum stiffness (Z-width) from virtual teeth using
-                                    commercially available haptic devices.</li>
+                                <li>Renders virtual teeth up to 10× stiffer (Z-width) than standard methods using
+                                    commercially available haptic devices, for realistic dental feedback in VR.</li>
                             </ul>
                         </div>
                     </td>
                 </tr>
                 <tr class="tr-pub-main">
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/papers/imgs/glove.jpeg"
-                            alt="Stretchable Skin-Like Cooling/Heating Device">
+                        <span class="thumb-wrap"><span class="conf-badge">AFM 2020</span><img class="img-zoom" src="src/papers/imgs/glove.jpeg"
+                            alt="Stretchable Skin-Like Cooling/Heating Device"></span>
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Stretchable Skin-Like Cooling/Heating Device for Reconstruction of
@@ -217,17 +207,16 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Introduces a stretchable, bi-functional skin-like thermo-haptic (STH) device for VR,
-                                    capable of precise cold and hot sensations with a single structure and 230%
-                                    stretchability.</li>
+                                <li>Reproduces both hot and cold sensations in VR from a single stretchable, skin-like
+                                    device (230% stretchable), combining heating and cooling in one structure.</li>
                             </ul>
                         </div>
                     </td>
                 </tr>
                 <tr class="tr-pub-main">
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/papers/imgs/highly_stretchable.jpeg"
-                            alt="Highly Stretchable Cu Nanowire Heater">
+                        <span class="thumb-wrap"><span class="conf-badge">JMCA 2020</span><img class="img-zoom" src="src/papers/imgs/highly_stretchable.jpeg"
+                            alt="Highly Stretchable Cu Nanowire Heater"></span>
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Highly Stretchable and Oxidation-resistive Cu Nanowire Heater for
@@ -247,20 +236,18 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Proposes laser-assisted dual-function copper nanowire (CuNW) polyurethane acrylate
-                                    (PUA) patterns as feedback-controllable stretchable heaters for a 12-pixel thermal
-                                    haptic device, with enhanced mechanical and chemical durability.</li>
-                                <li>Demonstrates a stretchable thermal haptic device on a nylon glove that replicates
-                                    heat transfer in various virtual environments, achieving temperature control with
-                                    less than 5% error.</li>
+                                <li>Replicates virtual heat on a wearable glove using a 12-pixel stretchable thermal
+                                    array, controlling temperature to within 5% error.</li>
+                                <li>Uses laser-patterned copper-nanowire heaters that remain durable under stretching
+                                    and oxidation for reliable feedback-controlled heating.</li>
                             </ul>
                         </div>
                     </td>
                 </tr>
                 <tr class="tr-pub-main">
                     <td class="tb-td-left">
-                        <img class="img-zoom" src="src/papers/imgs/collaborative.PNG"
-                            alt="Rigid-body Collaborative Manipulation">
+                        <span class="thumb-wrap"><span class="conf-badge">AsiaHaptics 2018</span><img class="img-zoom" src="src/papers/imgs/collaborative.PNG"
+                            alt="Rigid-body Collaborative Manipulation"></span>
                     </td>
                     <td class="tb-td-right">
                         <span class="paper-title">Rigid-body Collaborative Manipulation among Remote Users with Wearable
@@ -280,8 +267,8 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Introduces a remote multiuser collaboration system via wearable cutaneous haptic
-                                    interfaces, leveraging passivity-based simulations for stable and realistic
+                                <li>Enables remote users to jointly manipulate rigid bodies through wearable cutaneous
+                                    haptic interfaces, using passivity-based control for stable and realistic
                                     interactions.</li>
                             </ul>
                         </div>
