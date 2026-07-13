@@ -11,7 +11,7 @@
     --profile-width: 96px; /* shared width: profile picture + dark-mode button */
     --img-h-mobile: 200px;     /* GLOBAL knob: MAX thumbnail height on narrow/phone screens (keeps aspect ratio) */
     --img-min-h-mobile: 120px; /* GLOBAL knob: MIN thumbnail height on narrow/phone screens (keeps aspect ratio) */
-    --img-h-desktop: 190px;    /* GLOBAL knob: thumbnail SIZE on wide/desktop screens (height in px; column width scales with it, so the whole image grows, aspect ratio kept) */
+    --img-h-desktop: 140px;    /* GLOBAL knob: thumbnail SIZE on wide/desktop screens (height in px; column width scales with it, so the whole image grows, aspect ratio kept) */
     --shadow-sm: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
     --shadow-md: rgba(0, 0, 0, 0.12) 0px 4px 8px 0px, rgba(0, 0, 0, 0.08) 0px 2px 4px 0px;
     --shadow-lg: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px, rgba(0, 0, 0, 0.1) 0px 4px 8px 0px;
