@@ -9,7 +9,7 @@
     --text-color-light: #2f3f50;
     --border-color: #e1e8ed;
     --profile-width: 96px; /* shared width: profile picture + dark-mode button */
-    --img-h-mobile: 200px;     /* GLOBAL knob: MAX thumbnail height on narrow/phone screens (keeps aspect ratio) */
+    --img-h-mobile: 140px;     /* GLOBAL knob: MAX thumbnail height on narrow/phone screens (keeps aspect ratio) */
     --img-min-h-mobile: 120px; /* GLOBAL knob: MIN thumbnail height on narrow/phone screens (keeps aspect ratio) */
     --img-h-desktop: 140px;    /* GLOBAL knob: thumbnail SIZE on wide/desktop screens (height in px; column width scales with it, so the whole image grows, aspect ratio kept) */
     --shadow-sm: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
@@ -1416,8 +1416,8 @@ td[colspan="2"] .table-contents .tb-td-right {
     .pub-toggle-btn,
     .pub-toggle-btn-global {
         font-size: 1em;
-        padding: 5px 10px;
-        min-height: 36px;
+        padding: 3px 10px;
+        min-height: 0;
         min-width: 0;
         width: auto;
         max-width: none;
@@ -1500,8 +1500,8 @@ td[colspan="2"] .table-contents .tb-td-right {
     .pub-toggle-btn,
     .pub-toggle-btn-global {
         font-size: 1em;
-        padding: 5px 8px;
-        min-height: 34px;
+        padding: 3px 8px;
+        min-height: 0;
         min-width: 0;
         width: auto;
         max-width: none;
@@ -1875,9 +1875,9 @@ table {
 
     .pub-toggle-btn,
     .pub-toggle-btn-global {
-        padding: 6px 10px;
+        padding: 3px 10px;
         font-size: 1em;
-        min-height: 44px;
+        min-height: 0;
         min-width: 0;
         width: auto;
         max-width: none;
@@ -2037,6 +2037,22 @@ html.dark .pub-toggle-btn:hover,
 html.dark .pub-toggle-btn-global:hover {
     color: var(--text-color);
     border-color: var(--text-color-light);
+}
+
+/* BUG FIX: YouTube archive left/right scroll buttons had a hardcoded white gradient bg */
+html.dark .thumbnail-scroll-btn {
+    background: linear-gradient(to right, rgba(33, 38, 45, 0.98), rgba(33, 38, 45, 0.95));
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.55), 0 1px 4px rgba(0, 0, 0, 0.40);
+}
+html.dark .thumbnail-scroll-btn:hover {
+    background: linear-gradient(to right, rgba(48, 54, 61, 1), rgba(48, 54, 61, 0.98));
+    border-color: var(--text-color-light);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.60), 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+html.dark .thumbnail-scroll-btn:active {
+    background: linear-gradient(to right, rgba(22, 27, 34, 0.98), rgba(22, 27, 34, 0.95));
 }
 
 /* highlighted terms: lighten for the dark background */
