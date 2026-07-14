@@ -10,10 +10,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Apply saved theme before render to avoid a flash. Default is LIGHT (OS setting is ignored). -->
   <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}</script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171067365-1"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
   <title>Hyojoon Park | Academic Website</title>
@@ -86,6 +84,12 @@
       </table>
     </main>
   </div>
+
+  <!-- Floating "back to top" button (fixed to the viewport's bottom-right corner) -->
+  <button id="scroll-top-btn" type="button" aria-label="Scroll to top" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
@@ -94,6 +98,11 @@
     $(function () {
       // Always fetch section partials fresh so a stale cached intro.html can't linger.
       $.ajaxSetup({ cache: false });
+
+      // Floating "back to top" button.
+      $('#scroll-top-btn').on('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
 
       // Dark / light mode toggle (icon only; the button lives in intro.html and is
       // loaded via AJAX, so use a delegated click handler and render after it loads).
@@ -109,6 +118,90 @@
         var dark = document.documentElement.classList.toggle('dark');
         try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
         renderDarkModeBtn();
+      });
+
+      // Gameplay video controls (delegated so they work for videos injected
+      // via the section partials). Each button acts on the video in its cell.
+      function mediaVideoFor(btn) {
+        return btn.closest('.media-pair')
+          ? btn.closest('.media-pair').querySelector('.vertical-video')
+          : null;
+      }
+
+      // Play / pause the inline video and swap the button icon.
+      $(document).on('click', '.media-play', function () {
+        var v = mediaVideoFor(this);
+        if (!v) return;
+        var icon = this.querySelector('i');
+        if (v.paused) {
+          delete v.dataset.userPaused;              // user wants it playing
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+          if (icon) icon.className = 'fas fa-pause';
+        } else {
+          v.dataset.userPaused = '1';               // keep it paused even when scrolled back
+          v.pause();
+          if (icon) icon.className = 'fas fa-play';
+        }
+      });
+
+      // Lazy playback: videos have no `autoplay` and preload="none", so nothing
+      // downloads until they scroll into view. This starts them then (loading +
+      // playing) and pauses them when they leave, so the initial page load stays
+      // tiny (~1-2 MB) instead of eagerly pulling every video (~10 MB).
+      var videoIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          var v = e.target;
+          if (e.isIntersecting) {
+            if (v.paused && !v.dataset.userPaused) {
+              var p = v.play();
+              if (p && p.catch) p.catch(function () {});
+            }
+          } else if (!v.paused) {
+            v.pause();
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+
+      function observeLazyVideos() {
+        document.querySelectorAll('.vertical-video, video.img-zoom').forEach(function (v) {
+          if (!v.dataset.lazyObserved) {
+            v.dataset.lazyObserved = '1';
+            videoIO.observe(v);
+          }
+        });
+      }
+      // Run now and again as AJAX-injected sections arrive.
+      observeLazyVideos();
+      new MutationObserver(observeLazyVideos)
+        .observe(document.documentElement, { childList: true, subtree: true });
+
+      // Click a carousel image to open it full-size in a new tab. A small movement
+      // threshold means a scroll/swipe drag doesn't count as a click.
+      var appImgDown = { x: 0, y: 0 };
+      $(document).on('pointerdown', '.app-scroll-item', function (e) {
+        appImgDown.x = e.clientX; appImgDown.y = e.clientY;
+      });
+      $(document).on('click', '.app-scroll-item', function (e) {
+        if (Math.abs(e.clientX - appImgDown.x) > 8 || Math.abs(e.clientY - appImgDown.y) > 8) return;
+        var src = this.currentSrc || this.src;
+        if (src) window.open(src, '_blank');
+      });
+
+      // Open the video file in a new browser tab.
+      function openVideoInBrowser(v) {
+        var src = v && (v.currentSrc || v.src);
+        if (src) window.open(src, '_blank');
+      }
+
+      // Full-screen button: open the video in a new browser tab.
+      $(document).on('click', '.media-fs', function () {
+        openVideoInBrowser(mediaVideoFor(this));
+      });
+
+      // Clicking the video itself does the same.
+      $(document).on('click', '.vertical-video', function () {
+        openVideoInBrowser(this);
       });
 
       // Generic loader: if the partial contains <tr>, replace the placeholder row.

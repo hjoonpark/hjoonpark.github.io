@@ -12,6 +12,7 @@
     --img-h-mobile: 140px;     /* GLOBAL knob: MAX thumbnail height on narrow/phone screens (keeps aspect ratio) */
     --img-min-h-mobile: 120px; /* GLOBAL knob: MIN thumbnail height on narrow/phone screens (keeps aspect ratio) */
     --img-h-desktop: 140px;    /* GLOBAL knob: thumbnail SIZE on wide/desktop screens (height in px; column width scales with it, so the whole image grows, aspect ratio kept) */
+    --img-hover-scale: 1.25;    /* GLOBAL knob: how much row thumbnails enlarge on hover (applies to .img-zoom and .thumbnail alike) */
     --shadow-sm: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;
     --shadow-md: rgba(0, 0, 0, 0.12) 0px 4px 8px 0px, rgba(0, 0, 0, 0.08) 0px 2px 4px 0px;
     --shadow-lg: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px, rgba(0, 0, 0, 0.1) 0px 4px 8px 0px;
@@ -94,6 +95,64 @@ a:focus {
     background-color: var(--red);
     margin-top: 0;
     margin-bottom: 0px;
+}
+
+/* Floating "back to top" button — sticks just outside the centered content's right
+   edge (content is max-width:1005px, so its right edge is 50vw - 502.5px from the
+   viewport's right). As the window shrinks and the margin disappears, it clamps to
+   20px and rides over the rows. */
+#scroll-top-btn {
+    position: fixed;
+    right: max(20px, calc(50vw - 542.5px));
+    bottom: 20px;
+    z-index: 2147483000;              /* always on top of page content */
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    /* Matches the theme (light surface in light mode, dark in dark), 50% transparent. */
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--text-color);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+html.dark #scroll-top-btn {
+    background: rgba(22, 27, 34, 0.5);   /* #161b22 surface at 50% */
+}
+
+#scroll-top-btn:hover {
+    background: var(--blue);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+#scroll-top-btn:active {
+    transform: translateY(0);
+}
+
+#scroll-top-btn:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+    #scroll-top-btn {
+        right: 14px;
+        bottom: 14px;
+        width: 28px;
+        height: 28px;
+    }
 }
 
 #div-main {
@@ -374,6 +433,249 @@ table td:has(.table-contents) {
     height: 100%;
     max-height: 100%;
     object-fit: contain;
+}
+
+/* Nudge the left-column thumbnail down so its top lines up with the title text
+   in the right column (which starts ~8px lower due to its larger top padding).
+   Applies to the publication, code, and app-dev sections (all use .table-contents). */
+.table-contents .tb-td-left {
+    padding-top: 14px;
+}
+
+/* Media pair: (uncropped square thumbnail + control buttons) stacked on the left,
+   vertical (portrait) gameplay video on the right, side by side. */
+.tb-td-left--media {
+    /* Local height knob for these rows: 1.25x the global thumbnail height. */
+    --media-h: calc(var(--img-h-desktop) * 1.25);
+}
+
+.tb-td-left--media .media-pair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;      /* image+video kept together and centered in the column */
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: var(--media-h);   /* explicit (not 100%): avoids a table-cell flex-height quirk */
+    /* No overflow:hidden — it would clip the hover-zoom. Instead the image and
+       video shrink to fit (below), so the media never overflows the column. */
+}
+
+/* Left column: full (uncropped) thumbnail at the top, buttons pinned to the
+   bottom, so the column spans the same height as the video beside it. The stack
+   shrink-wraps the image (no grow) so the video sits right next to it. */
+.tb-td-left--media .media-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    flex: 0 1 auto;
+    min-width: 0;
+    height: var(--media-h);
+}
+
+.tb-td-left--media .media-stack .img-zoom {
+    /* Full square thumbnail, shown uncropped (object-fit: contain) like the other
+       thumbnails. Sized by height so its width follows as a clean square. */
+    height: calc(var(--media-h) - 52px);
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    flex: 0 1 auto;
+    object-fit: contain;
+}
+
+.tb-td-left--media .media-pair .vertical-video {
+    flex: 0 1 auto;        /* keeps its size, but may shrink to fit narrow columns */
+    min-width: 0;
+    width: auto !important;
+    height: var(--media-h);
+    max-height: var(--media-h);
+    aspect-ratio: 9 / 16;
+    object-fit: contain;
+    border-radius: 4px;
+    background: #000;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+/* Same hover-zoom as the thumbnails, driven by the shared --img-hover-scale knob. */
+.tb-td-left--media .media-pair .vertical-video:hover {
+    transform: scale(var(--img-hover-scale));
+    box-shadow: var(--shadow-md);
+    z-index: 100000;
+}
+
+/* "Preview" label + two buttons in a row, directly beneath the image. */
+.tb-td-left--media .media-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+.tb-td-left--media .media-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-color-light);
+    margin-right: 2px;
+}
+
+.tb-td-left--media .media-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--text-color-light);
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.tb-td-left--media .media-btn:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+}
+
+html.dark .tb-td-left--media .media-btn {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- App-dev image carousel ----
+   A horizontally scrollable, one-image-at-a-time strip inside the left cell,
+   with left/right buttons that appear only once there is more than one image.
+   (Ships with a single image for now; add more <img class="img-zoom app-scroll-item">
+   inside .app-scroll-track and the buttons light up automatically.) */
+.app-scroll {
+    position: relative;
+    width: 100%;
+    /* Pin to the standard thumbnail height so every image (portrait screenshots
+       included) is constrained to the same height and the row doesn't grow. */
+    height: var(--img-h-desktop);
+    transform-origin: center center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* On hover, zoom the whole carousel (image + nav buttons) as one unit, using the
+   same --img-hover-scale knob as the other thumbnails, and lift it above the text. */
+.app-scroll:hover {
+    transform: scale(var(--img-hover-scale));
+    z-index: 10000;
+}
+
+.app-scroll-viewport {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;               /* hide native scrollbar */
+    /* light framed "window" so it reads as an interactive image */
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease;
+}
+
+/* deepen the shadow on hover for extra affordance */
+.app-scroll:hover .app-scroll-viewport {
+    box-shadow: var(--shadow-md);
+}
+
+html.dark .app-scroll-viewport {
+    background: #161b22;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.app-scroll-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+.app-scroll-track {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    gap: 0;
+}
+
+.app-scroll .app-scroll-item {
+    flex: 0 0 100%;                      /* each image fills the cell -> one at a time */
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: center;
+    object-fit: contain;
+    /* the window frame carries the shadow/rounding, so the image sits flush inside it */
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* the strip scrolls, so suppress the big hover-zoom (it would clip in the viewport)
+   and don't let the global img-zoom:hover z-index lift the image over the nav buttons */
+.app-scroll .img-zoom:hover {
+    transform: none;
+    box-shadow: none;
+    z-index: 1 !important;
+}
+
+.app-scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10001;   /* stay above a hovered thumbnail (which can hit z-index 10000) */
+    display: none;                      /* JS shows it only when scrollable */
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    color: var(--text-color);
+    font-size: 12px;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.app-scroll-btn:hover {
+    background: #fff;
+    color: var(--blue);
+}
+
+.app-scroll-btn-left {
+    left: 4px;
+}
+
+.app-scroll-btn-right {
+    right: 4px;
+}
+
+html.dark .app-scroll-btn {
+    background: rgba(33, 38, 45, 0.9);
+    color: var(--text-color);
+}
+
+html.dark .app-scroll-btn:hover {
+    background: rgba(33, 38, 45, 1);
+    color: var(--blue);
 }
 
 .table-contents tr {
@@ -759,7 +1061,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 
 .img-zoom:hover {
     cursor: pointer;
-    transform: scale(1.08);
+    transform: scale(var(--img-hover-scale));
     box-shadow: var(--shadow-md);
     z-index: 100000;
 }
@@ -795,7 +1097,7 @@ td[colspan="2"] .table-contents .tb-td-right {
 }
 
 .thumbnail:hover {
-    transform: scale(1.08);
+    transform: scale(var(--img-hover-scale));
     box-shadow: var(--shadow-md);
     z-index: 100000;
     cursor: pointer;
@@ -1249,6 +1551,21 @@ td[colspan="2"] .table-contents .tb-td-right {
         vertical-align: top;
     }
 
+    /* Media pair on mobile: same two-equal-columns layout as desktop, just driven
+       by a smaller --media-h so both columns stay the exact same height. */
+    .tb-td-left--media,
+    .tb-td-left.tb-td-left--media {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        --media-h: calc(var(--img-h-mobile) * 1.15);
+    }
+
+    /* App carousel: use the mobile thumbnail height so images stay in sync there too. */
+    .app-scroll {
+        height: var(--img-h-mobile);
+    }
+
     /* On mobile this becomes the badge's positioning box, shrink-wrapped to the
        (centered) image, so the conf-badge stays pinned to the image's corner. */
     .thumb-wrap {
@@ -1659,7 +1976,7 @@ td[colspan="2"] .table-contents .tb-td-right {
     box-shadow: 0 4px 20px rgba(0, 102, 204, 0.4), 0 2px 8px rgba(0, 102, 204, 0.3);
 }
 
-.thumbnail-scroll-btn .material-icons {
+.thumbnail-scroll-btn i {
     font-size: 20px;
     color: var(--text-color);
     user-select: none;
@@ -1667,13 +1984,13 @@ td[colspan="2"] .table-contents .tb-td-right {
     opacity: 0.85;
 }
 
-.thumbnail-scroll-btn:hover .material-icons {
+.thumbnail-scroll-btn:hover i {
     color: var(--blue);
     opacity: 1;
     transform: scale(1.1);
 }
 
-.thumbnail-scroll-btn:active .material-icons {
+.thumbnail-scroll-btn:active i {
     transform: scale(0.95);
 }
 
@@ -1739,7 +2056,7 @@ td[colspan="2"] .table-contents .tb-td-right {
         border-radius: 8px;
     }
 
-    .thumbnail-scroll-btn .material-icons {
+    .thumbnail-scroll-btn i {
         font-size: 18px;
     }
 
@@ -1800,7 +2117,7 @@ td[colspan="2"] .table-contents .tb-td-right {
         border-radius: 8px;
     }
 
-    .thumbnail-scroll-btn .material-icons {
+    .thumbnail-scroll-btn i {
         font-size: 16px;
     }
 
