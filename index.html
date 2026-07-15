@@ -99,9 +99,21 @@
       // Always fetch section partials fresh so a stale cached intro.html can't linger.
       $.ajaxSetup({ cache: false });
 
-      // Floating "back to top" button.
+      // Floating "back to top" button — fast, fixed-duration scroll (native
+      // behavior:'smooth' scales with distance and feels slow on a long page).
       $('#scroll-top-btn').on('click', function () {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        var start = window.pageYOffset || document.documentElement.scrollTop;
+        if (start <= 0) return;
+        var duration = 300;                 // ms — lower = faster
+        var t0 = null;
+        function step(now) {
+          if (t0 === null) t0 = now;
+          var p = Math.min((now - t0) / duration, 1);
+          var eased = 1 - Math.pow(1 - p, 3);   // easeOutCubic
+          window.scrollTo(0, Math.round(start * (1 - eased)));
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
       });
 
       // Dark / light mode toggle (icon only; the button lives in intro.html and is
@@ -202,6 +214,12 @@
       // Clicking the video itself does the same.
       $(document).on('click', '.vertical-video', function () {
         openVideoInBrowser(this);
+      });
+
+      // Clicking the square thumbnail in a video row opens that image in a new tab.
+      $(document).on('click', '.tb-td-left--media .media-stack .img-zoom', function () {
+        var src = this.currentSrc || this.src;
+        if (src) window.open(src, '_blank');
       });
 
       // Generic loader: if the partial contains <tr>, replace the placeholder row.
