@@ -225,9 +225,9 @@
         }
     }
 
-    // Wire each app-dev image carousel independently. Buttons appear only when the
-    // strip is actually scrollable (i.e. more than one image), so a single image
-    // shows no buttons. Runs on AJAX injection because jQuery evals injected scripts.
+    // Wire each app-dev image carousel independently. Both buttons are always
+    // visible; each is disabled when there's nothing to scroll to on that side.
+    // Runs on AJAX injection because jQuery evals injected scripts.
     document.querySelectorAll('.app-scroll').forEach(function (root) {
         var vp = root.querySelector('.app-scroll-viewport');
         var left = root.querySelector('.app-scroll-btn-left');
@@ -236,8 +236,8 @@
 
         function update() {
             var sl = vp.scrollLeft, sw = vp.scrollWidth, cw = vp.clientWidth;
-            left.style.display = sl > 1 ? 'flex' : 'none';
-            right.style.display = sl < sw - cw - 1 ? 'flex' : 'none';
+            left.disabled = !(sl > 1);
+            right.disabled = !(sl < sw - cw - 1);
         }
         left.addEventListener('click', function () { vp.scrollBy({ left: -vp.clientWidth, behavior: 'smooth' }); });
         right.addEventListener('click', function () { vp.scrollBy({ left: vp.clientWidth, behavior: 'smooth' }); });
@@ -251,6 +251,7 @@
             }
         });
         window.addEventListener('resize', function () { setTimeout(update, 100); });
+        update();                 // no flash of enabled buttons before layout settles
         setTimeout(update, 120);
 
         // Hovering the carousel preloads a few images ahead, so they're ready by the

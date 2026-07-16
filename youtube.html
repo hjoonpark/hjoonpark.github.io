@@ -67,14 +67,15 @@
     
     if (!container || !leftBtn || !rightBtn) return;
     
-    function updateButtonVisibility() {
+    // Both buttons stay visible; each is disabled when there's nothing to scroll
+    // to on that side.
+    function updateButtonState() {
         const scrollLeft = container.scrollLeft;
         const scrollWidth = container.scrollWidth;
         const clientWidth = container.clientWidth;
-        
-        // Show/hide buttons based on scroll position
-        leftBtn.style.display = scrollLeft > 1 ? 'flex' : 'none';
-        rightBtn.style.display = scrollLeft < scrollWidth - clientWidth - 1 ? 'flex' : 'none';
+
+        leftBtn.disabled = !(scrollLeft > 1);
+        rightBtn.disabled = !(scrollLeft < scrollWidth - clientWidth - 1);
     }
     
     function scrollLeft() {
@@ -107,14 +108,15 @@
     
     leftBtn.addEventListener('click', scrollLeft);
     rightBtn.addEventListener('click', scrollRight);
-    container.addEventListener('scroll', updateButtonVisibility);
-    
-    // Initial button visibility (with slight delay to ensure layout is complete)
-    setTimeout(updateButtonVisibility, 100);
-    
+    container.addEventListener('scroll', updateButtonState);
+
+    updateButtonState();
+    // Re-check once layout is complete
+    setTimeout(updateButtonState, 100);
+
     // Update on window resize
     window.addEventListener('resize', function() {
-        setTimeout(updateButtonVisibility, 100);
+        setTimeout(updateButtonState, 100);
     });
 })();
 </script>
