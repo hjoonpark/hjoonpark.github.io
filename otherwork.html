@@ -104,6 +104,45 @@
                         </span>
                     </td>
                 </tr>
+                <tr>
+                    <td class="tb-td-left tb-td-left--vid">
+                        <div class="vid-media">
+                            <video class="img-zoom" src="src/otherwork/cloth_mass_spring.mp4"
+                                loop muted playsinline preload="none"
+                                aria-label="Cloth simulation using a fast mass-spring system"></video>
+                            <div class="media-controls">
+                                <button type="button" class="media-btn media-play" aria-label="Play / pause"><i class="fas fa-pause"></i></button>
+                                <button type="button" class="media-btn media-fs" aria-label="Open in new tab"><i class="fas fa-external-link-alt"></i></button>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="tb-td-right">
+                        <span class="paper-title">Cloth Simulation - Fast Mass-Spring System (2018)</span>
+                        <div class="code-desc cloth-desc">
+                            <p><b>C++/OpenGL</b> implementation of Liu et al., <i>Fast Simulation of Mass-Spring
+                                Systems</i> (TOG 2013). Using implicit Euler, each time step solves for positions
+                                <i>x</i> (<i>f</i>&thinsp;=&thinsp;&minus;&nabla;<i>E</i> the elastic force, <i>y</i> the
+                                inertial prediction):</p>
+                            <div class="eqn" aria-label="Governing equation">
+                                <div class="eqn-row"><b>M</b>(<i>x</i>&minus;<i>y</i>) = <i>h</i>&sup2;<i>f</i>(<i>x</i>) &nbsp;&hArr;&nbsp; min<sub><i>x</i></sub> &frac12;(<i>x</i>&minus;<i>y</i>)<sup>T</sup><b>M</b>(<i>x</i>&minus;<i>y</i>) + <i>h</i>&sup2;<i>E</i>(<i>x</i>)</div>
+                            </div>
+                            <p>The video compares three solvers:</p>
+                            <ol class="cloth-solvers">
+                                <li><b>Local-global:</b> Alternates parallel projection of each spring onto its
+                                    rest-length constraint with one sparse global solve. Since
+                                    (<b>M</b>&thinsp;+&thinsp;<i>h</i>&sup2;<b>L</b>) is constant, its
+                                    <a href="https://en.wikipedia.org/wiki/Cholesky_decomposition" target="_blank">Cholesky
+                                    factorization</a> is computed once and reused.</li>
+                                <li><b>Gradient descent:</b> Uses only the objective gradient. Each iteration is cheap,
+                                    but stiff springs require small step sizes, slowing convergence.</li>
+                                <li><b>Newton's method:</b> Uses the full Hessian
+                                    (<b>M</b>&thinsp;+&thinsp;<i>h</i>&sup2;&nabla;&sup2;<i>E</i>(<i>x</i>)). It converges
+                                    quickly near the solution but requires repeated factorization and may diverge if the
+                                    Hessian is indefinite.</li>
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </td>

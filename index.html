@@ -135,9 +135,11 @@
       // Gameplay video controls (delegated so they work for videos injected
       // via the section partials). Each button acts on the video in its cell.
       function mediaVideoFor(btn) {
-        return btn.closest('.media-pair')
-          ? btn.closest('.media-pair').querySelector('.vertical-video')
-          : null;
+        var pair = btn.closest('.media-pair');
+        if (pair) return pair.querySelector('.vertical-video');
+        // Fallback for single-video cells (e.g. the cloth-sim row): the video in the same cell.
+        var cell = btn.closest('.tb-td-left');
+        return cell ? cell.querySelector('video') : null;
       }
 
       // Play / pause the inline video and swap the button icon.

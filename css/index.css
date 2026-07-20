@@ -527,7 +527,8 @@ table td:has(.table-contents) {
     margin-right: 2px;
 }
 
-.tb-td-left--media .media-btn {
+.tb-td-left--media .media-btn,
+.tb-td-left--vid .media-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -544,14 +545,56 @@ table td:has(.table-contents) {
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.tb-td-left--media .media-btn:hover {
+.tb-td-left--media .media-btn:hover,
+.tb-td-left--vid .media-btn:hover {
     background: var(--blue);
     border-color: var(--blue);
     color: #fff;
 }
 
-html.dark .tb-td-left--media .media-btn {
+html.dark .tb-td-left--media .media-btn,
+html.dark .tb-td-left--vid .media-btn {
     background: rgba(255, 255, 255, 0.06);
+}
+
+/* Single landscape video with play/pause + open-in-tab controls (Codes section).
+   Taller than a normal thumbnail row so the controls sit below the video. */
+.tb-td-left.tb-td-left--vid {
+    --vid-h: calc(var(--img-h-desktop) + 46px);
+    height: var(--vid-h) !important;
+    min-height: var(--vid-h) !important;
+    max-height: var(--vid-h) !important;
+}
+
+.tb-td-left--vid .vid-media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    height: var(--vid-h);
+}
+
+.tb-td-left--vid .vid-media .img-zoom {
+    width: 100%;
+    height: auto;
+    max-height: calc(var(--vid-h) - 34px);
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.tb-td-left--vid .vid-media .img-zoom:hover {
+    transform: none;   /* no hover-zoom; the controls handle interaction */
+}
+
+.tb-td-left--vid .media-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 0 0 auto;
 }
 
 /* ---- App-dev image carousel ----
@@ -1005,6 +1048,77 @@ td[colspan="2"] .table-contents .tb-td-right {
 
 .code-desc li {
     margin-bottom: 2px;
+}
+
+/* Compact math block used to disclose a governing equation inside a code row.
+   Uses theme variables so it adapts to dark mode automatically. */
+.eqn {
+    margin: 0.5em 0 0.25em 2em;
+    padding: 0.5em 0.75em;
+    border-left: 3px solid var(--border-color);
+    background: rgba(0, 102, 204, 0.04);
+    border-radius: 4px;
+    font-family: "Cambria Math", Georgia, "Times New Roman", serif;
+    font-size: 1.02em;
+    line-height: 1.7;
+    color: var(--text-color);
+    overflow-x: auto;
+}
+
+html.dark .eqn {
+    background: rgba(88, 166, 255, 0.07);
+}
+
+.eqn .eqn-row {
+    white-space: nowrap;
+}
+
+/* Cloth-sim description: prose + display equations + a numbered solver list,
+   all sharing the code-desc look but without the bullet indentation. */
+.cloth-desc {
+    padding-left: 0;
+}
+
+.cloth-desc p {
+    margin: 0.4em 0;
+}
+
+.cloth-desc p:first-child {
+    margin-top: 0.25em;
+}
+
+.cloth-desc .eqn {
+    margin: 0.45em 0;   /* override the default 2em left indent so it aligns with the prose */
+}
+
+.cloth-desc ol.cloth-solvers {
+    padding-left: 1.5em;
+    margin: 0.35em 0 0.25em;
+}
+
+.cloth-desc ol.cloth-solvers li {
+    margin-bottom: 4px;
+}
+
+.eqn .eqn-tag {
+    display: inline-block;
+    font-family: inherit;
+    font-style: normal;
+    font-size: 0.68em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-color-light);
+    white-space: nowrap;
+    margin-right: 0.7em;
+    vertical-align: 0.12em;
+}
+
+.eqn i {
+    font-style: italic;
+}
+
+.eqn b {
+    font-weight: 700;
 }
 
 .my-author {
