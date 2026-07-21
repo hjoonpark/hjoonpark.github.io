@@ -570,7 +570,10 @@ html.dark .tb-td-left--vid .media-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* Top-align: the cell is 46px taller than a normal row to make room for the
+       controls underneath, so centring would split that slack and push the video
+       down out of line with the thumbnails in the other rows. */
+    justify-content: flex-start;
     gap: 6px;
     width: 100%;
     height: var(--vid-h);
@@ -1048,6 +1051,12 @@ td[colspan="2"] .table-contents .tb-td-right {
 
 .code-desc li {
     margin-bottom: 2px;
+}
+
+/* Nested list inside a code description: keep sub-items flush with the parent
+   text instead of stepping in a second time. */
+.code-desc .code-desc {
+    padding-left: 0;
 }
 
 /* Compact math block used to disclose a governing equation inside a code row.
@@ -1693,6 +1702,26 @@ html.dark .eqn {
         padding: 0;
         object-fit: contain;
         vertical-align: top;
+    }
+
+    /* Video rows on mobile: the desktop rule pins the cell to --vid-h with
+       !important, which survives the height:auto reset above. Combined with the
+       mobile cell padding that leaves .vid-media taller than its content box, so
+       the controls spill out and the next row paints over them. Let the cell grow
+       to fit the video plus its controls instead. */
+    .tb-td-left.tb-td-left--vid {
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+    }
+
+    .tb-td-left--vid .vid-media {
+        height: auto;
+    }
+
+    .tb-td-left--vid .vid-media .img-zoom {
+        max-height: var(--img-h-mobile);
+        min-height: 0;
     }
 
     /* Media pair on mobile: same two-equal-columns layout as desktop, just driven
