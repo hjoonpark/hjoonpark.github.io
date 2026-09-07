@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="css/index.css?v=56">
+  <link rel="stylesheet" href="css/index.css?v=59">
   <link rel="stylesheet" href="css/tooltip.css?v=42">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <link rel="icon" type="favicon.ico" href="favicon.ico?v=5">
@@ -18,13 +18,13 @@
 </head>
 
 <body>
-  <div id="header-bar">
-  </div>
-
-  <!-- Sticky section nav. Matches #div-main's width exactly, so it spans from the
-       profile sidebar's left edge to the content column's right edge. On narrow
-       screens the same strip scrolls horizontally instead of becoming a menu. -->
+  <!-- Sticky section nav. The red rule lives inside it so the two travel together
+       and stay pinned; as a sibling above, it just scrolled away. The tab strip
+       matches #div-main's width exactly, so it spans from the profile sidebar's
+       left edge to the content column's right edge. On narrow screens the strip
+       scrolls horizontally instead of becoming a menu. -->
   <nav id="section-nav" aria-label="Page sections">
+    <div id="header-bar"></div>
     <div class="nav-inner">
       <ul class="nav-scroll" data-fade="none">
         <li><a href="#sec-about">About Me</a></li>

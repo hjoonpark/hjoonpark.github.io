@@ -104,8 +104,17 @@ a:focus {
     position: sticky;
     top: 0;
     z-index: 60;
-    background-color: var(--bg-color);
+    /* A shade greyer than the page (--bg-color #fafafa) so the bar reads as its
+       own surface, especially once content scrolls under it. Reuses the palette's
+       existing grey (.pub-toggle-btn:hover) rather than introducing a new one. */
+    background-color: #f0f2f5;
     border-bottom: 1px solid var(--border-color);
+}
+
+/* Dark mode inverts the relationship: the bar sits slightly *lighter* than the
+   page, matching the section cards. */
+html.dark #section-nav {
+    background-color: #161b22;
 }
 
 /* Same width maths as #div-main (90% / max 1005px / 8px side padding, border-box),
@@ -183,6 +192,15 @@ a:focus {
 #section-nav a.is-active {
     color: var(--red);
     border-bottom-color: var(--red);
+}
+
+/* The global `a:focus` rule paints a blue outline on plain focus, which a mouse
+   click leaves stuck on the tab until you click elsewhere. Drop it here, then put
+   it back for :focus-visible only — that never matches a mouse click, so keyboard
+   users keep an indicator and mouse users see nothing. Order matters: these two
+   have equal specificity. */
+#section-nav a:focus {
+    outline: none;
 }
 
 #section-nav a:focus-visible {
