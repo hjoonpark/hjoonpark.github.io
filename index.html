@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="css/index.css?v=42">
+  <link rel="stylesheet" href="css/index.css?v=56">
   <link rel="stylesheet" href="css/tooltip.css?v=42">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <link rel="icon" type="favicon.ico" href="favicon.ico?v=5">
@@ -20,6 +20,24 @@
 <body>
   <div id="header-bar">
   </div>
+
+  <!-- Sticky section nav. Matches #div-main's width exactly, so it spans from the
+       profile sidebar's left edge to the content column's right edge. On narrow
+       screens the same strip scrolls horizontally instead of becoming a menu. -->
+  <nav id="section-nav" aria-label="Page sections">
+    <div class="nav-inner">
+      <ul class="nav-scroll" data-fade="none">
+        <li><a href="#sec-about">About Me</a></li>
+        <li><a href="#sec-education">Education</a></li>
+        <li><a href="#sec-work">Work Experience</a></li>
+        <li><a href="#sec-publications">Publications</a></li>
+        <li><a href="#sec-services">Services</a></li>
+        <li><a href="#sec-codes">Codes</a></li>
+        <li><a href="#sec-apps">Apps</a></li>
+        <li><a href="#sec-youtube">YouTube</a></li>
+      </ul>
+    </div>
+  </nav>
   <div id="div-main">
     <!-- PROFILE SIDEBAR (left column on desktop, centered block on mobile) -->
     <aside id="profile-sidebar">
@@ -96,24 +114,159 @@
   <script src="/js/index.js"></script>
   <script>
     $(function () {
-      // Always fetch section partials fresh so a stale cached intro.html can't linger.
-      $.ajaxSetup({ cache: false });
+      // NOTE: this used to be $.ajaxSetup({ cache: false }), which appends a unique
+      // ?_=<timestamp> to every partial and so forces a full re-download of all ten
+      // on every visit. GitHub Pages already serves them with an ETag and a short
+      // max-age, so the browser revalidates and gets a ~200-byte 304 instead —
+      // still fresh, without re-sending the bodies.
 
-      // Floating "back to top" button — fast, fixed-duration scroll (native
-      // behavior:'smooth' scales with distance and feels slow on a long page).
-      $('#scroll-top-btn').on('click', function () {
+      // Fixed-duration animated scroll, shared by the section nav and the
+      // back-to-top button (native behavior:'smooth' scales its duration with
+      // distance, which feels sluggish on a long page).
+      //
+      // NOTE ON DURATION: a frame is ~16.7ms at 60Hz, so any duration below that
+      // completes in a single frame and renders as an instant jump — there are no
+      // in-between frames to draw. 150ms is about the shortest that still reads as
+      // motion rather than a cut. Lower it here to taste.
+      var NAV_SCROLL_MS = 150;
+
+      // Users who ask for reduced motion get the jump instead of the glide.
+      var reduceMotion = window.matchMedia
+        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function fastScrollTo(targetY, duration) {
         var start = window.pageYOffset || document.documentElement.scrollTop;
-        if (start <= 0) return;
-        var duration = 300;                 // ms — lower = faster
+        var delta = targetY - start;
+        if (!delta) return;
+        if (reduceMotion || duration < 17) { window.scrollTo(0, targetY); return; }
         var t0 = null;
         function step(now) {
           if (t0 === null) t0 = now;
           var p = Math.min((now - t0) / duration, 1);
           var eased = 1 - Math.pow(1 - p, 3);   // easeOutCubic
-          window.scrollTo(0, Math.round(start * (1 - eased)));
+          window.scrollTo(0, Math.round(start + delta * eased));
           if (p < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
+      }
+
+      // ---- Sticky section nav ------------------------------------------------
+      // Sections arrive by AJAX, so the link targets may not exist yet; refresh()
+      // is re-run on ajaxComplete and hides links whose section never loaded.
+      (function sectionNav() {
+        var nav = document.getElementById('section-nav');
+        if (!nav) return;
+        var strip = nav.querySelector('.nav-scroll');
+        var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#sec-"]'));
+        var live = [];              // {a, el} for sections actually on the page
+
+        function navH() { return nav.offsetHeight; }
+
+        function publishNavHeight() {
+          // #profile-sidebar is sticky and must clear the nav
+          document.documentElement.style.setProperty('--nav-h', navH() + 'px');
+        }
+
+        function setFades() {
+          var l = strip.scrollLeft > 2;
+          var r = strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 2;
+          strip.setAttribute('data-fade', l && r ? 'both' : l ? 'left' : r ? 'right' : 'none');
+        }
+
+        // keep the active tab visible in the horizontally scrolling strip
+        function revealTab(a) {
+          var ar = a.getBoundingClientRect(), sr = strip.getBoundingClientRect();
+          if (ar.left < sr.left + 8) strip.scrollLeft -= (sr.left + 8 - ar.left);
+          else if (ar.right > sr.right - 8) strip.scrollLeft += (ar.right - (sr.right - 8));
+        }
+
+        function setActive(a) {
+          links.forEach(function (x) {
+            var on = x === a;
+            x.classList.toggle('is-active', on);
+            if (on) x.setAttribute('aria-current', 'true');
+            else x.removeAttribute('aria-current');
+          });
+          if (a) revealTab(a);
+        }
+
+        var holdActiveUntil = 0;
+
+        function updateActive() {
+          if (!live.length) return;
+          var t = window.performance ? performance.now() : Date.now();
+          if (t < holdActiveUntil) return;   // a nav click is still gliding
+          var probe = window.pageYOffset + navH() + 24;
+          var cur = live[0];
+          for (var i = 0; i < live.length; i++) {
+            if (live[i].el.getBoundingClientRect().top + window.pageYOffset <= probe) cur = live[i];
+          }
+          // pinned to the bottom: the last section is the one being read
+          if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) {
+            cur = live[live.length - 1];
+          }
+          setActive(cur.a);
+        }
+
+        function refresh() {
+          live = [];
+          links.forEach(function (a) {
+            var el = document.querySelector(a.getAttribute('href'));
+            a.parentElement.hidden = !el;
+            if (el) live.push({ a: a, el: el });
+          });
+          publishNavHeight();
+          setFades();
+          updateActive();
+        }
+
+        nav.addEventListener('click', function (e) {
+          var a = e.target.closest ? e.target.closest('a[href^="#sec-"]') : null;
+          if (!a) return;
+          e.preventDefault();
+          var el = document.querySelector(a.getAttribute('href'));
+          if (!el) return;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - navH() - 6;
+          // Keep the clicked tab lit for the whole glide, otherwise the scrollspy
+          // below would flash through every section the scroll passes over.
+          holdActiveUntil = (window.performance ? performance.now() : Date.now())
+                            + NAV_SCROLL_MS + 60;
+          fastScrollTo(Math.max(0, y), NAV_SCROLL_MS);
+          history.replaceState(null, '', a.getAttribute('href'));
+          setActive(a);
+        });
+
+        var ticking = false;
+        function onScroll() {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(function () { updateActive(); ticking = false; });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', function () { publishNavHeight(); setFades(); updateActive(); });
+        strip.addEventListener('scroll', setFades, { passive: true });
+        $(document).ajaxComplete(function () { setTimeout(refresh, 50); });
+
+        refresh();
+
+        // deep link: honour #sec-... on load, once its section exists
+        if (/^#sec-/.test(location.hash)) {
+          var tries = 0;
+          var seek = setInterval(function () {
+            var el = document.querySelector(location.hash);
+            if (el) {
+              window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - navH() - 6));
+              updateActive();
+              clearInterval(seek);
+            } else if (++tries > 40) clearInterval(seek);
+          }, 50);
+        }
+      })();
+
+      // Floating "back to top" button — fast, fixed-duration scroll (native
+      // behavior:'smooth' scales with distance and feels slow on a long page).
+      $('#scroll-top-btn').on('click', function () {
+        fastScrollTo(0, 300);
       });
 
       // Dark / light mode toggle (icon only; the button lives in intro.html and is
@@ -249,7 +402,49 @@
       insertRow("row-education", "education.html");
       insertRow("row-research", "research.html");
       insertRow("row-news", "news.html");
-      insertRow("row-work", "work.html");
+      // Work experience: each role's "Technical Contributions" list collapses,
+      // with a per-role button and an "Expand all" in the section header
+      // (same interaction as the publications section below).
+      insertRow("row-work", "work.html", function () {
+        function setBtn($btn, open) {
+          $btn.data('toggled', open)
+              .attr('aria-expanded', open ? 'true' : 'false')
+              .text(open ? "Collapse" : "Expand");
+        }
+
+        $(".xp-toggle-btn").off("click").on("click", function () {
+          let $btn = $(this);
+          let $content = $btn.closest('.xp-contributions').find('.xp-toggle-content');
+          let open = !$btn.data('toggled');
+          if (open) {
+            $content.slideDown();
+          } else {
+            $content.slideUp();
+          }
+          setBtn($btn, open);
+        });
+
+        // Global toggle
+        $(".xp-toggle-btn-global").off("click").on("click", function () {
+          let open = !$(this).data('toggled');
+          if (open) {
+            $('.xp-toggle-content').slideDown();
+          } else {
+            $('.xp-toggle-content').slideUp();
+          }
+          setBtn($('.xp-toggle-btn'), open);
+          $(this).data('toggled', open)
+                 .attr('aria-expanded', open ? 'true' : 'false')
+                 .text(open ? "Collapse all" : "Expand all");
+        });
+
+        // Start expanded on every visit (state is deliberately not persisted)
+        setBtn($(".xp-toggle-btn"), true);
+        $(".xp-toggle-btn-global").data('toggled', true)
+                                  .attr('aria-expanded', 'true')
+                                  .text('Collapse all');
+        $('.xp-toggle-content').show();
+      });
       insertRow("row-otherwork", "otherwork.html");
       insertRow("row-services", "services.html");
       insertRow("row-appdev", "appdev.html");
@@ -321,7 +516,9 @@
           var imageExts = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
           if (imageExts.test(href)) {
             var $wrapper = $('<span class="link-with-preview"></span>');
-            var $tooltip = $('<span class="link-preview-tooltip"><img src="' + href + '" alt="Preview"></span>');
+            // data-src, not src: these previews only appear on hover, so fetching
+            // them up front downloads full-size images nobody may ever look at.
+            var $tooltip = $('<span class="link-preview-tooltip"><img data-src="' + href + '" alt="Preview"></span>');
             $link.wrap($wrapper);
             $link.after($tooltip);
           }
@@ -353,10 +550,10 @@
               var imgSrc = 'https://img.youtube.com/vi/' + videoId + '/maxresdefault.jpg';
               var fallbackSrc = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
               var $img = $('<img>').attr({
-                'src': imgSrc,
+                'data-src': imgSrc,          // fetched on first hover, not on load
                 'alt': 'Video preview'
               }).on('error', function () {
-                $(this).attr('src', fallbackSrc);
+                if (this.src) $(this).attr('src', fallbackSrc);
               });
               var $tooltip = $('<span class="link-preview-tooltip"></span>').append($img);
               $link.wrap($wrapper);
@@ -389,6 +586,21 @@
           }
         });
       }
+
+      // Load a preview image the first time its link is hovered or focused.
+      // Covers the generated previews above and the markup ones in the partials.
+      function loadPreview(el) {
+        $(el).find('img[data-src]').each(function () {
+          this.src = this.getAttribute('data-src');
+          this.removeAttribute('data-src');
+        });
+      }
+      $(document).on('mouseenter', '.link-with-preview, .tooltip', function () {
+        loadPreview(this);
+      });
+      $(document).on('focusin', '.link-with-preview, .tooltip', function () {
+        loadPreview(this);
+      });
 
       // Add previews after all content loads
       setTimeout(addLinkPreviews, 800);

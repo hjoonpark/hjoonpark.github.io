@@ -1,5 +1,8 @@
 <tr>
-  <td class="header" colspan="2">Work Experience</td>
+  <td class="header" id="sec-work" colspan="2">
+    Work Experience
+    <button class="xp-toggle-btn-global" type="button" aria-expanded="true">Collapse all</button>
+  </td>
 </tr>
 <tr>
   <td colspan="2">
@@ -23,6 +26,25 @@
               <li>Developed a real-time, self-supervised <span class="highlight">neural hair simulator</span> for digital
                 humans, focusing on efficient physics-based animation for XR (<strong>publication-track results in progress</strong>)</li>
             </ul>
+            <section class="xp-contributions" aria-labelledby="google-contributions-title">
+              <div class="xp-contributions-head">
+                <h3 class="xp-contributions-title" id="google-contributions-title">Technical Contributions</h3>
+                <button class="xp-toggle-btn" type="button" aria-expanded="true"
+                  aria-controls="google-contributions-list">Collapse</button>
+              </div>
+              <div class="xp-toggle-content" id="google-contributions-list">
+                <ul class="xp-desc xp-contributions-list">
+                  <li>Designed a GRU-based motion encoder to retain motion history and capture hair inertia, including
+                    natural swinging and settling.</li>
+                  <li>Encoded local and global hair groom structure with a latent transformer, scaling linearly rather
+                    than quadratically in strand count.</li>
+                  <li>Built a StyleGAN2-inspired modulated MLP decoder conditioned on body shape, hairstyle, and motion
+                    history for hair animation.</li>
+                  <li>Trained the neural hair simulator with volumetric elastic, inertial, and collision losses for richer
+                    dynamics and faster training.</li>
+                </ul>
+              </div>
+            </section>
           </div>
         </li>
 
@@ -53,7 +75,45 @@
               <li>Follow-up work studies how <span class="highlight">capture geometry</span> affects 3DGS reconstruction
                 quality (<strong>publication-track results in progress</strong>)</li>
             </ul>
-            <img loading="lazy" decoding="async" src="src/papers/belllabs_intern.jpg" alt="Nokia Bell Labs Intern Project" class="project-image">
+            <section class="xp-contributions" aria-labelledby="nokia-contributions-title">
+              <div class="xp-contributions-head">
+                <h3 class="xp-contributions-title" id="nokia-contributions-title">Technical Contributions</h3>
+                <button class="xp-toggle-btn" type="button" aria-expanded="true"
+                  aria-controls="nokia-contributions-list">Collapse</button>
+              </div>
+              <div class="xp-toggle-content" id="nokia-contributions-list">
+                <ul class="xp-desc xp-contributions-list">
+                  <li>Aligned the digital twin with real-world coordinates using ChArUco board correspondences, linear
+                    triangulation, nonlinear reprojection-error minimization, and Umeyama similarity alignment.</li>
+                  <li>Embedded language features in each 3D Gaussian and applied DBSCAN clustering for real-time,
+                    text-guided 3D object segmentation.</li>
+                </ul>
+              </div>
+            </section>
+            <div class="project-media">
+              <div class="media-pair project-media-clip">
+                <video class="vertical-video" src="src/papers/bell_labs.mp4" loop muted playsinline
+                  preload="none" aria-label="Capture session in the warehouse"></video>
+                <p class="media-caption">Capture</p>
+                <div class="media-controls">
+                  <button type="button" class="media-btn media-play" aria-label="Play / pause"><i
+                      class="fas fa-pause"></i></button>
+                  <button type="button" class="media-btn media-fs" aria-label="Open in new tab"><i
+                      class="fas fa-external-link-alt"></i></button>
+                </div>
+              </div>
+              <div class="media-pair project-media-wide">
+                <video class="vertical-video" src="src/papers/warehouse_query.mp4" loop muted playsinline
+                  preload="none" aria-label="Text-prompt 3D segmentation of the reconstructed warehouse"></video>
+                <p class="media-caption">Real-time Text-based 3DGS Segmentation</p>
+                <div class="media-controls">
+                  <button type="button" class="media-btn media-play" aria-label="Play / pause"><i
+                      class="fas fa-pause"></i></button>
+                  <button type="button" class="media-btn media-fs" aria-label="Open in new tab"><i
+                      class="fas fa-external-link-alt"></i></button>
+                </div>
+              </div>
+            </div>
           </div>
         </li>
 
@@ -77,6 +137,23 @@
               <li>Controllable re-aging and de-aging via <span class="highlight">differentiable rendering</span> and a
                 GAN-based objective</li>
             </ul>
+            <section class="xp-contributions" aria-labelledby="nvidia-contributions-title">
+              <div class="xp-contributions-head">
+                <h3 class="xp-contributions-title" id="nvidia-contributions-title">Technical Contributions</h3>
+                <button class="xp-toggle-btn" type="button" aria-expanded="true"
+                  aria-controls="nvidia-contributions-list">Collapse</button>
+              </div>
+              <div class="xp-toggle-content" id="nvidia-contributions-list">
+                <ul class="xp-desc xp-contributions-list">
+                  <li>Generated synthetic 3D face meshes from infancy to old age by transferring identity-specific
+                    deformations from scanned faces to age-specific face templates.</li>
+                  <li>Learned the 3DMM identity basis using PCA on skull-aligned face meshes centered on age-specific
+                    reference shapes.</li>
+                  <li>Trained an end-to-end network to predict 3DMM identity and age parameters from a single image, using
+                    the pretrained MiVOLO age estimator to supply an age prior.</li>
+                </ul>
+              </div>
+            </section>
           </div>
         </li>
 
@@ -104,6 +181,23 @@
                 reconstruction of moving human bodies
                 <a href="https://github.com/hjoonpark/MultiCamCalib" target="_blank">github</a></li>
             </ul>
+            <section class="xp-contributions" aria-labelledby="utah-contributions-title">
+              <div class="xp-contributions-head">
+                <h3 class="xp-contributions-title" id="utah-contributions-title">Technical Contributions</h3>
+                <button class="xp-toggle-btn" type="button" aria-expanded="true"
+                  aria-controls="utah-contributions-list">Collapse</button>
+              </div>
+              <div class="xp-toggle-content" id="utah-contributions-list">
+                <ul class="xp-desc xp-contributions-list">
+                  <li>Built an end-to-end C++ and Python pipeline for multi-camera calibration using checkerboard corner
+                    detection and bundle adjustment with Ceres Solver.</li>
+                  <li>Built a VAE-based outlier detector to filter erroneous checkerboard corners and improve camera
+                    calibration.</li>
+                  <li>Trained a CNN corner detector for a body reconstruction pipeline that rejects invalid image patches,
+                    recognizes two-letter codes on the capture suit, and triangulates labeled corners.</li>
+                </ul>
+              </div>
+            </section>
           </div>
         </li>
 
@@ -131,6 +225,23 @@
                   href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C45&q=Adaptive+Precision-Enhancing+Hand+Rendering+for+Wearable+Fingertip+Tracking+Devices&btnG="
                   target="_blank">paper</a>]</li>
             </ul>
+            <section class="xp-contributions" aria-labelledby="kist-contributions-title">
+              <div class="xp-contributions-head">
+                <h3 class="xp-contributions-title" id="kist-contributions-title">Technical Contributions</h3>
+                <button class="xp-toggle-btn" type="button" aria-expanded="true"
+                  aria-controls="kist-contributions-list">Collapse</button>
+              </div>
+              <div class="xp-toggle-content" id="kist-contributions-list">
+                <ul class="xp-desc xp-contributions-list">
+                  <li>Calibrated virtual hand size using fingertip measurements, tracking-device geometry, and SVD-based
+                    similarity alignment.</li>
+                  <li>Retargeted finger joint angles using per-joint scaling and offsets calibrated from open-hand and
+                    grasping poses to align rendered and intended hand poses.</li>
+                  <li>Extended the FABRIK IK solver with planar hinge constraints to prevent unnatural finger bending
+                    during real-time hand reconstruction.</li>
+                </ul>
+              </div>
+            </section>
           </div>
         </li>
 

@@ -97,6 +97,128 @@ a:focus {
     margin-bottom: 0px;
 }
 
+/* ============================================
+   Section nav (sticky, under the red bar)
+   ============================================ */
+#section-nav {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Same width maths as #div-main (90% / max 1005px / 8px side padding, border-box),
+   so the tabs line up with the sidebar on the left and the content on the right. */
+#section-nav .nav-inner {
+    width: 90%;
+    max-width: 1005px;
+    margin: 0 auto;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+#section-nav .nav-scroll {
+    display: flex;
+    align-items: stretch;
+    /* Centred while the tabs fit. `safe` falls back to flex-start once the strip
+       overflows — plain `center` would push the first tab past the scroll origin
+       and make it unreachable on narrow screens. */
+    justify-content: center;
+    justify-content: safe center;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* old Edge */
+}
+
+#section-nav .nav-scroll::-webkit-scrollbar {
+    display: none;                  /* the fade edges signal overflow instead */
+}
+
+/* Fade the edge the strip can still scroll toward, so overflow is discoverable
+   without a scrollbar. Set by JS via data-fade. */
+#section-nav .nav-scroll[data-fade="right"] {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent 100%);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent 100%);
+}
+
+#section-nav .nav-scroll[data-fade="left"] {
+    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent 100%);
+    mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent 100%);
+}
+
+#section-nav .nav-scroll[data-fade="both"] {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+}
+
+#section-nav li {
+    flex: 0 0 auto;
+}
+
+#section-nav a {
+    display: block;
+    padding: 9px 11px 8px;
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text-color-light);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+#section-nav a:hover {
+    color: var(--text-color);
+    border-bottom-color: var(--border-color);
+    text-decoration: none;
+}
+
+#section-nav a.is-active {
+    color: var(--red);
+    border-bottom-color: var(--red);
+}
+
+#section-nav a:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+    border-radius: 2px;
+}
+
+html.dark #section-nav a.is-active {
+    color: #ff6b6b;
+    border-bottom-color: #ff6b6b;
+}
+
+@media (max-width: 768px) {
+    #section-nav .nav-inner {
+        width: 98%;
+        padding: 0 8px;
+    }
+
+    #section-nav a {
+        padding: 10px 10px 9px;
+    }
+}
+
+@media (max-width: 520px) {
+    #section-nav .nav-inner {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    #section-nav .nav-inner {
+        padding: 0 6px;   /* matches #div-main's tighter padding at this width */
+    }
+}
+
 /* Floating "back to top" button — sticks just outside the centered content's right
    edge (content is max-width:1005px, so its right edge is 50vw - 502.5px from the
    viewport's right). As the window shrinks and the margin disappears, it clamps to
@@ -175,7 +297,7 @@ html.dark #scroll-top-btn {
     flex: 0 0 232px;
     align-self: flex-start;
     position: sticky;
-    top: 8px;
+    top: calc(var(--nav-h, 0px) + 8px);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -360,7 +482,8 @@ table td.header {
 
 /* Ensure button in header doesn't expand - override any width rules */
 table td.header button,
-table td.header .pub-toggle-btn-global {
+table td.header .pub-toggle-btn-global,
+table td.header .xp-toggle-btn-global {
     width: auto !important;
     min-width: 0 !important;
     max-width: none !important;
@@ -368,7 +491,8 @@ table td.header .pub-toggle-btn-global {
 }
 
 /* Toggle button pinned to the right and vertically centered, no flex on the cell */
-table td.header .pub-toggle-btn-global {
+table td.header .pub-toggle-btn-global,
+table td.header .xp-toggle-btn-global {
     position: absolute;
     right: 16px;
     top: 50%;
@@ -528,7 +652,8 @@ table td:has(.table-contents) {
 }
 
 .tb-td-left--media .media-btn,
-.tb-td-left--vid .media-btn {
+.tb-td-left--vid .media-btn,
+.project-media .media-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -546,14 +671,16 @@ table td:has(.table-contents) {
 }
 
 .tb-td-left--media .media-btn:hover,
-.tb-td-left--vid .media-btn:hover {
+.tb-td-left--vid .media-btn:hover,
+.project-media .media-btn:hover {
     background: var(--blue);
     border-color: var(--blue);
     color: #fff;
 }
 
 html.dark .tb-td-left--media .media-btn,
-html.dark .tb-td-left--vid .media-btn {
+html.dark .tb-td-left--vid .media-btn,
+html.dark .project-media .media-btn {
     background: rgba(255, 255, 255, 0.06);
 }
 
@@ -1298,7 +1425,9 @@ html.dark .eqn {
    Publication Toggle Buttons
    ============================================ */
 .pub-toggle-btn,
-.pub-toggle-btn-global {
+.pub-toggle-btn-global,
+.xp-toggle-btn,
+.xp-toggle-btn-global {
     appearance: none;
     background-color: #ffffff;
     border: 1px solid #d0d5db;
@@ -1326,7 +1455,9 @@ html.dark .eqn {
 }
 
 .pub-toggle-btn:hover,
-.pub-toggle-btn-global:hover {
+.pub-toggle-btn-global:hover,
+.xp-toggle-btn:hover,
+.xp-toggle-btn-global:hover {
     background-color: #f0f2f5;
     border-color: #a0a8b4;
     color: #333;
@@ -1334,12 +1465,15 @@ html.dark .eqn {
 }
 
 .pub-toggle-btn:active,
-.pub-toggle-btn-global:active {
+.pub-toggle-btn-global:active,
+.xp-toggle-btn:active,
+.xp-toggle-btn-global:active {
     background-color: #e8eaed;
     border-color: #a0a8b4;
 }
 
-.pub-toggle-btn:disabled {
+.pub-toggle-btn:disabled,
+.xp-toggle-btn:disabled {
     background-color: #f5f6f7;
     border-color: var(--border-color);
     color: #959DA5;
@@ -1348,25 +1482,32 @@ html.dark .eqn {
 }
 
 .pub-toggle-btn:focus,
-.pub-toggle-btn-global:focus {
+.pub-toggle-btn-global:focus,
+.xp-toggle-btn:focus,
+.xp-toggle-btn-global:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(160, 168, 180, 0.25);
 }
 
 .pub-toggle-btn:focus:not(:focus-visible),
-.pub-toggle-btn-global:focus:not(:focus-visible) {
+.pub-toggle-btn-global:focus:not(:focus-visible),
+.xp-toggle-btn:focus:not(:focus-visible),
+.xp-toggle-btn-global:focus:not(:focus-visible) {
     box-shadow: none;
 }
 
-.pub-toggle-btn:before {
+.pub-toggle-btn:before,
+.xp-toggle-btn:before {
     display: none;
 }
 
-.pub-toggle-btn:-webkit-details-marker {
+.pub-toggle-btn:-webkit-details-marker,
+.xp-toggle-btn:-webkit-details-marker {
     display: none;
 }
 
-.pub-toggle-content {
+.pub-toggle-content,
+.xp-toggle-content {
     padding: 14px 18px 14px 20px;
     background: #f6f7f9;
     border-left: 3px solid #a0a8b4;
@@ -1378,7 +1519,8 @@ html.dark .eqn {
     word-wrap: break-word;
 }
 
-.pub-toggle-content::before {
+.pub-toggle-content::before,
+.xp-toggle-content::before {
     content: '';
     position: absolute;
     top: 0;
@@ -1405,7 +1547,8 @@ html.dark .eqn {
     margin-bottom: 4px;
 }
 
-.pub-toggle-content ul li::marker {
+.pub-toggle-content ul li::marker,
+.xp-toggle-content ul li::marker {
     color: #9aa3ae;
 }
 
@@ -1440,6 +1583,11 @@ html.dark .eqn {
     display: flex;
     gap: 12px;
     padding: 8px 0;
+    /* The global `* { max-width: 100% }` safety net would otherwise clamp this box
+       on hover, where `margin: 0 -4px` relies on `width: auto` growing by 8px to
+       keep the content box the same. Clamped, the content lost 8px and the text
+       rewrapped (a line would pop in and out as you moved the mouse). */
+    max-width: none;
 }
 
 .xp-item+.xp-item {
@@ -1522,6 +1670,41 @@ html.dark .eqn {
     font-weight: 400;
 }
 
+/* Technical contributions sit beneath each role's achievement summary. */
+.xp-contributions {
+    margin-top: 12px;
+}
+
+/* Title + Expand/Collapse button share one line; the list below collapses. */
+.xp-contributions-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.xp-contributions-title {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.xp-contributions .xp-toggle-content {
+    margin-top: 6px;
+}
+
+.xp-contributions-list {
+    margin: 0;
+    padding-left: 1.2em;
+    hyphens: manual;
+}
+
+.xp-contributions-list li + li {
+    margin-top: 4px;
+}
+
 /* Nested sub-item (e.g. exchange program under parent degree) */
 .xp-sub-item {
     display: flex;
@@ -1558,6 +1741,101 @@ html.dark .eqn {
 
 .xp-sub-body .xp-sub {
     font-size: 1em;
+}
+
+/* Two clips side by side, top-aligned: the portrait capture session and the
+   wide text-prompt segmentation result. The row's width is split in proportion
+   to the two aspect ratios (9:16 = 0.5625, 1920:1380 = 1.3913), which makes both
+   clips come out at exactly the same height for any container width. The buttons
+   hang below each clip, so the clips' own heights are what match. */
+.project-media {
+    /* Height cap. Both clips are sized by the row's width, so the cap is applied
+       there: with flex-basis 0 the shared height is (width - gap) / (sum of the
+       two flex ratios), so width = height * 1.9538 + gap inverts it. Below this
+       the row still shrinks to fit and the two heights stay equal. */
+    --pm-max-h: 221px;
+    max-width: calc(var(--pm-max-h) * 1.9538 + 12px);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.project-media .media-pair {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.project-media-clip {
+    flex: 0.5625 1 0;
+}
+
+.project-media-wide {
+    flex: 1.3913 1 0;
+}
+
+.project-media .vertical-video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    border-radius: 6px;
+    background: #000;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 3px 8px 0px, rgba(0, 0, 0, 0.12) 0px 2px 4px 0px;
+}
+
+.project-media-clip .vertical-video {
+    aspect-ratio: 9 / 16;
+}
+
+.project-media-wide .vertical-video {
+    aspect-ratio: 1920 / 1380;
+}
+
+.project-media .media-caption {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text-color-light);
+    text-align: center;
+    flex: 0 0 auto;
+}
+
+.project-media .media-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+/* Narrow rows: the proportional split would leave the portrait clip only ~50px
+   wide, so stack instead — capture clip first, segmentation clip beneath it. */
+@media (max-width: 940px) {
+    .project-media {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .project-media .media-pair {
+        flex: 0 0 auto;
+        max-width: 100%;
+    }
+
+    .project-media-wide {
+        width: 100%;
+    }
+
+    .project-media-clip .vertical-video {
+        width: auto;
+        height: 220px;
+    }
 }
 
 .project-image {
@@ -1643,7 +1921,8 @@ html.dark .eqn {
         overflow: hidden;
     }
 
-    table td.header .pub-toggle-btn-global {
+    table td.header .pub-toggle-btn-global,
+    table td.header .xp-toggle-btn-global {
         float: none;
         margin: 0;
         display: inline-block;
@@ -1906,7 +2185,9 @@ html.dark .eqn {
     }
 
     .pub-toggle-btn,
-    .pub-toggle-btn-global {
+    .pub-toggle-btn-global,
+    .xp-toggle-btn,
+    .xp-toggle-btn-global {
         font-size: 1em;
         padding: 3px 10px;
         min-height: 0;
@@ -1990,7 +2271,9 @@ html.dark .eqn {
     }
 
     .pub-toggle-btn,
-    .pub-toggle-btn-global {
+    .pub-toggle-btn-global,
+    .xp-toggle-btn,
+    .xp-toggle-btn-global {
         font-size: 1em;
         padding: 3px 8px;
         min-height: 0;
@@ -2332,9 +2615,11 @@ iframe {
     height: auto;
 }
 
-/* Prevent horizontal scrolling */
+/* Prevent horizontal scrolling. `clip` rather than `hidden`: `hidden` makes body a
+   scroll container, which silently breaks `position: sticky` on its descendants
+   (#section-nav and #profile-sidebar). Same reasoning as the html rule above. */
 body {
-    overflow-x: hidden;
+    overflow-x: clip;
     position: relative;
 }
 
@@ -2365,14 +2650,17 @@ table {
 
     a,
     button,
-    .pub-toggle-btn {
+    .pub-toggle-btn,
+    .xp-toggle-btn {
         min-height: 44px;
         min-width: 44px;
         padding: 8px 12px;
     }
 
     .pub-toggle-btn,
-    .pub-toggle-btn-global {
+    .pub-toggle-btn-global,
+    .xp-toggle-btn,
+    .xp-toggle-btn-global {
         padding: 3px 10px;
         font-size: 1em;
         min-height: 0;
@@ -2506,7 +2794,9 @@ html.dark #row-appdev,
 html.dark #row-doc,
 html.dark .pub-toggle-btn,
 html.dark .pub-toggle-btn-global,
-html.dark #darkmode-btn {
+html.dark #darkmode-btn,
+html.dark .xp-toggle-btn,
+html.dark .xp-toggle-btn-global {
     background-color: #161b22;
 }
 
@@ -2518,21 +2808,27 @@ html.dark .xp-item + .xp-item::before {
 html.dark .news-list li + li { border-top-color: rgba(255, 255, 255, 0.1); }
 
 /* BUG FIX: collapse/expand panel had a hardcoded light bg + border */
-html.dark .pub-toggle-content {
+html.dark .pub-toggle-content,
+html.dark .xp-toggle-content {
     background: #0d1117;              /* recessed vs the #161b22 card */
     border-left-color: #30363d;
     box-shadow: none;
 }
-html.dark .pub-toggle-content ul li::marker { color: #6e7681; }
+html.dark .pub-toggle-content ul li::marker,
+html.dark .xp-toggle-content ul li::marker { color: #6e7681; }
 
 /* BUG FIX: collapse/expand toggle buttons had hardcoded light border/text */
 html.dark .pub-toggle-btn,
-html.dark .pub-toggle-btn-global {
+html.dark .pub-toggle-btn-global,
+html.dark .xp-toggle-btn,
+html.dark .xp-toggle-btn-global {
     border-color: var(--border-color);
     color: var(--text-color-light);
 }
 html.dark .pub-toggle-btn:hover,
-html.dark .pub-toggle-btn-global:hover {
+html.dark .pub-toggle-btn-global:hover,
+html.dark .xp-toggle-btn:hover,
+html.dark .xp-toggle-btn-global:hover {
     color: var(--text-color);
     border-color: var(--text-color-light);
 }
