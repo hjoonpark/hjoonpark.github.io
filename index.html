@@ -357,7 +357,8 @@
 
       // Open the video file in a new browser tab.
       function openVideoInBrowser(v) {
-        var src = v && (v.currentSrc || v.src);
+        // data-full: the page plays a small web encode, the new tab gets the original.
+        var src = v && ((v.dataset && v.dataset.full) || v.currentSrc || v.src);
         if (src) window.open(src, '_blank');
       }
 
@@ -367,12 +368,12 @@
       });
 
       // Clicking the video itself does the same.
-      $(document).on('click', '.vertical-video', function () {
+      $(document).on('click', '.vertical-video, video.img-zoom', function () {
         openVideoInBrowser(this);
       });
 
       // Clicking the square thumbnail in a video row opens that image in a new tab.
-      $(document).on('click', '.tb-td-left--media .media-stack .img-zoom', function () {
+      $(document).on('click', '.tb-td-left--media .media-stack img.img-zoom', function () {
         var src = this.currentSrc || this.src;
         if (src) window.open(src, '_blank');
       });
