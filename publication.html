@@ -31,10 +31,12 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Achieves high-resolution facial animation 115× faster (18 FPS) than traditional
-                                    physics-based simulation, while maintaining comparable quality.</li>
-                                <li>Generalizes to unseen expressions, dynamics, and external forces, upsampling
-                                    low-resolution simulations to high-resolution surfaces without retraining.</li>
+                                <li>Combines coarse simulation with <strong>neural 3D super-resolution</strong>, producing
+                                    detailed facial animation at 18.46 FPS (115× faster than the traditional simulator).</li>
+                                <li>Uses <strong>graph neural networks</strong> and <strong>coordinate-based MLPs</strong>
+                                    for volumetric encoding and geodesic interpolation of coarse simulation output,
+                                    generalizing from quasi-static training data to unseen expressions, dynamics, and
+                                    external forces.</li>
                             </ul>
                         </div>
                     </td>
@@ -78,10 +80,11 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Addresses the scarcity of annotated medical images by generating diverse,
-                                    property-controllable synthetic training data, robust even under noisy labels.</li>
-                                <li>Introduces DuoVAE, a dual-VAE that controls target properties during generation,
-                                    enabling accurate collagen-fiber centerline tracking in fibrotic tissue.</li>
+                                <li>Introduces <strong>DuoVAE</strong>, pairing two independent <strong>VAEs</strong> for
+                                    <strong>controllable synthetic data generation</strong> across diverse collagen-fiber
+                                    morphologies.</li>
+                                <li>Combines a <strong>conditional GAN</strong> for image synthesis with
+                                    <strong>U-Net</strong> centerline extraction for collagen-fiber centerline tracking.</li>
                             </ul>
                         </div>
                     </td>
@@ -112,10 +115,12 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Reconstructs fine skin deformations of a moving body (e.g., from breathing and
-                                    shaking) using a low-cost patterned suit and multi-camera capture.</li>
-                                <li>Tracks 1,000+ uniquely labeled body points using occlusion-resilient deep networks
-                                    and a robust multi-camera calibration pipeline.</li>
+                                <li>Reconstructs 1,000+ uniquely labeled body points from 16 RGB cameras using <strong>CNN
+                                    regressors and classifiers</strong> for corner localization, candidate validation, and
+                                    code recognition, followed by <strong>multi-view triangulation</strong>, without
+                                    temporal tracking for point identification.</li>
+                                <li>Captures breathing, muscle motion, and flesh deformation with pixel-level reprojection
+                                    accuracy through camera calibration and <strong>bundle adjustment</strong>.</li>
                             </ul>
                         </div>
                     </td>
@@ -145,9 +150,11 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Reconstructs realistic full-hand poses in VR from fingertip positions alone.</li>
-                                <li>Combines motion retargeting with novel inverse-kinematics hinge constraints for
-                                    real-time, precise, and visually plausible rendering.</li>
+                                <li>Extends <strong>FABRIK inverse kinematics</strong> with planar hinge constraints for
+                                    real-time full-hand reconstruction from fingertip positions and uses <strong>motion
+                                    retargeting</strong> to improve pose alignment.</li>
+                                <li>Reduces grasping-task time by 17.08% for large objects and 28.14% for small objects
+                                    versus rendering the hand as spheres.</li>
                             </ul>
                         </div>
                     </td>
@@ -183,8 +190,10 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Renders virtual teeth up to 10× stiffer (Z-width) than standard methods using
-                                    commercially available haptic devices, for realistic dental feedback in VR.</li>
+                                <li>Uses <strong>passive midpoint integration</strong> to substantially increase stable
+                                    virtual-coupling stiffness for high-fidelity haptic rendering.</li>
+                                <li>Extends <strong>passive decomposition</strong> to 6-DoF haptics with a momentum-based
+                                    force observer, reducing device-proxy coordination error from 20 mm to near zero.</li>
                             </ul>
                         </div>
                     </td>
@@ -197,7 +206,7 @@
                     <td class="tb-td-right">
                         <span class="paper-title">Stretchable Skin-Like Cooling/Heating Device for Reconstruction of
                             Artificial Thermal Sensation in Virtual Reality</span>
-                        Jnwoo Lee, Heayoun Sul, Wonha Lee, Kyung Rok Pyun, Inho Ha, Dongkwan Kim, <span
+                        Jinwoo Lee, Heayoun Sul, Wonha Lee, Kyung Rok Pyun, Inho Ha, Dongkwan Kim, <span
                             class="my-author">Hyojoon Park</span>, Hyeonjin Eom, Yeosang Yoon, Jinwook Jung, Dongjun
                         Lee, and Seung Hwan Ko
                         <br>
@@ -213,8 +222,8 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Reproduces both hot and cold sensations in VR from a single stretchable, skin-like
-                                    device (230% stretchable), combining heating and cooling in one structure.</li>
+                                <li>Reproduces hot, cold, and material-dependent thermal cues at three fingertips in
+                                    VR using stretchable heating/cooling devices.</li>
                             </ul>
                         </div>
                     </td>
@@ -243,10 +252,8 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Replicates virtual heat on a wearable glove using a 12-pixel stretchable thermal
-                                    array, controlling temperature to within 5% error.</li>
-                                <li>Uses laser-patterned copper-nanowire heaters that remain durable under stretching
-                                    and oxidation for reliable feedback-controlled heating.</li>
+                                <li>Reproduces contact and radiative heat in VR using a 12-pixel thermal glove with
+                                    motion tracking and closed-loop temperature control.</li>
                             </ul>
                         </div>
                     </td>
@@ -275,24 +282,10 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Enables remote users to jointly manipulate rigid bodies through wearable cutaneous
-                                    haptic interfaces, using passivity-based control for stable and realistic
-                                    interactions.</li>
+                                <li>Enables two remote users to manipulate a shared rigid body in VR with wearable
+                                    cutaneous feedback.</li>
                             </ul>
                         </div>
-                    </td>
-                </tr>
-                <tr class="tr-pub-main">
-                    <td class="tb-td-left">
-                        <div class="img-placeholder-with-logo">
-                            <img loading="lazy" decoding="async" src="src/logo/snu.png" alt="Seoul National University" class="placeholder-logo">
-                        </div>
-                    </td>
-                    <td class="tb-td-right">
-                        <span class="paper-title">Design and Performance Evaluation of Wearable Haptic Interfaces</span>
-                        WonHa Lee, Myungsin Kim, <span class="my-author">Hyojoon Park</span>, and Dongjun Lee
-                        <br>
-                        <span class="conference">International Conference on Control, Automation and Systems 2018</span>
                     </td>
                 </tr>
                 <tr class="tr-pub-main">
@@ -308,6 +301,19 @@
                         <br>
                         <span class="conference">Korea Robotics Society Annual Conference 2018</span>
                         <br>
+                    </td>
+                </tr>
+                <tr class="tr-pub-main">
+                    <td class="tb-td-left">
+                        <div class="img-placeholder-with-logo">
+                            <img loading="lazy" decoding="async" src="src/logo/snu.png" alt="Seoul National University" class="placeholder-logo">
+                        </div>
+                    </td>
+                    <td class="tb-td-right">
+                        <span class="paper-title">Design and Performance Evaluation of Wearable Haptic Interfaces</span>
+                        WonHa Lee, Myungsin Kim, <span class="my-author">Hyojoon Park</span>, and Dongjun Lee
+                        <br>
+                        <span class="conference">International Conference on Control, Automation and Systems 2018</span>
                     </td>
                 </tr>
 </tr>

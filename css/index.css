@@ -1721,6 +1721,15 @@ html.dark .eqn {
     margin-top: 4px;
 }
 
+/* Key terms inside the technical-contribution bullets, mirroring the bolded
+   terms in the CV. .xp-desc sets a lighter body color, so lift these back to
+   the full text color as well as bolding them. */
+.xp-desc strong,
+.pub-toggle-content ul strong {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
 /* Nested sub-item (e.g. exchange program under parent degree) */
 .xp-sub-item {
     display: flex;

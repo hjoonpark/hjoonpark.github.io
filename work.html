@@ -23,8 +23,9 @@
               <span>Playa Vista, California, United States</span>
             </p>
             <ul class="xp-desc" style="margin:0.25em 0; padding-left:1.2em;">
-              <li>Developed a real-time, self-supervised <span class="highlight">neural hair simulator</span> for digital
-                humans, focusing on efficient physics-based animation for XR (<strong>publication-track results in progress</strong>)</li>
+              <li>Developed a real-time, self-supervised, physics-based <span class="highlight">neural hair
+                  simulator</span> for digital humans and XR (<strong>publication-track results in
+                  progress</strong>)</li>
             </ul>
             <section class="xp-contributions" aria-labelledby="google-contributions-title">
               <div class="xp-contributions-head">
@@ -34,14 +35,14 @@
               </div>
               <div class="xp-toggle-content" id="google-contributions-list">
                 <ul class="xp-desc xp-contributions-list">
-                  <li>Designed a GRU-based motion encoder to retain motion history and capture hair inertia, including
-                    natural swinging and settling.</li>
-                  <li>Encoded local and global hair groom structure with a latent transformer, scaling linearly rather
-                    than quadratically in strand count.</li>
-                  <li>Built a StyleGAN2-inspired modulated MLP decoder conditioned on body shape, hairstyle, and motion
-                    history for hair animation.</li>
-                  <li>Trained the neural hair simulator with volumetric elastic, inertial, and collision losses for richer
-                    dynamics and faster training.</li>
+                  <li>Designed a <strong>GRU motion encoder</strong> to model hair inertia, natural swinging, and
+                    settling from motion history.</li>
+                  <li>Encoded local and global hair-groom structure with a <strong>latent transformer</strong> that
+                    scales linearly with strand count.</li>
+                  <li>Built a <strong>StyleGAN2</strong>-inspired <strong>modulated MLP</strong> decoder conditioned
+                    on body shape, hairstyle, and motion history for hair animation.</li>
+                  <li>Trained the neural hair simulator with <strong>volumetric elastic, inertial, and collision
+                    losses</strong> for richer dynamics and faster training.</li>
                 </ul>
               </div>
             </section>
@@ -69,11 +70,11 @@
                     Winner</a><span class="tooltiptext-image"><img loading="lazy" decoding="async" src="src/papers/nokia_bell_labs_1st.jpg"
                       alt="1st Place Winner"></span></span> among 100+ global interns — project "Empowering
                   Digital Twins with Precise Physical Registration and Language-Awareness"</li>
-              <li>Renders 3D scenes in real-time using <span class="highlight">3DGS</span> with precise
-                <span class="highlight">physical registration</span> (scale and orientation) and <span
-                  class="highlight">language features</span> for natural-language object queries</li>
-              <li>Follow-up work studies how <span class="highlight">capture geometry</span> affects 3DGS reconstruction
-                quality (<strong>publication-track results in progress</strong>)</li>
+              <li>Built a real-time <span class="highlight">3DGS</span> digital twin with <span
+                  class="highlight">physical registration</span> (scale and orientation) and <span
+                  class="highlight">natural-language queries</span></li>
+              <li>Follow-up research studies capture-geometry effects on reconstruction quality
+                (<strong>publication-track results in progress</strong>)</li>
             </ul>
             <section class="xp-contributions" aria-labelledby="nokia-contributions-title">
               <div class="xp-contributions-head">
@@ -83,10 +84,10 @@
               </div>
               <div class="xp-toggle-content" id="nokia-contributions-list">
                 <ul class="xp-desc xp-contributions-list">
-                  <li>Aligned the digital twin with real-world coordinates using ChArUco board correspondences, linear
-                    triangulation, nonlinear reprojection-error minimization, and Umeyama similarity alignment.</li>
-                  <li>Embedded language features in each 3D Gaussian and applied DBSCAN clustering for real-time,
-                    text-guided 3D object segmentation.</li>
+                  <li>Registered 3DGS to real-world coordinates using ChArUco triangulation, reprojection
+                    optimization, and Umeyama alignment.</li>
+                  <li>Embedded language features in 3D Gaussians and used DBSCAN for real-time, <strong>text-guided
+                    3D object segmentation</strong>.</li>
                 </ul>
               </div>
             </section>
@@ -98,7 +99,7 @@
                 <p class="media-caption">Capture</p>
                 <div class="media-controls">
                   <button type="button" class="media-btn media-play" aria-label="Play / pause"><i
-                      class="fas fa-pause"></i></button>
+                      class="fas fa-play"></i></button>
                   <button type="button" class="media-btn media-fs" aria-label="Open in new tab"><i
                       class="fas fa-external-link-alt"></i></button>
                 </div>
@@ -110,7 +111,7 @@
                 <p class="media-caption">Real-time Text-based 3DGS Segmentation</p>
                 <div class="media-controls">
                   <button type="button" class="media-btn media-play" aria-label="Play / pause"><i
-                      class="fas fa-pause"></i></button>
+                      class="fas fa-play"></i></button>
                   <button type="button" class="media-btn media-fs" aria-label="Open in new tab"><i
                       class="fas fa-external-link-alt"></i></button>
                 </div>
@@ -134,10 +135,8 @@
               <span>Santa Clara, California, United States</span>
             </p>
             <ul class="xp-desc" style="margin:0.25em 0; padding-left:1.2em;">
-              <li>Built a single-image 3D face reconstruction framework generalizing across ages (infants to
-                elderly)</li>
-              <li>Controllable re-aging and de-aging via <span class="highlight">differentiable rendering</span> and a
-                GAN-based objective</li>
+              <li>Developed a <span class="highlight">single-image 3D face reconstruction</span> framework for
+                identity-preserving re-aging and de-aging across infancy to old age</li>
             </ul>
             <section class="xp-contributions" aria-labelledby="nvidia-contributions-title">
               <div class="xp-contributions-head">
@@ -147,12 +146,13 @@
               </div>
               <div class="xp-toggle-content" id="nvidia-contributions-list">
                 <ul class="xp-desc xp-contributions-list">
-                  <li>Generated synthetic 3D face meshes from infancy to old age by transferring identity-specific
-                    deformations from scanned faces to age-specific face templates.</li>
-                  <li>Learned the 3DMM identity basis using PCA on skull-aligned face meshes centered on age-specific
-                    reference shapes.</li>
-                  <li>Trained an end-to-end network to predict 3DMM identity and age parameters from a single image, using
-                    the pretrained MiVOLO age estimator to supply an age prior.</li>
+                  <li>Generated age-specific training meshes through <strong>deformation transfer</strong> from
+                    scanned faces to age-specific templates.</li>
+                  <li>Learned the <strong>3D morphable model (3DMM)</strong> identity basis from skull-aligned face
+                    meshes centered on age-specific reference shapes.</li>
+                  <li>Trained an end-to-end network to predict 3DMM identity and age parameters from a single image
+                    using a pretrained MiVOLO age prior, <strong>differentiable rendering</strong>, and
+                    <strong>GAN-based training</strong>.</li>
                 </ul>
               </div>
             </section>
@@ -178,9 +178,9 @@
                 [<a
                   href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Capturing+Detailed+Deformations+of+Moving+Human+Bodies&btnG="
                   target="_blank">paper</a>]</li>
-              <li>Built and open-sourced a <span class="highlight">multi-view camera calibration</span> framework
-                (bundle adjustment, ML-based outlier detection) tracking 1,000+ labeled points for detailed
-                reconstruction of moving human bodies
+              <li>Developed and open-sourced a <span class="highlight">multi-view body-reconstruction</span> system,
+                recovering 1,000+ uniquely labeled points from RGB cameras and a low-cost patterned suit to capture
+                fine skin deformation
                 [<a href="https://github.com/hjoonpark/MultiCamCalib" target="_blank">github</a>]</li>
             </ul>
             <section class="xp-contributions" aria-labelledby="utah-contributions-title">
@@ -191,12 +191,12 @@
               </div>
               <div class="xp-toggle-content" id="utah-contributions-list">
                 <ul class="xp-desc xp-contributions-list">
-                  <li>Built an end-to-end C++ and Python pipeline for multi-camera calibration using checkerboard corner
-                    detection and bundle adjustment with Ceres Solver.</li>
-                  <li>Built a VAE-based outlier detector to filter erroneous checkerboard corners and improve camera
-                    calibration.</li>
-                  <li>Trained a CNN corner detector for a body reconstruction pipeline that rejects invalid image patches,
-                    recognizes two-letter codes on the capture suit, and triangulates labeled corners.</li>
+                  <li>Built a <strong>multi-camera calibration and bundle adjustment</strong> pipeline in C++ and
+                    Python with Ceres Solver.</li>
+                  <li>Built a <strong>VAE outlier detector</strong> to filter erroneous checkerboard corners and
+                    improve calibration.</li>
+                  <li>Trained <strong>CNN regressors and classifiers</strong> for corner localization, candidate
+                    validation, and code recognition.</li>
                 </ul>
               </div>
             </section>
@@ -218,9 +218,8 @@
               <span>Mar 2019 – Aug 2019 · 6 mos</span>
             </p>
             <ul class="xp-desc" style="margin:0.25em 0; padding-left:1.2em;">
-              <li>Developed a <span class="highlight">VR hand-rendering</span> framework for wearable fingertip-tracking
-                devices, using motion retargeting and inverse-kinematics constraints for full hand pose and grasping
-                accuracy</li>
+              <li>Developed a <span class="highlight">VR hand-rendering</span> system that reconstructs realistic
+                full-hand poses from fingertip positions</li>
               <li>Project <i>“Adaptive Precision-Enhancing Hand Rendering for Wearable Fingertip Tracking Devices”</i> —
                 IROS 2020
                 [<a
@@ -235,12 +234,12 @@
               </div>
               <div class="xp-toggle-content" id="kist-contributions-list">
                 <ul class="xp-desc xp-contributions-list">
-                  <li>Calibrated virtual hand size using fingertip measurements, tracking-device geometry, and SVD-based
-                    similarity alignment.</li>
-                  <li>Retargeted finger joint angles using per-joint scaling and offsets calibrated from open-hand and
-                    grasping poses to align rendered and intended hand poses.</li>
-                  <li>Extended the FABRIK IK solver with planar hinge constraints to prevent unnatural finger bending
-                    during real-time hand reconstruction.</li>
+                  <li>Calibrated virtual hand size from fingertip measurements and tracking-device geometry using
+                    SVD-based similarity alignment.</li>
+                  <li>Applied <strong>motion retargeting</strong> with per-joint scaling and offsets calibrated from
+                    open-hand and grasping poses.</li>
+                  <li>Extended <strong>FABRIK inverse kinematics</strong> with planar hinge constraints for natural
+                    finger bending during <strong>real-time hand reconstruction</strong>.</li>
                 </ul>
               </div>
             </section>

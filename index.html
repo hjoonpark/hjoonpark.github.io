@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="css/index.css?v=60">
+  <link rel="stylesheet" href="css/index.css?v=61">
   <link rel="stylesheet" href="css/tooltip.css?v=42">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <link rel="icon" type="favicon.ico" href="favicon.ico?v=5">
@@ -311,6 +311,36 @@
         }
       });
 
+      // Autoplay-on-scroll is a desktop convenience, not a mobile one: on a phone
+      // it silently pulls a few MB of video over a cell connection just because
+      // the reader scrolled past. Skip it on narrow screens, when the OS asks for
+      // reduced motion, and when the browser reports data-saver or a slow link —
+      // those visits stay on the poster (~65 KB for both) until the reader taps
+      // play, which is what the .media-play button already does.
+      var autoplayOK = (function () {
+        try {
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+          if (window.matchMedia('(max-width: 768px)').matches) return false;
+          var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+          if (c && (c.saveData || /(^|-)(2g|slow-2g)$/.test(c.effectiveType || ''))) return false;
+        } catch (e) { }
+        return true;
+      })();
+
+      // Keep each button's icon in step with its video no matter what changed the
+      // state — autoplay, scrolling away, or a tap. play/pause do not bubble, so
+      // these listen in the capture phase.
+      function syncMediaIcon(v) {
+        var pair = v.closest && v.closest('.media-pair');
+        var icon = pair && pair.querySelector('.media-play i');
+        if (icon) icon.className = v.paused ? 'fas fa-play' : 'fas fa-pause';
+      }
+      ['play', 'pause'].forEach(function (evt) {
+        document.addEventListener(evt, function (e) {
+          if (e.target && e.target.tagName === 'VIDEO') syncMediaIcon(e.target);
+        }, true);
+      });
+
       // Lazy playback: videos have no `autoplay` and preload="none", so nothing
       // downloads until they scroll into view. This starts them then (loading +
       // playing) and pauses them when they leave, so the initial page load stays
@@ -319,9 +349,9 @@
         entries.forEach(function (e) {
           var v = e.target;
           if (e.isIntersecting) {
-            if (v.paused && !v.dataset.userPaused) {
+            if (autoplayOK && v.paused && !v.dataset.userPaused) {
               var p = v.play();
-              if (p && p.catch) p.catch(function () {});
+              if (p && p.catch) p.catch(function () { });
             }
           } else if (!v.paused) {
             v.pause();
@@ -366,8 +396,17 @@
         openVideoInBrowser(mediaVideoFor(this));
       });
 
-      // Clicking the video itself does the same.
+      // Clicking the video itself does the same — except where autoplay is off
+      // (phones, data-saver), where a still frame reads as "tap to play". There the
+      // first tap starts the small web encode; the explicit full-screen button is
+      // still the way to pull the multi-MB original.
       $(document).on('click', '.vertical-video, video.img-zoom', function () {
+        if (!autoplayOK && this.paused) {
+          delete this.dataset.userPaused;
+          var p = this.play();
+          if (p && p.catch) p.catch(function () { });
+          return;
+        }
         openVideoInBrowser(this);
       });
 
