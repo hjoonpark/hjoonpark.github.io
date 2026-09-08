@@ -398,22 +398,22 @@
         });
       }
 
-      // Load all sections
-      insertRow("row-intro", "intro.html", renderDarkModeBtn);
-      insertRow("row-education", "education.html");
-      insertRow("row-research", "research.html");
-      insertRow("row-news", "news.html");
-      // Work experience: each role's "Technical Contributions" list collapses,
-      // with a per-role button and an "Expand all" in the section header
-      // (same interaction as the publications section below).
-      insertRow("row-work", "work.html", function () {
+      // Initialize contributions after each section loads. Keep its controls local
+      // so Work Experience's "Collapse all" does not affect Education.
+      function initContributions(sectionId) {
+        const $heading = $("#" + sectionId);
+        const $section = $heading.closest('tr').next('tr');
+        const $buttons = $section.find('.xp-toggle-btn');
+        const $contents = $section.find('.xp-toggle-content');
+        const $global = $heading.find('.xp-toggle-btn-global');
+
         function setBtn($btn, open) {
           $btn.data('toggled', open)
               .attr('aria-expanded', open ? 'true' : 'false')
               .text(open ? "Collapse" : "Expand");
         }
 
-        $(".xp-toggle-btn").off("click").on("click", function () {
+        $buttons.off("click").on("click", function () {
           let $btn = $(this);
           let $content = $btn.closest('.xp-contributions').find('.xp-toggle-content');
           let open = !$btn.data('toggled');
@@ -426,25 +426,40 @@
         });
 
         // Global toggle
-        $(".xp-toggle-btn-global").off("click").on("click", function () {
+        $global.off("click").on("click", function () {
           let open = !$(this).data('toggled');
           if (open) {
-            $('.xp-toggle-content').slideDown();
+            $contents.slideDown();
           } else {
-            $('.xp-toggle-content').slideUp();
+            $contents.slideUp();
           }
-          setBtn($('.xp-toggle-btn'), open);
+          setBtn($buttons, open);
           $(this).data('toggled', open)
                  .attr('aria-expanded', open ? 'true' : 'false')
                  .text(open ? "Collapse all" : "Expand all");
         });
 
-        // Start expanded on every visit (state is deliberately not persisted)
-        setBtn($(".xp-toggle-btn"), true);
-        $(".xp-toggle-btn-global").data('toggled', true)
+        // Use each contribution's initial state from its markup on every visit.
+        $buttons.each(function () {
+          const $btn = $(this);
+          const open = $btn.attr('aria-expanded') !== 'false';
+          setBtn($btn, open);
+          $btn.closest('.xp-contributions').find('.xp-toggle-content').toggle(open);
+        });
+        $global.data('toggled', true)
                                   .attr('aria-expanded', 'true')
                                   .text('Collapse all');
-        $('.xp-toggle-content').show();
+      }
+
+      // Load all sections
+      insertRow("row-intro", "intro.html", renderDarkModeBtn);
+      insertRow("row-education", "education.html", function () {
+        initContributions("sec-education");
+      });
+      insertRow("row-research", "research.html");
+      insertRow("row-news", "news.html");
+      insertRow("row-work", "work.html", function () {
+        initContributions("sec-work");
       });
       insertRow("row-otherwork", "otherwork.html");
       insertRow("row-services", "services.html");
