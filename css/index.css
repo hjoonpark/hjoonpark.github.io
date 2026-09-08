@@ -117,8 +117,7 @@ html.dark #section-nav {
     background-color: #161b22;
 }
 
-/* Same width maths as #div-main (90% / max 1005px / 8px side padding, border-box),
-   so the tabs line up with the sidebar on the left and the content on the right. */
+/* Center the navigation independently, on the same axis as the main content. */
 #section-nav .nav-inner {
     width: 90%;
     max-width: 1005px;
@@ -237,13 +236,10 @@ html.dark #section-nav a.is-active {
     }
 }
 
-/* Floating "back to top" button — sticks just outside the centered content's right
-   edge (content is max-width:1005px, so its right edge is 50vw - 502.5px from the
-   viewport's right). As the window shrinks and the margin disappears, it clamps to
-   20px and rides over the rows. */
+/* Keep the button just outside the centered, 749px content column on wide screens. */
 #scroll-top-btn {
     position: fixed;
-    right: max(20px, calc(50vw - 542.5px));
+    right: max(20px, calc(50vw - 414.5px));
     bottom: 20px;
     z-index: 2147483000;              /* always on top of page content */
     width: 32px;
@@ -296,11 +292,13 @@ html.dark #scroll-top-btn {
 }
 
 #div-main {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    /* Equal outer columns keep the table centered; only the left contains a profile. */
+    grid-template-columns: 232px minmax(0, 749px) 232px;
+    align-items: start;
     gap: 8px;
-    width: 90%;
-    max-width: 1005px;
+    width: calc(100% - 32px);
+    max-width: 1245px;
     border: 0;
     border-spacing: 0;
     border-collapse: separate;
@@ -312,7 +310,7 @@ html.dark #scroll-top-btn {
 
 /* ---- Profile sidebar: narrow left column on desktop, centered block on mobile ---- */
 #profile-sidebar {
-    flex: 0 0 232px;
+    grid-column: 1;
     align-self: flex-start;
     position: sticky;
     top: calc(var(--nav-h, 0px) + 8px);
@@ -323,7 +321,7 @@ html.dark #scroll-top-btn {
 }
 
 #content-main {
-    flex: 1 1 auto;
+    grid-column: 2;
     min-width: 0; /* let wide tables/code shrink instead of forcing overflow */
 }
 
@@ -1901,6 +1899,21 @@ html.dark .eqn {
 /* ============================================
    Responsive Design
    ============================================ */
+/* Stack before the centered column and its two side margins become too narrow. */
+@media (max-width: 1151px) {
+    #div-main {
+        display: block;
+        width: 90%;
+        max-width: 765px;
+    }
+
+    #profile-sidebar {
+        position: static;
+        width: 232px;
+        margin: 0 auto 8px;
+    }
+}
+
 @media (max-width: 768px) {
     #div-main {
         display: block; /* stack sidebar above content on mobile */
