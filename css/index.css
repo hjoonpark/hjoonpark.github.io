@@ -400,8 +400,7 @@ html.dark #scroll-top-btn {
 #row-research,
 #row-work,
 #row-education,
-#row-appdev,
-#row-doc {
+#row-appdev {
     box-shadow: var(--shadow-sm);
     border-radius: 4px;
     overflow: visible;
@@ -423,8 +422,7 @@ html.dark #scroll-top-btn {
 #row-publication,
 #row-otherwork,
 #row-education,
-#row-appdev,
-#row-doc {
+#row-appdev {
     width: 100% !important;
     max-width: 100% !important;
 }
@@ -433,8 +431,7 @@ html.dark #scroll-top-btn {
 #row-publication td,
 #row-otherwork td,
 #row-education td,
-#row-appdev td,
-#row-doc td {
+#row-appdev td {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box;
@@ -444,8 +441,7 @@ html.dark #scroll-top-btn {
 #row-publication td.header button,
 #row-otherwork td.header button,
 #row-education td.header button,
-#row-appdev td.header button,
-#row-doc td.header button {
+#row-appdev td.header button {
     width: auto !important;
     max-width: none !important;
     min-width: 0 !important;
@@ -2831,7 +2827,6 @@ html.dark #row-research,
 html.dark #row-work,
 html.dark #row-education,
 html.dark #row-appdev,
-html.dark #row-doc,
 html.dark .pub-toggle-btn,
 html.dark .pub-toggle-btn-global,
 html.dark #darkmode-btn,
