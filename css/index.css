@@ -23,7 +23,7 @@
    ============================================ */
 html {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 0.85em; /* GLOBAL font-size knob — scales the whole site */
+    font-size: 0.85em; /* GLOBAL font-size knob that scales the whole site */
     font-weight: 400;
     line-height: 1.6;
     -webkit-text-size-adjust: 100%;
@@ -130,7 +130,7 @@ html.dark #section-nav {
     display: flex;
     align-items: stretch;
     /* Centred while the tabs fit. `safe` falls back to flex-start once the strip
-       overflows — plain `center` would push the first tab past the scroll origin
+       overflows. Plain `center` would push the first tab past the scroll origin
        and make it unreachable on narrow screens. */
     justify-content: center;
     justify-content: safe center;
@@ -195,7 +195,7 @@ html.dark #section-nav {
 
 /* The global `a:focus` rule paints a blue outline on plain focus, which a mouse
    click leaves stuck on the tab until you click elsewhere. Drop it here, then put
-   it back for :focus-visible only — that never matches a mouse click, so keyboard
+   it back for :focus-visible only, which never matches a mouse click, so keyboard
    users keep an indicator and mouse users see nothing. Order matters: these two
    have equal specificity. */
 #section-nav a:focus {
@@ -599,7 +599,7 @@ table td:has(.table-contents) {
     min-width: 0;
     max-width: 100%;
     height: var(--media-h);   /* explicit (not 100%): avoids a table-cell flex-height quirk */
-    /* No overflow:hidden — it would clip the hover-zoom. Instead the image and
+    /* No overflow:hidden, since it would clip the hover-zoom. Instead the image and
        video shrink to fit (below), so the media never overflows the column. */
 }
 
@@ -644,7 +644,7 @@ table td:has(.table-contents) {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
 }
 
-/* No hover-zoom in the app-dev media rows — neither the video nor the thumbnail. */
+/* No hover-zoom in the app-dev media rows, neither the video nor the thumbnail. */
 .tb-td-left--media .media-pair .vertical-video:hover,
 .tb-td-left--media .media-stack .img-zoom:hover {
     transform: none;
@@ -769,7 +769,7 @@ html.dark .project-media .media-btn {
     position: relative;
     /* FIXED pixel width (not 100%): a constant width breaks the circular
        cell<->content sizing, so the flex carousel content can never push the
-       table column wider — no more width flip-flopping as images load / scroll. */
+       table column wider, so no more width flip-flopping as images load / scroll. */
     width: calc(var(--img-h-desktop) * 1.6);
     max-width: 100%;
     /* Pin to the standard thumbnail height so every image (portrait screenshots
@@ -777,7 +777,7 @@ html.dark .project-media .media-btn {
     height: var(--img-h-desktop);
 }
 
-/* Independent Application Development: NO hover-zoom anywhere — carousels, their
+/* Independent Application Development: NO hover-zoom anywhere, including carousels, their
    images, or the video rows (thumbnail + video). !important so it can't be undone. */
 .app-scroll:hover,
 .app-scroll .img-zoom:hover,
@@ -1840,7 +1840,7 @@ html.dark .eqn {
 }
 
 /* Narrow rows: the proportional split would leave the portrait clip only ~50px
-   wide, so stack instead — capture clip first, segmentation clip beneath it. */
+   wide, so stack instead: capture clip first, segmentation clip beneath it. */
 @media (max-width: 940px) {
     .project-media {
         flex-direction: column;
@@ -2071,7 +2071,7 @@ html.dark .eqn {
 
     /* YouTube (video-link) thumbnails: the 3-class base rule forces 100%/100%,
        so match its specificity here to cap the height (e.g. Two Minute Papers).
-       margin:0 auto centers it — the .video-link is inline-block, so text-align
+       margin:0 auto centers it. The .video-link is inline-block, so text-align
        can't center this block child. */
     .tb-td-left .video-link .thumbnail {
         display: block;
@@ -2781,7 +2781,7 @@ table {
 /* ============================================
    Dark-mode toggle button (floats at the content's top-right; design only, not wired up)
    ============================================ */
-/* Dark / light-mode toggle — a small round icon button that sits inline with the
+/* Dark / light-mode toggle: a small round icon button that sits inline with the
    social icons in the profile card, right after the CV link. Icon only. */
 #darkmode-btn {
     display: inline-flex;

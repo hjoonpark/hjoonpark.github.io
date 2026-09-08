@@ -256,7 +256,7 @@
         setTimeout(update, 120);
 
         // Hovering the carousel preloads a few images ahead, so they're ready by the
-        // time you click/scroll — eliminates the pop-in for the common case.
+        // time you click/scroll, which eliminates the pop-in for the common case.
         root.addEventListener('mouseenter', function () { loadAround(vp, 2); });
 
         // Preload the first couple of images only once the carousel scrolls into
