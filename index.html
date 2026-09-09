@@ -168,7 +168,13 @@
           else if (ar.right > sr.right - 8) strip.scrollLeft += (ar.right - (sr.right - 8));
         }
 
+        var activeLink = null;
         function setActive(a) {
+          // Scrollspy calls this on every frame. Bail when nothing changed, otherwise
+          // revealTab() nudges strip.scrollLeft each frame, which re-fires the strip's
+          // scroll handler and repaints the fade mask, i.e. visible flicker.
+          if (a === activeLink) return;
+          activeLink = a;
           links.forEach(function (x) {
             var on = x === a;
             x.classList.toggle('is-active', on);
@@ -200,7 +206,7 @@
           live = [];
           links.forEach(function (a) {
             var el = document.querySelector(a.getAttribute('href'));
-            a.parentElement.hidden = !el;
+            if (a.parentElement.hidden === !!el) a.parentElement.hidden = !el;
             if (el) live.push({ a: a, el: el });
           });
           publishNavHeight();
@@ -233,7 +239,11 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', function () { publishNavHeight(); setFades(); updateActive(); });
         strip.addEventListener('scroll', setFades, { passive: true });
-        $(document).ajaxComplete(function () { setTimeout(refresh, 50); });
+        var refreshTimer;
+        $(document).ajaxComplete(function () {
+          clearTimeout(refreshTimer);
+          refreshTimer = setTimeout(refresh, 60);
+        });
 
         refresh();
 
@@ -365,16 +375,24 @@
         var open = $btn.attr('aria-expanded') === 'false';
         $btn.attr('aria-expanded', open ? 'true' : 'false').text(open ? 'Collapse' : 'Expand');
         if (open) {
-          $panel.slideDown(180, function () { $(window).trigger('resize'); });
+          $panel.slideDown(180, function () { window.dispatchEvent(new Event('resize')); });
         } else {
           $panel.slideUp(180);
         }
       });
 
-      // Run now and again as AJAX-injected sections arrive.
+      // Run now and again as AJAX-injected sections arrive. Scoped to the content
+      // table (videos never appear elsewhere) and disconnected once the partials
+      // have settled, so it is not watching the document for the whole session.
       observeLazyVideos();
-      new MutationObserver(observeLazyVideos)
-        .observe(document.documentElement, { childList: true, subtree: true });
+      var lazyMO = new MutationObserver(observeLazyVideos);
+      var mainTable = document.getElementById('table-main');
+      if (mainTable) {
+        lazyMO.observe(mainTable, { childList: true, subtree: true });
+        $(document).ajaxStop(function () {
+          setTimeout(function () { observeLazyVideos(); lazyMO.disconnect(); }, 200);
+        });
+      }
 
       // Click a carousel image to open it full-size in a new tab. A small movement
       // threshold means a scroll/swipe drag doesn't count as a click.

@@ -191,11 +191,13 @@
                     <td colspan="2">
                         <div class="pub-toggle-content">
                             <ul>
-                                <li>Uses <strong>passive midpoint integration</strong> to substantially increase stable
-                                    virtual-coupling stiffness for high-fidelity haptic rendering.</li>
-                                <li>Extends <strong>passive decomposition</strong> to 6-DoF haptics with a
-                                    momentum-based human force observer, reducing device-proxy coordination error from
-                                    20 mm to near zero.</li>
+                                <li>Extends <strong>passive decomposition</strong> to SE(3) using <strong>passive
+                                    midpoint integration</strong>, substantially increasing stable virtual-coupling
+                                    stiffness, with <strong>octree voxel rendering</strong> for real-time collision
+                                    detection and material removal in virtual tooth drilling.</li>
+                                <li>Derives a <strong>momentum-based disturbance observer</strong> for sensorless force
+                                    estimation on multi-DoF haptic devices, reducing device-proxy coordination error
+                                    from 20 mm to near zero.</li>
                             </ul>
                         </div>
                     </td>
