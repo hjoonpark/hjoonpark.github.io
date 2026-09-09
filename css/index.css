@@ -213,6 +213,24 @@ html.dark #section-nav a.is-active {
     border-bottom-color: #ff6b6b;
 }
 
+/* Apps and YouTube are side projects rather than research sections, so they sit
+   quieter than the tabs before them and are fenced off by a divider. Hover and
+   active states are left alone, so they still respond normally. */
+#section-nav .nav-secondary a {
+    color: #7b8794;
+    font-weight: 500;
+}
+
+html.dark #section-nav .nav-secondary a {
+    color: #8b949e;
+}
+
+#section-nav .nav-divider {
+    margin-left: 8px;
+    padding-left: 9px;
+    border-left: 1px solid var(--border-color);
+}
+
 @media (max-width: 768px) {
     #section-nav .nav-inner {
         width: 98%;
@@ -351,6 +369,17 @@ html.dark #scroll-top-btn {
     word-break: break-word;
 }
 
+/* Research identity line, directly under the name. Sized between the name and
+   the email so it reads as a subtitle rather than a second heading. */
+.profile-tagline {
+    color: var(--text-color-light);
+    font-size: 0.92em;
+    line-height: 1.45;
+    margin: 0 auto 8px;
+    max-width: 22em;
+    text-wrap: balance;
+}
+
 #profile-sidebar .intro-links {
     display: flex;
     flex-wrap: wrap;
@@ -483,7 +512,10 @@ table td.header {
     border-bottom: 1px solid var(--border-color);
     letter-spacing: .06em;
     padding: 4px 16px 4px;
-    background-color: #fff;
+    /* One shade greyer than the page (--bg-color #fafafa) so section headers read
+       as their own band. Reuses the same grey as the sticky nav (#f0f2f5) rather
+       than introducing another tone. */
+    background-color: #f0f2f5;
     font-weight: 600;
     position: relative; /* anchor for the absolutely-positioned toggle button */
     vertical-align: middle;
@@ -495,6 +527,7 @@ table td.header {
 /* Ensure button in header doesn't expand - override any width rules */
 table td.header button,
 table td.header .pub-toggle-btn-global,
+table td.header .section-toggle-btn,
 table td.header .xp-toggle-btn-global {
     width: auto !important;
     min-width: 0 !important;
@@ -504,6 +537,7 @@ table td.header .xp-toggle-btn-global {
 
 /* Toggle button pinned to the right and vertically centered, no flex on the cell */
 table td.header .pub-toggle-btn-global,
+table td.header .section-toggle-btn,
 table td.header .xp-toggle-btn-global {
     position: absolute;
     right: 16px;
@@ -773,7 +807,7 @@ html.dark .project-media .media-btn {
     height: var(--img-h-desktop);
 }
 
-/* Independent Application Development: NO hover-zoom anywhere, including carousels, their
+/* App Development: NO hover-zoom anywhere, including carousels, their
    images, or the video rows (thumbnail + video). !important so it can't be undone. */
 .app-scroll:hover,
 .app-scroll .img-zoom:hover,
@@ -1439,6 +1473,7 @@ html.dark .eqn {
 .pub-toggle-btn,
 .pub-toggle-btn-global,
 .xp-toggle-btn,
+.section-toggle-btn,
 .xp-toggle-btn-global {
     appearance: none;
     background-color: #ffffff;
@@ -1469,6 +1504,7 @@ html.dark .eqn {
 .pub-toggle-btn:hover,
 .pub-toggle-btn-global:hover,
 .xp-toggle-btn:hover,
+.section-toggle-btn:hover,
 .xp-toggle-btn-global:hover {
     background-color: #f0f2f5;
     border-color: #a0a8b4;
@@ -1479,6 +1515,7 @@ html.dark .eqn {
 .pub-toggle-btn:active,
 .pub-toggle-btn-global:active,
 .xp-toggle-btn:active,
+.section-toggle-btn:active,
 .xp-toggle-btn-global:active {
     background-color: #e8eaed;
     border-color: #a0a8b4;
@@ -1496,6 +1533,7 @@ html.dark .eqn {
 .pub-toggle-btn:focus,
 .pub-toggle-btn-global:focus,
 .xp-toggle-btn:focus,
+.section-toggle-btn:focus,
 .xp-toggle-btn-global:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(160, 168, 180, 0.25);
@@ -1504,6 +1542,7 @@ html.dark .eqn {
 .pub-toggle-btn:focus:not(:focus-visible),
 .pub-toggle-btn-global:focus:not(:focus-visible),
 .xp-toggle-btn:focus:not(:focus-visible),
+.section-toggle-btn:focus:not(:focus-visible),
 .xp-toggle-btn-global:focus:not(:focus-visible) {
     box-shadow: none;
 }
@@ -2223,6 +2262,7 @@ html.dark .eqn {
     .pub-toggle-btn,
     .pub-toggle-btn-global,
     .xp-toggle-btn,
+    .section-toggle-btn,
     .xp-toggle-btn-global {
         font-size: 1em;
         padding: 3px 10px;
@@ -2309,6 +2349,7 @@ html.dark .eqn {
     .pub-toggle-btn,
     .pub-toggle-btn-global,
     .xp-toggle-btn,
+    .section-toggle-btn,
     .xp-toggle-btn-global {
         font-size: 1em;
         padding: 3px 8px;
@@ -2696,6 +2737,7 @@ table {
     .pub-toggle-btn,
     .pub-toggle-btn-global,
     .xp-toggle-btn,
+    .section-toggle-btn,
     .xp-toggle-btn-global {
         padding: 3px 10px;
         font-size: 1em;
@@ -2820,7 +2862,6 @@ html.dark body { background-color: var(--bg-color); }
 html.dark .profile-card,
 html.dark .section-card,
 html.dark table tr td,
-html.dark table td.header,
 html.dark #row-publication,
 html.dark #row-otherwork,
 html.dark #row-research,
@@ -2831,8 +2872,15 @@ html.dark .pub-toggle-btn,
 html.dark .pub-toggle-btn-global,
 html.dark #darkmode-btn,
 html.dark .xp-toggle-btn,
+html.dark .section-toggle-btn,
 html.dark .xp-toggle-btn-global {
     background-color: #161b22;
+}
+
+/* Section headers get their own band on dark too. Dark inverts the relationship:
+   the header sits slightly lighter than the card, the way the nav does. */
+html.dark table td.header {
+    background-color: #1c2129;
 }
 
 /* row dividers: black-based -> light on dark */
@@ -2856,6 +2904,7 @@ html.dark .xp-toggle-content ul li::marker { color: #6e7681; }
 html.dark .pub-toggle-btn,
 html.dark .pub-toggle-btn-global,
 html.dark .xp-toggle-btn,
+html.dark .section-toggle-btn,
 html.dark .xp-toggle-btn-global {
     border-color: var(--border-color);
     color: var(--text-color-light);
@@ -2863,6 +2912,7 @@ html.dark .xp-toggle-btn-global {
 html.dark .pub-toggle-btn:hover,
 html.dark .pub-toggle-btn-global:hover,
 html.dark .xp-toggle-btn:hover,
+html.dark .section-toggle-btn:hover,
 html.dark .xp-toggle-btn-global:hover {
     color: var(--text-color);
     border-color: var(--text-color-light);

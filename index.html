@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="css/index.css?v=61">
+  <link rel="stylesheet" href="css/index.css?v=65">
   <link rel="stylesheet" href="css/tooltip.css?v=42">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <link rel="icon" type="favicon.ico" href="favicon.ico?v=5">
@@ -32,8 +32,8 @@
         <li><a href="#sec-publications">Publications</a></li>
         <li><a href="#sec-services">Services</a></li>
         <li><a href="#sec-codes">Codes</a></li>
-        <li><a href="#sec-apps">Apps</a></li>
-        <li><a href="#sec-youtube">YouTube</a></li>
+        <li class="nav-secondary nav-divider"><a href="#sec-apps">Apps</a></li>
+        <li class="nav-secondary"><a href="#sec-youtube">Demos</a></li>
       </ul>
     </div>
   </nav>
@@ -356,6 +356,21 @@
           }
         });
       }
+      // Archive sections (Apps, YouTube) load collapsed so they do not sit between a
+      // recruiter and the research sections. Their carousels measure widths on init,
+      // which is wrong while hidden, so fire a resize once the panel is open.
+      $(document).on('click', '.section-toggle-btn', function () {
+        var $btn = $(this);
+        var $panel = $('#' + $btn.attr('aria-controls'));
+        var open = $btn.attr('aria-expanded') === 'false';
+        $btn.attr('aria-expanded', open ? 'true' : 'false').text(open ? 'Collapse' : 'Expand');
+        if (open) {
+          $panel.slideDown(180, function () { $(window).trigger('resize'); });
+        } else {
+          $panel.slideUp(180);
+        }
+      });
+
       // Run now and again as AJAX-injected sections arrive.
       observeLazyVideos();
       new MutationObserver(observeLazyVideos)
