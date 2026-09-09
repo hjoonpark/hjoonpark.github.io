@@ -473,9 +473,13 @@
           setBtn($btn, open);
           $btn.closest('.xp-contributions').find('.xp-toggle-content').toggle(open);
         });
-        $global.data('toggled', true)
-                                  .attr('aria-expanded', 'true')
-                                  .text('Collapse all');
+        // Mirror the section's actual initial state, so the first click on the global
+        // button does what its label says rather than toggling to a no-op.
+        const anyOpen = $buttons.toArray()
+          .some(function (b) { return b.getAttribute('aria-expanded') !== 'false'; });
+        $global.data('toggled', anyOpen)
+               .attr('aria-expanded', anyOpen ? 'true' : 'false')
+               .text(anyOpen ? 'Collapse all' : 'Expand all');
       }
 
       // Load all sections
